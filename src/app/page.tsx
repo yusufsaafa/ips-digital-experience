@@ -1,6 +1,7 @@
 import { CinematicHero } from "./components/CinematicHero";
 import { IndustriesSection } from "./components/IndustriesSection";
 import { CaseStudySection } from "./components/CaseStudySection";
+import { EngineeringProcessSection } from "./components/EngineeringProcessSection";
 import { TechnicalRequestSection } from "./components/TechnicalRequestSection";
 import { GlobalNavigation } from "./components/GlobalNavigation";
 import { SectionReveal } from "./components/SectionReveal";
@@ -18,7 +19,10 @@ export default function Home() {
       <SectionReveal id="case-study" index="03" label="Failure to control" delay={80}>
         <CaseStudySection />
       </SectionReveal>
-      <SectionReveal id="technical-brief" index="04" label="Start an engineering brief" delay={100}>
+      <SectionReveal id="engineering-process" index="04" label="Evidence to validation" delay={90}>
+        <EngineeringProcessSection />
+      </SectionReveal>
+      <SectionReveal id="technical-brief" index="05" label="Start an engineering brief" delay={100}>
         <TechnicalRequestSection />
       </SectionReveal>
     </>
