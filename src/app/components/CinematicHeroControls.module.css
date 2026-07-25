@@ -1,0 +1,102 @@
+.controls {
+  position: absolute;
+  z-index: 40;
+  right: clamp(18px, 3vw, 48px);
+  bottom: clamp(22px, 4vh, 48px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 450ms ease, transform 450ms ease;
+}
+
+.controlButton,
+.skipButton {
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(8, 12, 14, 0.76);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.controlButton {
+  width: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+
+.skipButton {
+  padding: 0 16px;
+  font: 600 10px/1 var(--font-geist-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.controlButton:hover,
+.skipButton:hover,
+.controlButton:focus-visible,
+.skipButton:focus-visible {
+  border-color: rgba(134, 255, 198, 0.72);
+  background: rgba(14, 30, 24, 0.9);
+  color: #b8ffd8;
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.controlButton:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.stepStatus {
+  min-width: 74px;
+  color: rgba(255, 255, 255, 0.62);
+  font: 600 10px/1 var(--font-geist-mono, monospace);
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+
+.touchInstruction {
+  display: none;
+  position: absolute;
+  z-index: 35;
+  left: 50%;
+  bottom: 88px;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.58);
+  font: 600 9px/1 var(--font-geist-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 760px), (pointer: coarse) {
+  .controls {
+    right: 14px;
+    bottom: 18px;
+    left: 14px;
+    justify-content: center;
+  }
+
+  .skipButton {
+    flex: 1;
+    max-width: 190px;
+  }
+
+  .touchInstruction {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controls,
+  .controlButton,
+  .skipButton {
+    transition: none;
+  }
+}
