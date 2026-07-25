@@ -1,0 +1,364 @@
+.scene {
+  transition: min-height 900ms ease, background 900ms ease;
+}
+
+.capabilities {
+  position: absolute;
+  top: 100svh;
+  left: 0;
+  right: 0;
+  z-index: 12;
+  min-height: 100svh;
+  padding: clamp(88px, 11vw, 150px) clamp(22px, 6vw, 96px) 120px;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(4, 9, 11, 0) 0, #071014 10%, #071014 100%),
+    radial-gradient(circle at 78% 18%, rgba(116, 204, 230, 0.08), transparent 30%);
+  transform: translateY(80px);
+  transition:
+    opacity 900ms 650ms ease,
+    transform 1200ms 500ms cubic-bezier(0.16, 0.82, 0.18, 1);
+}
+
+.capabilities::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(143, 202, 221, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 202, 221, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000, transparent 84%);
+}
+
+.capabilitiesHeader,
+.capabilityGrid {
+  position: relative;
+  z-index: 2;
+}
+
+.capabilitiesHeader {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(320px, 1.4fr) minmax(240px, 0.8fr);
+  gap: clamp(28px, 5vw, 82px);
+  align-items: end;
+  padding-bottom: clamp(48px, 7vw, 88px);
+  border-bottom: 1px solid rgba(184, 218, 229, 0.12);
+}
+
+.capabilitiesHeader p,
+.capabilitiesHeader span,
+.capabilityCard span,
+.cardIndex {
+  font-family: var(--font-geist-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.capabilitiesHeader p {
+  align-self: start;
+  margin: 0;
+  color: rgba(202, 227, 235, 0.46);
+  font-size: 0.62rem;
+}
+
+.capabilitiesHeader h2 {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(3rem, 6.5vw, 7.2rem);
+  font-weight: 420;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+
+.capabilitiesHeader > span {
+  color: rgba(212, 230, 236, 0.56);
+  font-family: var(--font-geist-sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.capabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.capabilityCard {
+  position: relative;
+  min-height: 410px;
+  padding: 30px 28px 34px;
+  overflow: hidden;
+  border-right: 1px solid rgba(184, 218, 229, 0.11);
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
+  transform: translateY(54px);
+  opacity: 0;
+  transition:
+    transform 900ms cubic-bezier(0.16, 0.82, 0.18, 1),
+    opacity 700ms ease,
+    background 500ms ease;
+}
+
+.capabilityCard:first-child {
+  border-left: 1px solid rgba(184, 218, 229, 0.11);
+}
+
+.capabilityCard::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 0;
+  background: linear-gradient(180deg, rgba(92, 186, 215, 0), rgba(92, 186, 215, 0.07));
+  transition: height 600ms cubic-bezier(0.16, 0.82, 0.18, 1);
+}
+
+.capabilityCard:hover {
+  background: rgba(114, 201, 228, 0.025);
+}
+
+.capabilityCard:hover::before {
+  height: 72%;
+}
+
+.cardIndex {
+  color: rgba(204, 228, 235, 0.4);
+  font-size: 0.58rem;
+}
+
+.cardSignal {
+  position: absolute;
+  top: 28px;
+  right: 26px;
+  width: 34px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(132, 210, 233, 0.22);
+  border-radius: 50%;
+}
+
+.cardSignal::before,
+.cardSignal::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(132, 210, 233, 0.24);
+  transform: translate(-50%, -50%);
+}
+
+.cardSignal::before { width: 145%; height: 1px; }
+.cardSignal::after { width: 1px; height: 145%; }
+
+.cardSignal i {
+  position: absolute;
+  inset: 43%;
+  border-radius: 50%;
+  background: rgb(154, 225, 245);
+  box-shadow: 0 0 12px rgba(104, 204, 232, 0.7);
+}
+
+.capabilityCard h3 {
+  position: relative;
+  margin: 150px 0 18px;
+  font-size: clamp(1.6rem, 2.1vw, 2.5rem);
+  font-weight: 450;
+  letter-spacing: -0.035em;
+}
+
+.capabilityCard p {
+  position: relative;
+  margin: 0;
+  color: rgba(212, 230, 236, 0.56);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.capabilityCard > span {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  color: rgba(204, 228, 235, 0.34);
+  font-size: 0.52rem;
+  line-height: 1.6;
+}
+
+.released {
+  min-height: 200svh;
+  overflow: visible;
+  background: #071014;
+}
+
+.released .systemWorld {
+  position: absolute;
+  top: 0;
+  height: 100svh;
+  transform: scale(0.84) translateY(-8vh);
+  transform-origin: center top;
+  opacity: 0.82;
+  filter: saturate(0.72) brightness(0.72);
+  transition:
+    transform 1400ms cubic-bezier(0.16, 0.82, 0.18, 1),
+    opacity 900ms ease,
+    filter 900ms ease;
+}
+
+.released .systemWorld::after {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.22), transparent 35%, #071014 92%),
+    radial-gradient(circle at center, transparent 0 38%, rgba(0,0,0,0.35) 82%);
+}
+
+.released .crossSection {
+  left: 70%;
+  width: min(45vw, 720px);
+  height: min(54vh, 540px);
+  transform: translate(-50%, -50%) rotate(-3deg) scale(0.86);
+  opacity: 0.72;
+  transition:
+    left 1300ms cubic-bezier(0.16, 0.82, 0.18, 1),
+    width 1300ms ease,
+    height 1300ms ease,
+    transform 1300ms cubic-bezier(0.16, 0.82, 0.18, 1),
+    opacity 900ms ease;
+}
+
+.released .systemCopy {
+  left: clamp(24px, 7vw, 112px);
+  bottom: 18vh;
+  width: min(610px, 44vw);
+}
+
+.released .systemCopy h2 {
+  font-size: clamp(2.8rem, 5.4vw, 6.2rem);
+}
+
+.released .alert,
+.released .statusRail {
+  opacity: 0 !important;
+  transform: translateY(18px) !important;
+  transition: opacity 500ms ease, transform 600ms ease !important;
+}
+
+.released .capabilities {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.released .capabilityCard {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.released .capabilityCard:nth-child(1) { transition-delay: 900ms; }
+.released .capabilityCard:nth-child(2) { transition-delay: 1040ms; }
+.released .capabilityCard:nth-child(3) { transition-delay: 1180ms; }
+.released .capabilityCard:nth-child(4) { transition-delay: 1320ms; }
+
+.released .scrollHint {
+  position: fixed;
+  bottom: 22px;
+  opacity: 0.55 !important;
+}
+
+@media (max-width: 980px) {
+  .capabilitiesHeader {
+    grid-template-columns: 1fr 1.6fr;
+  }
+
+  .capabilitiesHeader > span {
+    grid-column: 2;
+  }
+
+  .capabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capabilityCard:nth-child(1),
+  .capabilityCard:nth-child(2) {
+    border-bottom: 1px solid rgba(184, 218, 229, 0.11);
+  }
+}
+
+@media (max-width: 680px) {
+  .released {
+    min-height: 290svh;
+  }
+
+  .capabilities {
+    min-height: 190svh;
+    padding: 78px 20px 80px;
+  }
+
+  .capabilitiesHeader {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .capabilitiesHeader > span {
+    grid-column: auto;
+  }
+
+  .capabilitiesHeader h2 {
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+
+  .capabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .capabilityCard {
+    min-height: 320px;
+    border-left: 1px solid rgba(184, 218, 229, 0.11);
+    border-bottom: 1px solid rgba(184, 218, 229, 0.11);
+  }
+
+  .capabilityCard h3 {
+    margin-top: 96px;
+  }
+
+  .released .systemWorld {
+    transform: scale(0.9) translateY(-5vh);
+  }
+
+  .released .crossSection {
+    left: 70%;
+    top: 34%;
+    width: 74vw;
+    height: 36vh;
+    opacity: 0.42;
+  }
+
+  .released .systemCopy {
+    left: 20px;
+    right: 20px;
+    bottom: 72px;
+    width: auto;
+  }
+
+  .released .systemCopy h2 {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .systemWorld,
+  .crossSection,
+  .capabilities,
+  .capabilityCard,
+  .alert,
+  .statusRail {
+    transition: none !important;
+  }
+
+  .released .capabilities,
+  .released .capabilityCard {
+    opacity: 1;
+    transform: none;
+  }
+}
