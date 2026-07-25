@@ -7,7 +7,8 @@ const sections = [
   { id: "experience", label: "Experience", index: "01" },
   { id: "industries", label: "Industries", index: "02" },
   { id: "case-study", label: "Case", index: "03" },
-  { id: "technical-brief", label: "Brief", index: "04" },
+  { id: "engineering-process", label: "Process", index: "04" },
+  { id: "technical-brief", label: "Brief", index: "05" },
 ] as const;
 
 export function GlobalNavigation() {
