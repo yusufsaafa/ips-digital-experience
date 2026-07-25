@@ -10,13 +10,10 @@
 .content {
   position: relative;
   z-index: 2;
-  opacity: 0;
-  transform: translateY(88px) scale(0.985);
-  filter: blur(10px) brightness(0.72);
-  transition:
-    opacity 900ms var(--reveal-delay) ease,
-    transform 1200ms var(--reveal-delay) cubic-bezier(0.16, 0.82, 0.18, 1),
-    filter 1000ms var(--reveal-delay) ease;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: contentIn 850ms var(--reveal-delay) cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .transitionRail {
@@ -36,71 +33,31 @@
   font-size: 0.56rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(-14px);
-  transition:
-    opacity 700ms calc(var(--reveal-delay) + 180ms) ease,
-    transform 900ms calc(var(--reveal-delay) + 180ms) cubic-bezier(0.16, 0.82, 0.18, 1);
+  opacity: 1;
+  transform: none;
 }
 
 .transitionRail i {
   height: 1px;
   background: linear-gradient(90deg, rgba(142, 214, 236, 0.5), rgba(142, 214, 236, 0.06));
-  transform: scaleX(0);
+  transform: scaleX(1);
   transform-origin: left;
-  transition: transform 1300ms calc(var(--reveal-delay) + 260ms) cubic-bezier(0.16, 0.82, 0.18, 1);
 }
 
 .transitionRail strong {
   font-weight: 500;
 }
 
-.scan {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(90deg, transparent, rgba(125, 222, 249, 0.92), transparent);
-  box-shadow: 0 0 24px rgba(96, 203, 233, 0.45);
-}
-
-.visible .content {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: none;
-}
-
-.visible .transitionRail {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.visible .transitionRail i {
-  transform: scaleX(1);
-}
-
-.visible .scan {
-  animation: sectionScan 1600ms calc(var(--reveal-delay) + 80ms) cubic-bezier(0.16, 0.82, 0.18, 1) both;
-}
-
-@keyframes sectionScan {
-  0% {
-    opacity: 0;
+@keyframes contentIn {
+  from {
+    opacity: 0.7;
+    transform: translateY(24px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
     transform: translateY(0);
-  }
-  15% {
-    opacity: 0.85;
-  }
-  75% {
-    opacity: 0.34;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(min(42vh, 420px));
+    filter: none;
   }
 }
 
@@ -111,30 +68,10 @@
     gap: 12px;
     font-size: 0.48rem;
   }
-
-  .content {
-    transform: translateY(58px) scale(0.99);
-    filter: blur(6px) brightness(0.8);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .content,
-  .transitionRail,
-  .transitionRail i,
-  .scan {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .content,
-  .transitionRail {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-
-  .transitionRail i {
-    transform: scaleX(1);
+  .content {
+    animation: none;
   }
 }
