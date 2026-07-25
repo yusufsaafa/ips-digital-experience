@@ -8,7 +8,7 @@ import failure from "./CinematicHeroFailure.module.css";
 import solution from "./CinematicHeroSolution.module.css";
 import transition from "./CinematicHeroTransition.module.css";
 import capabilityStyles from "./CinematicHeroCapabilities.module.css";
-import controlStyles from "./CinematicHeroControls.module.css";
+import scrollStyles from "./CinematicHeroScroll.module.css";
 
 type SceneStep = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -76,75 +76,49 @@ const capabilities: Capability[] = [
   },
 ];
 
-const forwardLocks: Partial<Record<SceneStep, number>> = {
-  2: 4100,
-  3: 3200,
-  4: 2800,
-  5: 2500,
-};
+const sceneLabels = ["Approach", "Unlock", "Enter", "Inspect", "Failure", "Resolve", "Release"] as const;
 
 export function CinematicHero() {
+  const trackRef = useRef<HTMLElement>(null);
   const sceneRef = useRef<HTMLElement>(null);
   const [sceneStep, setSceneStep] = useState<SceneStep>(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeCapability, setActiveCapability] = useState(0);
-  const sceneStepRef = useRef<SceneStep>(0);
-  const stepEnteredAt = useRef(Date.now());
-  const lastWheelAt = useRef(0);
-  const touchStartY = useRef<number | null>(null);
-  const lastTouchAt = useRef(0);
-
-  function changeStep(next: SceneStep) {
-    sceneStepRef.current = next;
-    stepEnteredAt.current = Date.now();
-    setSceneStep(next);
-  }
-
-  function moveScene(direction: 1 | -1, options?: { bypassLock?: boolean }) {
-    const current = sceneStepRef.current;
-    const elapsed = Date.now() - stepEnteredAt.current;
-
-    if (direction > 0) {
-      if (current === 6) return false;
-      const lock = forwardLocks[current] ?? 0;
-      if (!options?.bypassLock && elapsed < lock) return false;
-    }
-
-    if (direction < 0 && current === 0) return false;
-
-    const next = direction > 0 ? Math.min(6, current + 1) : Math.max(0, current - 1);
-    changeStep(next as SceneStep);
-    return true;
-  }
-
-  function skipExperience() {
-    changeStep(6);
-    window.requestAnimationFrame(() => {
-      document.getElementById("industries")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
 
   useEffect(() => {
+    const track = trackRef.current;
     const scene = sceneRef.current;
-    if (!scene) return;
+    if (!track || !scene) return;
 
-    function handleWheel(event: WheelEvent) {
-      if (Math.abs(event.deltaY) < 8) return;
+    let frame = 0;
 
-      const current = sceneStepRef.current;
-      if (current === 6 && event.deltaY > 0) return;
-      if (current === 6 && event.deltaY < 0 && window.scrollY > 8) return;
+    const updateTimeline = () => {
+      frame = 0;
+      const bounds = track.getBoundingClientRect();
+      const distance = Math.max(1, track.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -bounds.top / distance));
+      const nextStep = Math.min(6, Math.floor(progress * 7)) as SceneStep;
 
-      event.preventDefault();
+      setScrollProgress(progress);
+      setSceneStep((current) => (current === nextStep ? current : nextStep));
+      scene.style.setProperty("--scroll-progress", progress.toFixed(4));
+      scene.style.setProperty("--scene-progress", ((progress * 7) % 1).toFixed(4));
+    };
 
-      const now = Date.now();
-      if (now - lastWheelAt.current < 900) return;
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateTimeline);
+    };
 
-      const moved = moveScene(event.deltaY > 0 ? 1 : -1);
-      if (moved) lastWheelAt.current = now;
-    }
+    updateTimeline();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
 
-    scene.addEventListener("wheel", handleWheel, { passive: false });
-    return () => scene.removeEventListener("wheel", handleWheel);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
   }, []);
 
   function handlePointerMove(event: React.PointerEvent<HTMLElement>) {
@@ -157,53 +131,17 @@ export function CinematicHero() {
 
     scene.style.setProperty("--pointer-x", `${x}px`);
     scene.style.setProperty("--pointer-y", `${y}px`);
-    scene.style.setProperty("--tilt-x", `${((y / bounds.height) - 0.5) * -2.2}deg`);
-    scene.style.setProperty("--tilt-y", `${((x / bounds.width) - 0.5) * 2.2}deg`);
+    scene.style.setProperty("--tilt-x", `${((y / bounds.height) - 0.5) * -1.2}deg`);
+    scene.style.setProperty("--tilt-y", `${((x / bounds.width) - 0.5) * 1.2}deg`);
   }
 
   function handlePointerLeave() {
     const scene = sceneRef.current;
     if (!scene) return;
-
     scene.style.setProperty("--pointer-x", "50%");
     scene.style.setProperty("--pointer-y", "48%");
     scene.style.setProperty("--tilt-x", "0deg");
     scene.style.setProperty("--tilt-y", "0deg");
-  }
-
-  function handleTouchStart(event: React.TouchEvent<HTMLElement>) {
-    touchStartY.current = event.touches[0]?.clientY ?? null;
-  }
-
-  function handleTouchEnd(event: React.TouchEvent<HTMLElement>) {
-    const startY = touchStartY.current;
-    const endY = event.changedTouches[0]?.clientY;
-    touchStartY.current = null;
-
-    if (startY === null || endY === undefined) return;
-    const delta = startY - endY;
-    if (Math.abs(delta) < 42) return;
-
-    const now = Date.now();
-    if (now - lastTouchAt.current < 650) return;
-
-    const moved = moveScene(delta > 0 ? 1 : -1);
-    if (moved) lastTouchAt.current = now;
-  }
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
-    const isForward = event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ";
-    const isBackward = event.key === "ArrowUp" || event.key === "ArrowLeft" || event.key === "PageUp";
-
-    if (!isForward && !isBackward) return;
-    if (isForward && sceneStepRef.current === 6) return;
-
-    event.preventDefault();
-    moveScene(isForward ? 1 : -1);
-  }
-
-  function advanceScene() {
-    moveScene(1);
   }
 
   const isApproached = sceneStep >= 1;
@@ -215,191 +153,164 @@ export function CinematicHero() {
   const selectedCapability = capabilities[activeCapability];
 
   return (
-    <main
-      ref={sceneRef}
-      data-scene-step={sceneStep}
-      className={`${styles.scene} ${motion.scene} ${system.scene} ${failure.scene} ${solution.scene} ${transition.scene} ${isApproached ? styles.approached : ""} ${isOpening ? motion.opening : ""} ${isInside ? system.inside : ""} ${isFailing ? failure.failing : ""} ${isResolved ? solution.resolved : ""} ${isReleased ? transition.released : ""}`}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-      aria-label={`IPS cinematic engineering experience. Scene ${sceneStep + 1} of 7.`}
-    >
-      <div className={`${styles.surface} ${motion.surface} ${system.surface}`} aria-hidden="true" />
-      <div className={styles.scratches} aria-hidden="true" />
-      <div className={styles.pointerLight} aria-hidden="true" />
-      <div className={styles.vignette} aria-hidden="true" />
-      <div className={motion.chamberGlow} aria-hidden="true" />
-
-      <section className={`${styles.content} ${motion.content}`} aria-labelledby="hero-title">
-        <p className={styles.eyebrow}>Integrated Polymer Solutions</p>
-        <h1 id="hero-title">
-          <span className={styles.titleLine}>See what</span>
-          <span className={styles.titleLine}>can fail</span>
-          <span className={`${styles.titleLine} ${styles.mutedLine}`}>below the surface.</span>
-        </h1>
-      </section>
-
-      <button
-        className={`${styles.hatch} ${motion.hatch} ${system.hatch}`}
-        type="button"
-        aria-label={isInside ? "Engineering system entered" : isOpening ? "Inspection port open" : "Open inspection port"}
-        onClick={advanceScene}
+    <section ref={trackRef} className={scrollStyles.track} aria-label="IPS cinematic engineering journey">
+      <main
+        ref={sceneRef}
+        data-scene-step={sceneStep}
+        className={`${scrollStyles.stickyScene} ${styles.scene} ${motion.scene} ${system.scene} ${failure.scene} ${solution.scene} ${transition.scene} ${isApproached ? styles.approached : ""} ${isOpening ? motion.opening : ""} ${isInside ? system.inside : ""} ${isFailing ? failure.failing : ""} ${isResolved ? solution.resolved : ""} ${isReleased ? transition.released : ""}`}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        aria-label={`IPS cinematic engineering experience. Scene ${sceneStep + 1} of 7.`}
       >
-        <span className={`${styles.hatchShadow} ${motion.hatchShadow}`} aria-hidden="true" />
-        <span className={`${styles.outerRing} ${motion.outerRing}`} aria-hidden="true">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <span className={`${styles.bolt} ${motion.bolt}`} key={index} style={{ "--bolt-index": index } as React.CSSProperties} />
-          ))}
-          <span className={motion.depthWell}>
-            <span className={motion.depthRing} />
-            <span className={motion.depthRing} />
-            <span className={motion.depthRing} />
-            <span className={motion.coreLight} />
+        <div className={scrollStyles.ambientMotion} aria-hidden="true" />
+        <div className={`${styles.surface} ${motion.surface} ${system.surface}`} aria-hidden="true" />
+        <div className={styles.scratches} aria-hidden="true" />
+        <div className={styles.pointerLight} aria-hidden="true" />
+        <div className={styles.vignette} aria-hidden="true" />
+        <div className={motion.chamberGlow} aria-hidden="true" />
+
+        <section className={`${styles.content} ${motion.content}`} aria-labelledby="hero-title">
+          <p className={styles.eyebrow}>Integrated Polymer Solutions</p>
+          <h1 id="hero-title">
+            <span className={styles.titleLine}>See what</span>
+            <span className={styles.titleLine}>can fail</span>
+            <span className={`${styles.titleLine} ${styles.mutedLine}`}>below the surface.</span>
+          </h1>
+        </section>
+
+        <div className={`${styles.hatch} ${motion.hatch} ${system.hatch}`} aria-hidden="true">
+          <span className={`${styles.hatchShadow} ${motion.hatchShadow}`} />
+          <span className={`${styles.outerRing} ${motion.outerRing}`}>
+            {Array.from({ length: 8 }).map((_, index) => (
+              <span className={`${styles.bolt} ${motion.bolt}`} key={index} style={{ "--bolt-index": index } as React.CSSProperties} />
+            ))}
+            <span className={motion.depthWell}>
+              <span className={motion.depthRing} />
+              <span className={motion.depthRing} />
+              <span className={motion.depthRing} />
+              <span className={motion.coreLight} />
+            </span>
+            <span className={`${styles.innerRing} ${motion.innerRing}`}>
+              <span className={`${styles.aperture} ${motion.aperture}`} />
+              <span className={styles.scanLine} />
+            </span>
           </span>
-          <span className={`${styles.innerRing} ${motion.innerRing}`}>
-            <span className={`${styles.aperture} ${motion.aperture}`} />
-            <span className={styles.scanLine} />
-          </span>
-        </span>
-        <span className={`${styles.openLabel} ${motion.openLabel}`}>{isOpening ? "Port unlocked" : "Open inspection"}</span>
-      </button>
-
-      <section className={`${system.systemWorld} ${failure.systemWorld} ${solution.systemWorld} ${transition.systemWorld}`} aria-label="Engineering cross-section">
-        <div className={system.systemHeader}>
-          <span>IPS / SYSTEM INSPECTION 01</span>
-          <span>{isReleased ? "ENGINEERING CAPABILITIES" : isResolved ? "BOUNDARY STABILIZED" : isFailing ? "FAILURE TRACE ACTIVE" : "PRESSURE BOUNDARY"}</span>
+          <span className={`${styles.openLabel} ${motion.openLabel}`}>{isOpening ? "Port unlocked" : "Inspection boundary"}</span>
         </div>
 
-        <div className={`${system.crossSection} ${failure.crossSection} ${solution.crossSection} ${transition.crossSection}`} aria-hidden="true">
-          <div className={`${system.materialLayer} ${system.housing}`}><span>OUTER HOUSING</span></div>
-          <div className={`${system.materialLayer} ${system.seal} ${failure.seal} ${solution.seal}`}><span>POLYMER SEAL</span></div>
-          <div className={`${system.materialLayer} ${system.interface} ${failure.interface} ${solution.interface}`}><span>ENGINEERED INTERFACE</span></div>
-          <div className={`${system.materialLayer} ${system.pressure} ${failure.pressure} ${solution.pressure}`}><span>PRESSURIZED MEDIA</span></div>
-          <div className={`${system.pressureWave} ${solution.pressureWave}`} />
-          <div className={system.inspectionLine} />
-          <div className={`${system.targetMarker} ${failure.targetMarker} ${solution.targetMarker}`}><i /></div>
-          <svg className={`${failure.failureTrace} ${solution.failureTrace}`} viewBox="0 0 800 620" preserveAspectRatio="none">
-            <path className={`${failure.traceGlow} ${solution.traceGlow}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
-            <path className={`${failure.traceCore} ${solution.traceCore}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
-          </svg>
-          <div className={`${failure.breachPoint} ${solution.breachPoint}`} />
-          <div className={`${failure.escapePlume} ${solution.escapePlume}`} />
-          <div className={solution.repairPulse} />
-          <div className={solution.compressionBand} />
-        </div>
-
-        <div className={`${system.systemCopy} ${failure.systemCopy} ${solution.systemCopy} ${transition.systemCopy}`}>
-          <p>{isReleased ? "04 / INTEGRATED CAPABILITY" : isResolved ? "03 / ENGINEERED CONTROL" : isFailing ? "02 / FAILURE PROPAGATION" : "01 / BOUNDARY CONDITION"}</p>
-          <h2>{isReleased ? "Engineering the interface changes the whole system." : isResolved ? "A seal is not a part. It is a controlled interface." : isFailing ? "Pressure finds the smallest path out." : "Every critical failure begins at an interface."}</h2>
-          <span>{isReleased ? "Continue into IPS engineering capabilities." : isResolved ? "Scroll to continue through the IPS system." : isFailing ? "Scroll to engineer the seal." : "Scroll to trace the pressure path."}</span>
-        </div>
-
-        <div className={`${failure.alert} ${solution.alert} ${transition.alert}`} aria-hidden="true">
-          <span>{isReleased ? "SYSTEM MODEL COMPLETE" : isResolved ? "IPS SEAL RESPONSE" : "INTERFACE BREACH"}</span>
-          <strong>{isReleased ? "FROM FAILURE TO ENGINEERED CONTROL" : isResolved ? "ΔP CONTAINED / LOAD BALANCED" : "ΔP ESCAPE PATH DETECTED"}</strong>
-        </div>
-
-        <div className={`${solution.statusRail} ${transition.statusRail}`} aria-hidden="true">
-          <span>CONTACT</span><i />
-          <span>COMPRESSION</span><i />
-          <span>CONTAINMENT</span><i />
-        </div>
-      </section>
-
-      <section className={transition.capabilities} aria-labelledby="capabilities-title">
-        <header className={transition.capabilitiesHeader}>
-          <p>IPS / ENGINEERING CAPABILITIES</p>
-          <h2 id="capabilities-title">We engineer what happens at the boundary.</h2>
-          <span>From investigation through production, each discipline resolves a different part of the same system.</span>
-        </header>
-
-        <div className={capabilityStyles.capabilityWorkspace}>
-          <div className={transition.capabilityGrid} role="tablist" aria-label="Engineering capabilities">
-            {capabilities.map((capability, index) => {
-              const isActive = index === activeCapability;
-              return (
-                <button
-                  className={`${transition.capabilityCard} ${capabilityStyles.capabilityButton} ${isActive ? capabilityStyles.activeCapability : ""}`}
-                  key={capability.index}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls="capability-inspection"
-                  onMouseEnter={() => setActiveCapability(index)}
-                  onFocus={() => setActiveCapability(index)}
-                  onClick={() => setActiveCapability(index)}
-                >
-                  <div className={transition.cardIndex}>{capability.index}</div>
-                  <div className={transition.cardSignal} aria-hidden="true"><i /></div>
-                  <h3>{capability.title}</h3>
-                  <p>{capability.copy}</p>
-                  <span>{capability.meta}</span>
-                </button>
-              );
-            })}
+        <section className={`${system.systemWorld} ${failure.systemWorld} ${solution.systemWorld} ${transition.systemWorld}`} aria-label="Engineering cross-section">
+          <div className={system.systemHeader}>
+            <span>IPS / SYSTEM INSPECTION 01</span>
+            <span>{isReleased ? "ENGINEERING CAPABILITIES" : isResolved ? "BOUNDARY STABILIZED" : isFailing ? "FAILURE TRACE ACTIVE" : "PRESSURE BOUNDARY"}</span>
           </div>
 
-          <article
-            id="capability-inspection"
-            className={capabilityStyles.inspectionPanel}
-            data-mode={selectedCapability.mode}
-            role="tabpanel"
-            aria-live="polite"
-          >
-            <div className={capabilityStyles.inspectionHeader}>
-              <span>MODULE {selectedCapability.index} / ACTIVE INSPECTION</span>
-              <strong>{selectedCapability.metricLabel}: {selectedCapability.metricValue}</strong>
+          <div className={`${system.crossSection} ${failure.crossSection} ${solution.crossSection} ${transition.crossSection}`} aria-hidden="true">
+            <div className={`${system.materialLayer} ${system.housing}`}><span>OUTER HOUSING</span></div>
+            <div className={`${system.materialLayer} ${system.seal} ${failure.seal} ${solution.seal}`}><span>POLYMER SEAL</span></div>
+            <div className={`${system.materialLayer} ${system.interface} ${failure.interface} ${solution.interface}`}><span>ENGINEERED INTERFACE</span></div>
+            <div className={`${system.materialLayer} ${system.pressure} ${failure.pressure} ${solution.pressure}`}><span>PRESSURIZED MEDIA</span></div>
+            <div className={`${system.pressureWave} ${solution.pressureWave}`} />
+            <div className={system.inspectionLine} />
+            <div className={`${system.targetMarker} ${failure.targetMarker} ${solution.targetMarker}`}><i /></div>
+            <svg className={`${failure.failureTrace} ${solution.failureTrace}`} viewBox="0 0 800 620" preserveAspectRatio="none">
+              <path className={`${failure.traceGlow} ${solution.traceGlow}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
+              <path className={`${failure.traceCore} ${solution.traceCore}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
+            </svg>
+            <div className={`${failure.breachPoint} ${solution.breachPoint}`} />
+            <div className={`${failure.escapePlume} ${solution.escapePlume}`} />
+            <div className={solution.repairPulse} />
+            <div className={solution.compressionBand} />
+          </div>
+
+          <div className={`${system.systemCopy} ${failure.systemCopy} ${solution.systemCopy} ${transition.systemCopy}`}>
+            <p>{isReleased ? "04 / INTEGRATED CAPABILITY" : isResolved ? "03 / ENGINEERED CONTROL" : isFailing ? "02 / FAILURE PROPAGATION" : "01 / BOUNDARY CONDITION"}</p>
+            <h2>{isReleased ? "Engineering the interface changes the whole system." : isResolved ? "A seal is not a part. It is a controlled interface." : isFailing ? "Pressure finds the smallest path out." : "Every critical failure begins at an interface."}</h2>
+            <span>{isReleased ? "Continue into IPS engineering capabilities." : isResolved ? "The intervention restores contact and containment." : isFailing ? "The smallest uncontrolled path becomes the system failure." : "Follow the interface from condition to cause."}</span>
+          </div>
+
+          <div className={`${failure.alert} ${solution.alert} ${transition.alert}`} aria-hidden="true">
+            <span>{isReleased ? "SYSTEM MODEL COMPLETE" : isResolved ? "IPS SEAL RESPONSE" : "INTERFACE BREACH"}</span>
+            <strong>{isReleased ? "FROM FAILURE TO ENGINEERED CONTROL" : isResolved ? "ΔP CONTAINED / LOAD BALANCED" : "ΔP ESCAPE PATH DETECTED"}</strong>
+          </div>
+
+          <div className={`${solution.statusRail} ${transition.statusRail}`} aria-hidden="true">
+            <span>CONTACT</span><i />
+            <span>COMPRESSION</span><i />
+            <span>CONTAINMENT</span><i />
+          </div>
+        </section>
+
+        <section className={transition.capabilities} aria-labelledby="capabilities-title">
+          <header className={transition.capabilitiesHeader}>
+            <p>IPS / ENGINEERING CAPABILITIES</p>
+            <h2 id="capabilities-title">We engineer what happens at the boundary.</h2>
+            <span>From investigation through production, each discipline resolves a different part of the same system.</span>
+          </header>
+
+          <div className={capabilityStyles.capabilityWorkspace}>
+            <div className={transition.capabilityGrid} role="tablist" aria-label="Engineering capabilities">
+              {capabilities.map((capability, index) => {
+                const isActive = index === activeCapability;
+                return (
+                  <button
+                    className={`${transition.capabilityCard} ${capabilityStyles.capabilityButton} ${isActive ? capabilityStyles.activeCapability : ""}`}
+                    key={capability.index}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls="capability-inspection"
+                    onMouseEnter={() => setActiveCapability(index)}
+                    onFocus={() => setActiveCapability(index)}
+                    onClick={() => setActiveCapability(index)}
+                  >
+                    <div className={transition.cardIndex}>{capability.index}</div>
+                    <div className={transition.cardSignal} aria-hidden="true"><i /></div>
+                    <h3>{capability.title}</h3>
+                    <p>{capability.copy}</p>
+                    <span>{capability.meta}</span>
+                  </button>
+                );
+              })}
             </div>
 
-            <div className={capabilityStyles.inspectionBody}>
-              <div className={capabilityStyles.diagram} aria-hidden="true">
-                <div className={capabilityStyles.diagramHousing} />
-                <div className={capabilityStyles.diagramCore} />
-                <div className={capabilityStyles.diagramInterface} />
-                <div className={capabilityStyles.diagramLoad} />
-                <div className={capabilityStyles.diagramTarget}><i /></div>
-                <div className={capabilityStyles.diagramScan} />
+            <article id="capability-inspection" className={capabilityStyles.inspectionPanel} data-mode={selectedCapability.mode} role="tabpanel" aria-live="polite">
+              <div className={capabilityStyles.inspectionHeader}>
+                <span>MODULE {selectedCapability.index} / ACTIVE INSPECTION</span>
+                <strong>{selectedCapability.metricLabel}: {selectedCapability.metricValue}</strong>
               </div>
+              <div className={capabilityStyles.inspectionBody}>
+                <div className={capabilityStyles.diagram} aria-hidden="true">
+                  <div className={capabilityStyles.diagramHousing} />
+                  <div className={capabilityStyles.diagramCore} />
+                  <div className={capabilityStyles.diagramInterface} />
+                  <div className={capabilityStyles.diagramLoad} />
+                  <div className={capabilityStyles.diagramTarget}><i /></div>
+                  <div className={capabilityStyles.diagramScan} />
+                </div>
+                <div className={capabilityStyles.inspectionCopy}>
+                  <p>PROBLEM CONDITION</p>
+                  <h3>{selectedCapability.problem}</h3>
+                  <div><span>IPS INTERVENTION</span><p>{selectedCapability.intervention}</p></div>
+                  <div><span>ENGINEERED RESULT</span><p>{selectedCapability.result}</p></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
 
-              <div className={capabilityStyles.inspectionCopy}>
-                <p>PROBLEM CONDITION</p>
-                <h3>{selectedCapability.problem}</h3>
-                <div>
-                  <span>IPS INTERVENTION</span>
-                  <p>{selectedCapability.intervention}</p>
-                </div>
-                <div>
-                  <span>ENGINEERED RESULT</span>
-                  <p>{selectedCapability.result}</p>
-                </div>
-              </div>
-            </div>
-          </article>
+        <div className={scrollStyles.progressRail} aria-hidden="true">
+          <div className={scrollStyles.progressCopy}>
+            <span>{String(sceneStep + 1).padStart(2, "0")} / 07</span>
+            <strong>{sceneLabels[sceneStep]}</strong>
+          </div>
+          <div className={scrollStyles.progressLine}><i /></div>
         </div>
-      </section>
 
-      <div className={controlStyles.controls} aria-label="Cinematic scene controls">
-        <button className={controlStyles.controlButton} type="button" onClick={() => moveScene(-1)} disabled={sceneStep === 0} aria-label="Previous scene">↑</button>
-        <span className={controlStyles.stepStatus} aria-live="polite">{String(sceneStep + 1).padStart(2, "0")} / 07</span>
-        <button className={controlStyles.controlButton} type="button" onClick={() => moveScene(1)} disabled={sceneStep === 6} aria-label="Next scene">↓</button>
-        <button className={controlStyles.skipButton} type="button" onClick={skipExperience}>Skip experience</button>
-      </div>
-
-      {!isReleased && <div className={controlStyles.touchInstruction} aria-hidden="true">Swipe to inspect</div>}
-
-      <div className={`${styles.scrollHint} ${motion.scrollHint} ${system.scrollHint} ${transition.scrollHint}`} aria-hidden="true">
-        <span />
-        {sceneStep === 0 && "Scroll to approach"}
-        {sceneStep === 1 && "Scroll to unlock"}
-        {sceneStep === 2 && "Wait for release, then enter"}
-        {sceneStep === 3 && "Scroll to trace failure"}
-        {sceneStep === 4 && "Scroll to engineer the seal"}
-        {sceneStep === 5 && "Scroll to reveal capabilities"}
-        {sceneStep === 6 && "Continue through IPS"}
-      </div>
-    </main>
+        <div className={`${styles.scrollHint} ${motion.scrollHint} ${system.scrollHint} ${transition.scrollHint}`} aria-hidden="true">
+          <span />
+          {isReleased ? "Continue through IPS" : "Scroll to inspect"}
+        </div>
+      </main>
+    </section>
   );
 }
