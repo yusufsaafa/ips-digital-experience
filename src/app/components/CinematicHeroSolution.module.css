@@ -1,0 +1,267 @@
+.scene {
+  --solution-cyan: 126, 228, 214;
+}
+
+.systemWorld,
+.crossSection,
+.seal,
+.interface,
+.pressure,
+.pressureWave,
+.targetMarker,
+.failureTrace,
+.traceGlow,
+.traceCore,
+.breachPoint,
+.escapePlume,
+.systemCopy,
+.alert {
+  transition:
+    opacity 900ms ease,
+    filter 1100ms ease,
+    transform 1300ms cubic-bezier(0.16, 0.82, 0.18, 1),
+    background 1000ms ease,
+    border-color 1000ms ease,
+    box-shadow 1100ms ease,
+    color 900ms ease;
+}
+
+.repairPulse {
+  position: absolute;
+  top: 51.5%;
+  left: 50%;
+  width: 7%;
+  aspect-ratio: 1;
+  z-index: 5;
+  border: 1px solid rgba(var(--solution-cyan), 0.9);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow:
+    0 0 22px rgba(var(--solution-cyan), 0.75),
+    inset 0 0 18px rgba(var(--solution-cyan), 0.45);
+  transform: translate(-50%, -50%) scale(0.2);
+}
+
+.compressionBand {
+  position: absolute;
+  top: 47.7%;
+  left: 50%;
+  z-index: 4;
+  width: 66%;
+  height: 12%;
+  border: 1px solid rgba(var(--solution-cyan), 0.22);
+  border-radius: 50%;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--solution-cyan), 0.05) 18%,
+    rgba(var(--solution-cyan), 0.2) 50%,
+    rgba(var(--solution-cyan), 0.05) 82%,
+    transparent
+  );
+  box-shadow:
+    inset 0 0 26px rgba(var(--solution-cyan), 0.12),
+    0 0 32px rgba(var(--solution-cyan), 0.1);
+  transform: translate(-50%, -50%) scaleX(0.18);
+}
+
+.statusRail {
+  position: absolute;
+  right: clamp(24px, 5vw, 78px);
+  bottom: clamp(44px, 8vh, 96px);
+  z-index: 4;
+  display: grid;
+  grid-template-columns: auto 8px;
+  align-items: center;
+  gap: 12px 14px;
+  opacity: 0;
+  color: rgba(196, 236, 230, 0.58);
+  font-family: var(--font-geist-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.17em;
+  transform: translateY(16px);
+  transition: opacity 700ms 1800ms ease, transform 800ms 1800ms ease;
+}
+
+.statusRail i {
+  width: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(var(--solution-cyan));
+  box-shadow: 0 0 12px rgba(var(--solution-cyan), 0.8);
+}
+
+.resolved .systemWorld {
+  background:
+    radial-gradient(circle at 58% 48%, rgba(var(--solution-cyan), 0.08), transparent 34%),
+    linear-gradient(125deg, #020405 0%, #06110f 52%, #010302 100%);
+}
+
+.resolved .crossSection {
+  transform: translate(-50%, -50%) scale(1.025);
+}
+
+.resolved .seal {
+  border-color: rgba(var(--solution-cyan), 0.32) !important;
+  background:
+    linear-gradient(90deg, rgba(47, 133, 124, 0.2), transparent 30%, rgba(88, 203, 190, 0.18)),
+    #0d1a19 !important;
+  box-shadow:
+    inset 0 0 34px rgba(var(--solution-cyan), 0.13),
+    0 12px 30px rgba(0, 0, 0, 0.52),
+    0 0 26px rgba(var(--solution-cyan), 0.08) !important;
+  animation: sealCompress 1700ms cubic-bezier(0.16, 0.82, 0.18, 1) both;
+}
+
+.resolved .interface {
+  background: linear-gradient(90deg, transparent, rgba(var(--solution-cyan), 0.82), transparent) !important;
+  box-shadow:
+    0 0 10px rgba(var(--solution-cyan), 0.64),
+    0 0 42px rgba(var(--solution-cyan), 0.24) !important;
+  animation: interfaceLock 1400ms 400ms ease both;
+}
+
+.resolved .pressure {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(65, 170, 157, 0.21), transparent 48%),
+    repeating-radial-gradient(circle at 50% -18%, transparent 0 24px, rgba(105, 207, 193, 0.035) 25px, transparent 27px 44px),
+    #040c0b !important;
+}
+
+.resolved .pressureWave {
+  border-color: rgba(var(--solution-cyan), 0.28) !important;
+  animation: balancedPulse 2500ms 1000ms ease-out infinite !important;
+}
+
+.resolved .failureTrace,
+.resolved .breachPoint,
+.resolved .escapePlume {
+  opacity: 0 !important;
+  filter: blur(10px) !important;
+}
+
+.resolved .traceGlow,
+.resolved .traceCore {
+  stroke-dashoffset: 920 !important;
+  opacity: 0 !important;
+  transition: stroke-dashoffset 1450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 700ms 600ms ease;
+}
+
+.resolved .targetMarker {
+  border-color: rgba(var(--solution-cyan), 0.72) !important;
+  box-shadow:
+    0 0 18px rgba(var(--solution-cyan), 0.24),
+    inset 0 0 18px rgba(var(--solution-cyan), 0.08);
+  animation: resolvedTarget 1900ms ease both !important;
+}
+
+.resolved .targetMarker::before,
+.resolved .targetMarker::after,
+.resolved .targetMarker i {
+  background: rgb(var(--solution-cyan)) !important;
+}
+
+.resolved .targetMarker i {
+  box-shadow: 0 0 20px rgba(var(--solution-cyan), 0.9) !important;
+}
+
+.resolved .repairPulse {
+  animation: repairWave 1700ms 180ms cubic-bezier(0.16, 0.82, 0.18, 1) both;
+}
+
+.resolved .compressionBand {
+  animation: compressionLock 1500ms 560ms cubic-bezier(0.16, 0.82, 0.18, 1) both;
+}
+
+.resolved .alert {
+  border-color: rgba(var(--solution-cyan), 0.28) !important;
+  background: rgba(5, 28, 25, 0.72) !important;
+  color: rgba(190, 244, 235, 0.84) !important;
+  box-shadow: 0 0 32px rgba(var(--solution-cyan), 0.1);
+}
+
+.resolved .alert::before {
+  background: rgb(var(--solution-cyan)) !important;
+  box-shadow: 0 0 12px rgba(var(--solution-cyan), 0.9) !important;
+}
+
+.resolved .systemCopy {
+  filter: none;
+}
+
+.resolved .statusRail {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes sealCompress {
+  0% { transform: translateX(-50%) scaleY(1); }
+  36% { transform: translateX(-50%) scaleY(0.82); }
+  68% { transform: translateX(-50%) scaleY(1.07); }
+  100% { transform: translateX(-50%) scaleY(1); }
+}
+
+@keyframes interfaceLock {
+  0% { opacity: 0.35; transform: translateX(-50%) scaleX(0.12); filter: blur(5px); }
+  62% { opacity: 1; transform: translateX(-50%) scaleX(1.04); filter: blur(0); }
+  100% { opacity: 1; transform: translateX(-50%) scaleX(1); filter: blur(0); }
+}
+
+@keyframes repairWave {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.15); }
+  28% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(7.2); }
+}
+
+@keyframes compressionLock {
+  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.12); }
+  62% { opacity: 0.82; transform: translate(-50%, -50%) scaleX(1.04); }
+  100% { opacity: 0.46; transform: translate(-50%, -50%) scaleX(1); }
+}
+
+@keyframes resolvedTarget {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(0); }
+  45% { transform: translate(-50%, -50%) scale(0.72) rotate(90deg); }
+  100% { transform: translate(-50%, -50%) scale(0.86) rotate(180deg); }
+}
+
+@keyframes balancedPulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.62); }
+  36% { opacity: 0.34; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
+}
+
+@media (max-width: 760px) {
+  .statusRail {
+    right: 22px;
+    bottom: 26px;
+    grid-template-columns: auto 7px;
+    gap: 8px 10px;
+    font-size: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal,
+  .interface,
+  .pressureWave,
+  .failureTrace,
+  .targetMarker,
+  .repairPulse,
+  .compressionBand,
+  .statusRail {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .resolved .repairPulse,
+  .resolved .compressionBand {
+    opacity: 0;
+  }
+
+  .resolved .statusRail {
+    opacity: 1;
+    transform: none;
+  }
+}
