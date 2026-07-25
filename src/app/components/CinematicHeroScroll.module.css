@@ -1,0 +1,122 @@
+.track {
+  position: relative;
+  height: 720vh;
+  background: #090b0d;
+}
+
+.stickyScene {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  min-height: 680px;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.progressRail {
+  position: absolute;
+  z-index: 40;
+  right: clamp(20px, 3.2vw, 52px);
+  top: 50%;
+  display: grid;
+  grid-template-columns: auto 2px;
+  align-items: center;
+  gap: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.progressCopy {
+  display: grid;
+  justify-items: end;
+  gap: 5px;
+  color: rgba(244, 246, 247, 0.52);
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.progressCopy strong {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.progressLine {
+  position: relative;
+  width: 2px;
+  height: min(28vh, 230px);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.progressLine i {
+  position: absolute;
+  inset: 0;
+  transform: scaleY(var(--scroll-progress, 0));
+  transform-origin: top;
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(164,190,197,.44));
+  transition: transform 120ms linear;
+}
+
+.ambientMotion {
+  position: absolute;
+  z-index: 2;
+  inset: -12%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 48% 44%, rgba(164, 190, 197, 0.075), transparent 30%),
+    radial-gradient(circle at 72% 62%, rgba(255, 255, 255, 0.035), transparent 24%);
+  filter: blur(16px);
+  animation: breathe 7s ease-in-out infinite alternate;
+}
+
+.stickyScene :global(*) {
+  --cinematic-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes breathe {
+  from { transform: scale(0.98) translate3d(-0.4%, 0.5%, 0); opacity: 0.66; }
+  to { transform: scale(1.025) translate3d(0.6%, -0.4%, 0); opacity: 1; }
+}
+
+@media (max-width: 760px) {
+  .track {
+    height: 610vh;
+  }
+
+  .stickyScene {
+    min-height: 620px;
+  }
+
+  .progressRail {
+    right: 14px;
+    gap: 8px;
+  }
+
+  .progressCopy {
+    display: none;
+  }
+
+  .progressLine {
+    height: 120px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    height: auto;
+  }
+
+  .stickyScene {
+    position: relative;
+    min-height: 100svh;
+  }
+
+  .ambientMotion {
+    animation: none;
+  }
+}
