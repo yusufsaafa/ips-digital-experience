@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import styles from "./SectionReveal.module.css";
 
 type SectionRevealProps = {
@@ -40,7 +40,7 @@ export function SectionReveal({ children, id, label, index, delay = 0 }: Section
       ref={sectionRef}
       id={id}
       className={`${styles.shell} ${isVisible ? styles.visible : ""}`}
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
+      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       <div className={styles.transitionRail} aria-hidden="true">
         <span>{index}</span>
