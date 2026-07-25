@@ -110,11 +110,11 @@ export const homePageContent = {
       buttonLabel: "Inspect boundary",
       buttonAccessibleName: "Open pressure-boundary inspection",
       helperText:
-        "Opens a static inspection view of pressure acting across a sealed interface.",
+        "Opens a three-step inspection of pressure acting across a sealed interface.",
       statusClosed:
-        "The inspection diagram is visible below and can be emphasized with the inspection control.",
+        "The inspection summary is visible below. Open the inspection for the three-step explanation.",
       statusOpen:
-        "Inspection view emphasized. The diagram and sealing problem introduction are ready to review.",
+        "Inspection sequence open. Use the step controls to review the boundary, pressure, and failure path.",
       diagramTitle: "Conceptual pressure-boundary cross-section",
       diagramDescription:
         "A conceptual cross-section shows pressure acting across a sealed interface. The diagram highlights a possible leakage path and the need to maintain sealing behavior between an outer environment and a protected internal region.",
@@ -126,6 +126,53 @@ export const homePageContent = {
         "Pressure region",
         "Possible leakage path",
         "Protected region",
+      ],
+      controls: {
+        back: "Back",
+        next: "Next",
+        skip: "Skip inspection",
+        exit: "Exit inspection",
+        exploreProblem: "Explore problem",
+      },
+      // Sprint 12 prototype steps. All descriptions are temporary and require
+      // IPS stakeholder review before final publication.
+      steps: [
+        {
+          id: "boundary" as const,
+          number: 1,
+          title: "Boundary",
+          description:
+            "An intact surface can hide the boundary where performance is decided.",
+          engineeringConcept:
+            "The important condition may exist at a hidden interface rather than on the visible surface.",
+          diagramDescription:
+            "The diagram emphasizes the outer environment, rigid housing, and interface boundary while pressure and leakage remain de-emphasized.",
+          verificationStatus: "stakeholder-review-required" as const,
+        },
+        {
+          id: "pressure" as const,
+          number: 2,
+          title: "Pressure",
+          description:
+            "Pressure creates demand across the sealed interface.",
+          engineeringConcept:
+            "Pressure acts across the interface and sealing element.",
+          diagramDescription:
+            "The diagram keeps the boundary visible and adds the pressure region, directional pressure indicators, and sealing element.",
+          verificationStatus: "stakeholder-review-required" as const,
+        },
+        {
+          id: "failure-path" as const,
+          number: 3,
+          title: "Failure path",
+          description:
+            "The engineering question is how to maintain sealing behavior before leakage becomes a system risk.",
+          engineeringConcept:
+            "Boundary performance must be maintained under operating conditions.",
+          diagramDescription:
+            "The diagram shows the previous layers, then emphasizes the possible leakage path, protected region, and sealing element.",
+          verificationStatus: "stakeholder-review-required" as const,
+        },
       ],
       problem: {
         label: "Maintain sealing under pressure",

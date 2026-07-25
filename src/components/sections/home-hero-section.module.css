@@ -255,6 +255,39 @@
     transform var(--motion-duration-standard) var(--motion-ease-standard);
 }
 
+.stepSummary {
+  display: grid;
+  gap: var(--space-3);
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 14%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-ink-foreground) 5%, transparent);
+  padding: var(--space-4);
+}
+
+.stepSummary h2 {
+  color: var(--color-ink-foreground);
+  font-size: var(--font-size-xl);
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.stepSummary p {
+  color: color-mix(in srgb, var(--color-ink-foreground) 74%, transparent);
+  line-height: 1.6;
+}
+
+.stepConcept {
+  border-top: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 12%, transparent);
+  padding-top: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.stepConcept strong {
+  color: var(--color-ink-foreground);
+}
+
 .diagramFigure {
   display: grid;
   gap: var(--space-3);
@@ -281,6 +314,22 @@
   height: auto;
   overflow: visible;
   color: color-mix(in srgb, var(--color-accent) 68%, white);
+}
+
+.diagram g {
+  transition:
+    opacity var(--motion-duration-standard) var(--motion-ease-standard),
+    transform var(--motion-duration-standard) var(--motion-ease-standard);
+}
+
+.diagram text {
+  fill: var(--color-ink-foreground);
+  font-size: 18px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--color-ink);
+  stroke-linejoin: round;
+  stroke-width: 5px;
 }
 
 .diagramOuter {
@@ -337,14 +386,143 @@
   stroke-width: 4;
 }
 
-.diagramLabels text {
-  fill: var(--color-ink-foreground);
-  font-size: 18px;
+.diagram[data-diagram-state="boundary"] .layerPressure,
+.diagram[data-diagram-state="boundary"] .layerDirection,
+.diagram[data-diagram-state="boundary"] .layerSeal,
+.diagram[data-diagram-state="boundary"] .layerLeak,
+.diagram[data-diagram-state="boundary"] .layerProtected {
+  opacity: 0.12;
+}
+
+.diagram[data-diagram-state="boundary"] .layerOuter,
+.diagram[data-diagram-state="boundary"] .layerHousing,
+.diagram[data-diagram-state="boundary"] .layerInterface,
+.diagram[data-diagram-state="pressure"] .layerPressure,
+.diagram[data-diagram-state="pressure"] .layerDirection,
+.diagram[data-diagram-state="pressure"] .layerSeal,
+.diagram[data-diagram-state="failure-path"] .layerLeak,
+.diagram[data-diagram-state="failure-path"] .layerSeal,
+.diagram[data-diagram-state="failure-path"] .layerProtected {
+  opacity: 1;
+}
+
+.diagram[data-diagram-state="pressure"] .layerLeak,
+.diagram[data-diagram-state="pressure"] .layerProtected {
+  opacity: 0.12;
+}
+
+.diagram[data-diagram-state="pressure"] .layerOuter,
+.diagram[data-diagram-state="pressure"] .layerHousing,
+.diagram[data-diagram-state="pressure"] .layerInterface {
+  opacity: 0.72;
+}
+
+.diagram[data-diagram-state="failure-path"] .layerOuter,
+.diagram[data-diagram-state="failure-path"] .layerHousing,
+.diagram[data-diagram-state="failure-path"] .layerInterface,
+.diagram[data-diagram-state="failure-path"] .layerPressure,
+.diagram[data-diagram-state="failure-path"] .layerDirection {
+  opacity: 0.74;
+}
+
+.diagram[data-diagram-state="failure-path"] .diagramSeal {
+  stroke-width: 5;
+}
+
+.diagram[data-diagram-state="failure-path"] .diagramLeak {
+  stroke-width: 7;
+}
+
+.inspectionControls {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.stepSelectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.stepSelector,
+.controlButton,
+.controlButtonPrimary {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 22%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-ink-foreground) 6%, transparent);
+  color: var(--color-ink-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  paint-order: stroke;
-  stroke: var(--color-ink);
-  stroke-linejoin: round;
-  stroke-width: 5px;
+  line-height: 1.2;
+  padding: var(--space-3);
+  text-align: center;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-standard),
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.stepSelector span {
+  display: inline-grid;
+  width: 1.6rem;
+  height: 1.6rem;
+  place-items: center;
+  border: var(--border-width-thin) solid currentColor;
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+}
+
+.stepSelector[aria-current="step"] {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, white);
+  background: color-mix(in srgb, var(--color-ink-foreground) 12%, transparent);
+  box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--color-accent) 80%, white);
+}
+
+.sequenceControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.controlButtonPrimary {
+  border-color: color-mix(in srgb, var(--color-accent) 72%, white);
+  background: var(--color-ink-foreground);
+  color: var(--color-ink);
+}
+
+.stepSelector:disabled,
+.controlButton:disabled,
+.controlButtonPrimary:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.noScriptSteps {
+  display: grid;
+  gap: var(--space-3);
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 16%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
+}
+
+.noScriptSteps li {
+  color: color-mix(in srgb, var(--color-ink-foreground) 74%, transparent);
+}
+
+.noScriptSteps h3 {
+  color: var(--color-ink-foreground);
+  font-size: var(--font-size-base);
+  line-height: 1.3;
 }
 
 .problemIntro {
@@ -352,6 +530,17 @@
   gap: var(--space-3);
   border-left: 3px solid color-mix(in srgb, var(--color-accent) 80%, white);
   padding-left: var(--space-4);
+  opacity: 0.74;
+  transition:
+    border-color var(--motion-duration-standard) var(--motion-ease-standard),
+    opacity var(--motion-duration-standard) var(--motion-ease-standard),
+    transform var(--motion-duration-standard) var(--motion-ease-standard);
+}
+
+.inspection[data-inspection-state="failure-path"] .problemIntro,
+.problemIntro[data-problem-ready="true"] {
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .problemIntro h2 {
@@ -389,12 +578,30 @@
     background: color-mix(in srgb, var(--color-ink-foreground) 12%, transparent);
     transform: translateY(-1px);
   }
+
+  .stepSelector:not(:disabled):hover,
+  .controlButton:not(:disabled):hover,
+  .controlButtonPrimary:not(:disabled):hover {
+    border-color: color-mix(in srgb, var(--color-accent) 74%, white);
+    background: color-mix(in srgb, var(--color-ink-foreground) 12%, transparent);
+    color: var(--color-ink-foreground);
+    transform: translateY(-1px);
+  }
+
+  .controlButtonPrimary:not(:disabled):hover {
+    background: color-mix(in srgb, var(--color-ink-foreground) 86%, white);
+    color: var(--color-ink);
+  }
 }
 
 .pathways a:focus-visible,
 .problemLinks a:focus-visible,
 .pathwayText a:focus-visible,
-.inspectionButton:focus-visible {
+.inspectionButton:focus-visible,
+.stepSelector:focus-visible,
+.controlButton:focus-visible,
+.controlButtonPrimary:focus-visible,
+.problemIntro:focus-visible {
   outline: var(--border-width-focus) solid var(--color-focus-ring);
   outline-offset: var(--space-1);
 }
@@ -450,7 +657,7 @@
     height: 64px;
   }
 
-  .diagramLabels text {
+  .diagram text {
     font-size: 21px;
   }
 }
@@ -478,7 +685,21 @@
     padding: var(--space-3);
   }
 
-  .diagramLabels text {
+  .stepSelectors {
+    grid-template-columns: 1fr;
+  }
+
+  .sequenceControls {
+    flex-direction: column;
+  }
+
+  .stepSelector,
+  .controlButton,
+  .controlButtonPrimary {
+    width: 100%;
+  }
+
+  .diagram text {
     font-size: 24px;
   }
 }
@@ -499,13 +720,20 @@
   .problemLinks a,
   .pathwayText a,
   .inspectionButton,
-  .inspectionBody {
+  .inspectionBody,
+  .diagram g,
+  .stepSelector,
+  .controlButton,
+  .controlButtonPrimary,
+  .problemIntro {
     transition: none;
   }
 
   .inspectionButton:hover,
   .inspectionButton:active,
-  .inspection[data-expanded="true"] .inspectionBody {
+  .inspection[data-expanded="true"] .inspectionBody,
+  .inspection[data-inspection-state="failure-path"] .problemIntro,
+  .problemIntro[data-problem-ready="true"] {
     transform: none;
   }
 }
