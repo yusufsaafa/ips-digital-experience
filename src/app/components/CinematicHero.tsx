@@ -8,6 +8,7 @@ import failure from "./CinematicHeroFailure.module.css";
 import solution from "./CinematicHeroSolution.module.css";
 import transition from "./CinematicHeroTransition.module.css";
 import capabilityStyles from "./CinematicHeroCapabilities.module.css";
+import controlStyles from "./CinematicHeroControls.module.css";
 
 type SceneStep = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -75,6 +76,13 @@ const capabilities: Capability[] = [
   },
 ];
 
+const forwardLocks: Partial<Record<SceneStep, number>> = {
+  2: 4100,
+  3: 3200,
+  4: 2800,
+  5: 2500,
+};
+
 export function CinematicHero() {
   const sceneRef = useRef<HTMLElement>(null);
   const [sceneStep, setSceneStep] = useState<SceneStep>(0);
@@ -82,11 +90,37 @@ export function CinematicHero() {
   const sceneStepRef = useRef<SceneStep>(0);
   const stepEnteredAt = useRef(Date.now());
   const lastWheelAt = useRef(0);
+  const touchStartY = useRef<number | null>(null);
+  const lastTouchAt = useRef(0);
 
   function changeStep(next: SceneStep) {
     sceneStepRef.current = next;
     stepEnteredAt.current = Date.now();
     setSceneStep(next);
+  }
+
+  function moveScene(direction: 1 | -1, options?: { bypassLock?: boolean }) {
+    const current = sceneStepRef.current;
+    const elapsed = Date.now() - stepEnteredAt.current;
+
+    if (direction > 0) {
+      if (current === 6) return false;
+      const lock = forwardLocks[current] ?? 0;
+      if (!options?.bypassLock && elapsed < lock) return false;
+    }
+
+    if (direction < 0 && current === 0) return false;
+
+    const next = direction > 0 ? Math.min(6, current + 1) : Math.max(0, current - 1);
+    changeStep(next as SceneStep);
+    return true;
+  }
+
+  function skipExperience() {
+    changeStep(6);
+    window.requestAnimationFrame(() => {
+      document.getElementById("industries")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   useEffect(() => {
@@ -105,14 +139,8 @@ export function CinematicHero() {
       const now = Date.now();
       if (now - lastWheelAt.current < 900) return;
 
-      if (current === 2 && event.deltaY > 0 && now - stepEnteredAt.current < 4100) return;
-      if (current === 3 && event.deltaY > 0 && now - stepEnteredAt.current < 3200) return;
-      if (current === 4 && event.deltaY > 0 && now - stepEnteredAt.current < 2800) return;
-      if (current === 5 && event.deltaY > 0 && now - stepEnteredAt.current < 2500) return;
-
-      lastWheelAt.current = now;
-      const next = event.deltaY > 0 ? Math.min(6, current + 1) : Math.max(0, current - 1);
-      changeStep(next as SceneStep);
+      const moved = moveScene(event.deltaY > 0 ? 1 : -1);
+      if (moved) lastWheelAt.current = now;
     }
 
     scene.addEventListener("wheel", handleWheel, { passive: false });
@@ -143,14 +171,39 @@ export function CinematicHero() {
     scene.style.setProperty("--tilt-y", "0deg");
   }
 
+  function handleTouchStart(event: React.TouchEvent<HTMLElement>) {
+    touchStartY.current = event.touches[0]?.clientY ?? null;
+  }
+
+  function handleTouchEnd(event: React.TouchEvent<HTMLElement>) {
+    const startY = touchStartY.current;
+    const endY = event.changedTouches[0]?.clientY;
+    touchStartY.current = null;
+
+    if (startY === null || endY === undefined) return;
+    const delta = startY - endY;
+    if (Math.abs(delta) < 42) return;
+
+    const now = Date.now();
+    if (now - lastTouchAt.current < 650) return;
+
+    const moved = moveScene(delta > 0 ? 1 : -1);
+    if (moved) lastTouchAt.current = now;
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
+    const isForward = event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ";
+    const isBackward = event.key === "ArrowUp" || event.key === "ArrowLeft" || event.key === "PageUp";
+
+    if (!isForward && !isBackward) return;
+    if (isForward && sceneStepRef.current === 6) return;
+
+    event.preventDefault();
+    moveScene(isForward ? 1 : -1);
+  }
+
   function advanceScene() {
-    const current = sceneStepRef.current;
-    const elapsed = Date.now() - stepEnteredAt.current;
-    if (current === 2 && elapsed < 4100) return;
-    if (current === 3 && elapsed < 3200) return;
-    if (current === 4 && elapsed < 2800) return;
-    if (current === 5 && elapsed < 2500) return;
-    changeStep(Math.min(6, current + 1) as SceneStep);
+    moveScene(1);
   }
 
   const isApproached = sceneStep >= 1;
@@ -168,6 +221,11 @@ export function CinematicHero() {
       className={`${styles.scene} ${motion.scene} ${system.scene} ${failure.scene} ${solution.scene} ${transition.scene} ${isApproached ? styles.approached : ""} ${isOpening ? motion.opening : ""} ${isInside ? system.inside : ""} ${isFailing ? failure.failing : ""} ${isResolved ? solution.resolved : ""} ${isReleased ? transition.released : ""}`}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      aria-label={`IPS cinematic engineering experience. Scene ${sceneStep + 1} of 7.`}
     >
       <div className={`${styles.surface} ${motion.surface} ${system.surface}`} aria-hidden="true" />
       <div className={styles.scratches} aria-hidden="true" />
@@ -322,6 +380,15 @@ export function CinematicHero() {
           </article>
         </div>
       </section>
+
+      <div className={controlStyles.controls} aria-label="Cinematic scene controls">
+        <button className={controlStyles.controlButton} type="button" onClick={() => moveScene(-1)} disabled={sceneStep === 0} aria-label="Previous scene">↑</button>
+        <span className={controlStyles.stepStatus} aria-live="polite">{String(sceneStep + 1).padStart(2, "0")} / 07</span>
+        <button className={controlStyles.controlButton} type="button" onClick={() => moveScene(1)} disabled={sceneStep === 6} aria-label="Next scene">↓</button>
+        <button className={controlStyles.skipButton} type="button" onClick={skipExperience}>Skip experience</button>
+      </div>
+
+      {!isReleased && <div className={controlStyles.touchInstruction} aria-hidden="true">Swipe to inspect</div>}
 
       <div className={`${styles.scrollHint} ${motion.scrollHint} ${system.scrollHint} ${transition.scrollHint}`} aria-hidden="true">
         <span />
