@@ -7,12 +7,14 @@
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  background: #050607;
+  background: #030405;
   color: #f4f6f7;
-  perspective: 1200px;
+  perspective: 1400px;
+  overscroll-behavior: none;
 }
 
 .surface,
+.scratches,
 .pointerLight,
 .vignette {
   position: absolute;
@@ -21,19 +23,20 @@
 }
 
 .surface {
-  z-index: -4;
-  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(1.025);
+  z-index: -5;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(1.035);
   transform-origin: center;
   background:
     repeating-linear-gradient(
-      92deg,
-      rgba(255, 255, 255, 0.018) 0,
-      rgba(255, 255, 255, 0.018) 1px,
-      transparent 1px,
-      transparent 5px
+      91deg,
+      rgba(255, 255, 255, 0.015) 0,
+      rgba(255, 255, 255, 0.015) 1px,
+      rgba(0, 0, 0, 0.015) 2px,
+      transparent 4px,
+      transparent 8px
     ),
-    linear-gradient(145deg, #15191b 0%, #090b0c 38%, #111416 70%, #060708 100%);
-  transition: transform 240ms ease-out;
+    linear-gradient(145deg, #15191b 0%, #080a0b 36%, #121517 68%, #040506 100%);
+  transition: transform 900ms cubic-bezier(0.2, 0.75, 0.2, 1), filter 900ms ease;
 }
 
 .surface::before,
@@ -44,35 +47,49 @@
 }
 
 .surface::before {
-  opacity: 0.4;
+  opacity: 0.28;
   background:
-    linear-gradient(90deg, transparent 0 49.9%, rgba(255, 255, 255, 0.025) 50%, transparent 50.1%),
-    linear-gradient(0deg, transparent 0 49.9%, rgba(255, 255, 255, 0.018) 50%, transparent 50.1%);
+    linear-gradient(90deg, transparent 0 49.9%, rgba(255, 255, 255, 0.02) 50%, transparent 50.1%),
+    linear-gradient(0deg, transparent 0 49.9%, rgba(255, 255, 255, 0.014) 50%, transparent 50.1%);
   background-size: 420px 420px;
 }
 
 .surface::after {
-  opacity: 0.32;
+  opacity: 0.24;
   mix-blend-mode: screen;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E");
+}
+
+.scratches {
+  z-index: -4;
+  opacity: 0.16;
+  mix-blend-mode: screen;
+  background:
+    linear-gradient(104deg, transparent 16%, rgba(255,255,255,.09) 16.05%, transparent 16.15%),
+    linear-gradient(86deg, transparent 34%, rgba(255,255,255,.055) 34.04%, transparent 34.12%),
+    linear-gradient(96deg, transparent 63%, rgba(255,255,255,.07) 63.04%, transparent 63.12%),
+    repeating-linear-gradient(94deg, transparent 0 74px, rgba(255,255,255,.018) 75px, transparent 77px 140px);
+  filter: blur(0.15px);
 }
 
 .pointerLight {
   z-index: -3;
   background:
     radial-gradient(
-      circle 360px at var(--pointer-x) var(--pointer-y),
-      rgba(214, 235, 243, 0.14),
-      rgba(88, 118, 132, 0.07) 28%,
-      transparent 68%
+      circle 300px at var(--pointer-x) var(--pointer-y),
+      rgba(223, 239, 245, 0.17),
+      rgba(92, 123, 136, 0.075) 28%,
+      transparent 70%
     );
+  transition: opacity 700ms ease;
 }
 
 .vignette {
   z-index: -2;
   background:
-    radial-gradient(circle at 50% 45%, transparent 0 25%, rgba(0, 0, 0, 0.18) 58%, rgba(0, 0, 0, 0.78) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 28%, transparent 75%, rgba(0, 0, 0, 0.55));
+    radial-gradient(circle at 50% 45%, transparent 0 20%, rgba(0, 0, 0, 0.22) 56%, rgba(0, 0, 0, 0.88) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.65));
+  transition: opacity 900ms ease;
 }
 
 .content {
@@ -81,6 +98,7 @@
   left: clamp(24px, 7vw, 112px);
   z-index: 2;
   max-width: min(720px, 68vw);
+  transition: opacity 900ms ease, transform 1100ms cubic-bezier(0.2, 0.75, 0.2, 1), filter 900ms ease;
 }
 
 .eyebrow {
@@ -90,6 +108,8 @@
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  opacity: 0;
+  animation: revealCopy 900ms 150ms cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
 }
 
 .content h1 {
@@ -102,9 +122,20 @@
   text-shadow: 0 20px 80px rgba(0, 0, 0, 0.62);
 }
 
-.content h1 span {
+.titleLine {
   display: block;
-  color: rgba(236, 241, 242, 0.44);
+  opacity: 0;
+  transform: translateY(34px);
+  filter: blur(9px);
+  animation: revealCopy 1100ms cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+.titleLine:nth-child(1) { animation-delay: 360ms; }
+.titleLine:nth-child(2) { animation-delay: 620ms; }
+.titleLine:nth-child(3) { animation-delay: 900ms; }
+
+.mutedLine {
+  color: rgba(236, 241, 242, 0.42);
 }
 
 .hatch {
@@ -112,14 +143,32 @@
   top: 56%;
   left: 72%;
   z-index: 3;
-  width: clamp(170px, 18vw, 280px);
+  width: clamp(210px, 21vw, 340px);
   aspect-ratio: 1;
   padding: 0;
   border: 0;
   background: transparent;
   color: inherit;
   cursor: crosshair;
-  transform: translate(-50%, -50%);
+  opacity: 0.34;
+  filter: brightness(0.55) contrast(1.1);
+  transform: translate(-50%, -50%) scale(0.94);
+  transition:
+    opacity 800ms ease,
+    filter 800ms ease,
+    transform 1200ms cubic-bezier(0.16, 0.85, 0.2, 1),
+    left 1200ms cubic-bezier(0.16, 0.85, 0.2, 1),
+    top 1200ms cubic-bezier(0.16, 0.85, 0.2, 1);
+}
+
+.hatch::before {
+  content: "";
+  position: absolute;
+  inset: -28%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(137, 191, 211, 0.1), transparent 66%);
+  opacity: 0;
+  transition: opacity 500ms ease;
 }
 
 .hatchShadow {
@@ -127,8 +176,8 @@
   inset: 7%;
   border-radius: 50%;
   box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.68),
-    0 0 0 1px rgba(255, 255, 255, 0.025);
+    0 40px 90px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .outerRing {
@@ -136,17 +185,17 @@
   inset: 0;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(218, 232, 237, 0.16);
+  border: 1px solid rgba(218, 232, 237, 0.14);
   border-radius: 50%;
   background:
-    conic-gradient(from 28deg, #0a0c0d, #32393c 12%, #111416 25%, #3c4447 38%, #0c0e0f 52%, #252b2e 70%, #08090a 88%, #2c3336),
+    conic-gradient(from 28deg, #090b0c, #333a3d 12%, #101315 25%, #3d4548 38%, #0b0d0e 52%, #252b2e 70%, #070809 88%, #2d3437),
     #111416;
   box-shadow:
-    inset 0 0 0 3px rgba(0, 0, 0, 0.78),
-    inset 0 0 34px rgba(255, 255, 255, 0.06),
-    0 0 0 1px rgba(0, 0, 0, 0.9),
-    0 24px 70px rgba(0, 0, 0, 0.62);
-  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 450ms ease;
+    inset 0 0 0 3px rgba(0, 0, 0, 0.82),
+    inset 0 0 34px rgba(255, 255, 255, 0.055),
+    0 0 0 1px rgba(0, 0, 0, 0.92),
+    0 24px 70px rgba(0, 0, 0, 0.72);
+  transition: transform 900ms cubic-bezier(0.16, 0.85, 0.2, 1), filter 500ms ease;
 }
 
 .innerRing {
@@ -154,23 +203,23 @@
   width: 67%;
   aspect-ratio: 1;
   overflow: hidden;
-  border: 1px solid rgba(201, 226, 236, 0.18);
+  border: 1px solid rgba(201, 226, 236, 0.16);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 38% 30%, rgba(94, 137, 154, 0.2), transparent 20%),
+    radial-gradient(circle at 38% 30%, rgba(94, 137, 154, 0.18), transparent 20%),
     radial-gradient(circle, #020303 0 44%, #080b0c 58%, #14191b 72%, #050607 100%);
   box-shadow:
-    inset 0 0 50px rgba(0, 0, 0, 0.96),
-    0 0 28px rgba(117, 180, 203, 0.08);
+    inset 0 0 50px rgba(0, 0, 0, 0.98),
+    0 0 28px rgba(117, 180, 203, 0.06);
 }
 
 .aperture {
   position: absolute;
   inset: 18%;
-  border: 1px solid rgba(190, 224, 236, 0.08);
+  border: 1px solid rgba(190, 224, 236, 0.07);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 45% 42%, rgba(96, 157, 180, 0.09), transparent 32%),
+    radial-gradient(circle at 45% 42%, rgba(96, 157, 180, 0.08), transparent 32%),
     #010202;
   box-shadow: inset 0 0 35px #000;
 }
@@ -216,23 +265,35 @@
   transform: rotate(-18deg);
 }
 
-.inspectLabel {
+.openLabel {
   position: absolute;
-  top: calc(100% + 20px);
+  top: calc(100% + 22px);
   left: 50%;
-  opacity: 0.38;
+  width: max-content;
+  opacity: 0;
   font-family: var(--font-geist-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.28em;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  transform: translateX(-50%);
-  transition: opacity 250ms ease, letter-spacing 350ms ease;
+  transform: translate(-50%, 8px);
+  transition: opacity 350ms ease, transform 500ms ease, letter-spacing 500ms ease;
+}
+
+.hatch:hover,
+.hatch:focus-visible {
+  opacity: 1;
+  filter: brightness(1.12) contrast(1.02);
+  transform: translate(-50%, -50%) scale(1.025);
+}
+
+.hatch:hover::before,
+.hatch:focus-visible::before {
+  opacity: 1;
 }
 
 .hatch:hover .outerRing,
 .hatch:focus-visible .outerRing {
-  filter: brightness(1.16);
-  transform: rotate(7deg) scale(1.035);
+  transform: rotate(8deg);
 }
 
 .hatch:hover .scanLine,
@@ -241,10 +302,11 @@
   animation: scan 2.4s linear infinite;
 }
 
-.hatch:hover .inspectLabel,
-.hatch:focus-visible .inspectLabel {
-  opacity: 0.9;
-  letter-spacing: 0.38em;
+.hatch:hover .openLabel,
+.hatch:focus-visible .openLabel {
+  opacity: 0.78;
+  letter-spacing: 0.3em;
+  transform: translate(-50%, 0);
 }
 
 .hatch:focus-visible {
@@ -257,20 +319,76 @@
   position: absolute;
   bottom: 30px;
   left: clamp(24px, 7vw, 112px);
+  z-index: 4;
   display: flex;
   align-items: center;
   gap: 12px;
-  color: rgba(226, 235, 238, 0.32);
+  color: rgba(226, 235, 238, 0.3);
   font-family: var(--font-geist-mono);
   font-size: 0.62rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  transition: opacity 700ms ease;
 }
 
 .scrollHint span {
   width: 34px;
   height: 1px;
   background: currentColor;
+}
+
+.approached .surface {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.16);
+  filter: brightness(0.68);
+}
+
+.approached .scratches,
+.approached .pointerLight {
+  opacity: 0.42;
+}
+
+.approached .vignette {
+  opacity: 0.74;
+}
+
+.approached .content {
+  opacity: 0.12;
+  filter: blur(5px);
+  transform: translate3d(-5vw, -3vh, -80px) scale(0.94);
+}
+
+.approached .hatch {
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  filter: brightness(1.15) contrast(1.04);
+  transform: translate(-50%, -50%) scale(1.72);
+}
+
+.approached .outerRing {
+  transform: rotate(12deg);
+}
+
+.approached .scanLine {
+  opacity: 0.68;
+  animation: scan 2.8s linear infinite;
+}
+
+.approached .openLabel {
+  opacity: 0.72;
+  transform: translate(-50%, 0);
+}
+
+.approached .scrollHint {
+  opacity: 0.55;
+}
+
+@keyframes revealCopy {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 @keyframes scan {
@@ -297,9 +415,15 @@
   }
 
   .hatch {
-    top: 68%;
-    left: 56%;
-    width: min(52vw, 220px);
+    top: 69%;
+    left: 58%;
+    width: min(58vw, 250px);
+  }
+
+  .approached .hatch {
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.34);
   }
 
   .scrollHint {
@@ -310,10 +434,21 @@
 
 @media (prefers-reduced-motion: reduce) {
   .surface,
+  .content,
+  .hatch,
   .outerRing,
-  .inspectLabel,
-  .scanLine {
+  .openLabel,
+  .scanLine,
+  .eyebrow,
+  .titleLine {
     transition: none;
     animation: none !important;
+  }
+
+  .eyebrow,
+  .titleLine {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
