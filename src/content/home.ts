@@ -11,8 +11,18 @@ export const siteNavigation = {
       currentHref: "#problems",
       isAvailable: true,
     },
-    { label: "Industries", href: "/industries", isAvailable: false },
-    { label: "Capabilities", href: "/capabilities", isAvailable: false },
+    {
+      label: "Industries",
+      href: "/industries",
+      currentHref: "#industries",
+      isAvailable: true,
+    },
+    {
+      label: "Capabilities",
+      href: "/capabilities",
+      currentHref: "#capabilities",
+      isAvailable: true,
+    },
     { label: "Products", href: "/products", isAvailable: false },
     {
       label: "IPS Specialist Network",
@@ -61,8 +71,18 @@ export const homePageContent = {
         currentHref: "#problems",
         isAvailable: true,
       },
-      { label: "Industry", href: "/industries", isAvailable: false },
-      { label: "Capability", href: "/capabilities", isAvailable: false },
+      {
+        label: "Industry",
+        href: "/industries",
+        currentHref: "#industries",
+        isAvailable: true,
+      },
+      {
+        label: "Capability",
+        href: "/capabilities",
+        currentHref: "#capabilities",
+        isAvailable: true,
+      },
       { label: "Product", href: "/products", isAvailable: false },
       {
         label: "Known IPS specialist",
@@ -118,6 +138,193 @@ export const homePageContent = {
           "For demanding operating conditions where material selection and engineered component design need to work together.",
         href: "/problems/harsh-environment-material-performance",
         isAvailable: false,
+      },
+    ],
+  },
+  industries: {
+    eyebrow: "Industries",
+    title: "Match the challenge to the operating environment.",
+    body:
+      "IPS work often begins with understanding where the component will perform, what it must withstand, and which constraints shape the path forward.",
+    validationNote:
+      "Additional industry priorities require IPS stakeholder validation before appearing as homepage paths.",
+    items: [
+      {
+        title: "Aerospace",
+        body:
+          "For aircraft and flight-adjacent environments where sealing, protection, weight, and reliability can shape material decisions.",
+        href: "/industries/aerospace",
+        relatedProblems: [
+          "Mission-Critical Sealing",
+          "Fire and Thermal Protection",
+          "EMI/RFI Shielding",
+        ],
+        isAvailable: false,
+      },
+      {
+        title: "Defense",
+        body:
+          "For demanding defense environments where shielding, thermal protection, containment, and material performance need careful routing.",
+        href: "/industries/defense",
+        relatedProblems: [
+          "EMI/RFI Shielding",
+          "Fire and Thermal Protection",
+          "Harsh-Environment Material Performance",
+        ],
+        isAvailable: false,
+      },
+      {
+        title: "Medical Devices",
+        body:
+          "For device applications where elastomeric components, molding approach, and production context must be considered together.",
+        href: "/industries/medical-devices",
+        relatedProblems: [
+          "Mission-Critical Sealing",
+          "High-Purity Processing",
+          "Harsh-Environment Material Performance",
+        ],
+        isAvailable: false,
+      },
+      {
+        title: "Semiconductor",
+        body:
+          "For process environments where high-purity handling, chemical exposure, and material suitability can drive early decisions.",
+        href: "/industries/semiconductor",
+        relatedProblems: [
+          "High-Purity Processing",
+          "Corrosion and Chemical Resistance",
+          "Mission-Critical Sealing",
+        ],
+        isAvailable: false,
+      },
+      {
+        title: "Energy and Industrial",
+        body:
+          "For industrial systems where corrosion, containment, pressure, or harsh operating conditions influence material selection.",
+        href: "/industries/energy-industrial",
+        relatedProblems: [
+          "Corrosion and Chemical Resistance",
+          "Mission-Critical Sealing",
+          "Harsh-Environment Material Performance",
+        ],
+        isAvailable: false,
+      },
+    ],
+  },
+  capabilities: {
+    eyebrow: "Capabilities",
+    title: "Move from problem recognition to a practical solution path.",
+    body:
+      "These capability groups are proposed homepage pathways. They organize IPS expertise by how a technical problem may be addressed.",
+    groups: [
+      {
+        title: "Sealing and Elastomer Engineering",
+        body:
+          "For requirements centered on sealing behavior, elastomeric components, and molded material decisions.",
+        items: [
+          {
+            title: "Engineered Elastomers",
+            body:
+              "Material and component paths for applications where elastomer behavior is central to the requirement.",
+            href: "/capabilities/engineered-elastomers",
+            context: "Related to sealing, medical devices, and harsh environments.",
+            isAvailable: false,
+          },
+          {
+            title: "Sealing and Gaskets",
+            body:
+              "Routes for applications where containment, interface design, or sealing reliability shapes the solution.",
+            href: "/capabilities/sealing-gaskets",
+            context: "Related to aerospace, defense, industrial, and semiconductor contexts.",
+            isAvailable: false,
+          },
+          {
+            title: "Medical Silicone and Rubber Molding",
+            body:
+              "Molding-oriented paths for medical device component requirements and production context.",
+            href: "/capabilities/medical-silicone-rubber-molding",
+            context: "Related to medical devices and high-purity considerations.",
+            isAvailable: false,
+          },
+        ],
+      },
+      {
+        title: "Shielding and Protection",
+        body:
+          "For applications shaped by interference control, thermal exposure, fire protection, or signature-related material needs.",
+        items: [
+          {
+            title: "EMI/RFI Shielding",
+            body:
+              "Solution paths for systems where electromagnetic or radio-frequency interference must be addressed.",
+            href: "/capabilities/emi-rfi-shielding",
+            context: "Related to defense, aerospace, and commercial electronic environments.",
+            isAvailable: false,
+          },
+          {
+            title: "RF and Microwave Absorbing Materials",
+            body:
+              "Material paths for applications involving RF or microwave absorption requirements.",
+            href: "/capabilities/rf-microwave-absorbing-materials",
+            context: "Related to shielding, defense, and harsh-environment performance.",
+            isAvailable: false,
+          },
+          {
+            title: "Fire and Thermal Protection",
+            body:
+              "Routes for applications where heat exposure or thermal protection shapes the material challenge.",
+            href: "/capabilities/fire-thermal-protection",
+            context: "Related to aerospace, defense, and industrial environments.",
+            isAvailable: false,
+          },
+        ],
+      },
+      {
+        title: "Materials and Manufacturing",
+        body:
+          "For applications where material compatibility, manufacturing method, or production approach drives the solution path.",
+        items: [
+          {
+            title: "Rotational Molding and Lining",
+            body:
+              "Manufacturing paths for lined, molded, or vessel-oriented applications.",
+            href: "/capabilities/rotational-molding-lining",
+            context: "Related to high-purity, corrosion, semiconductor, and industrial needs.",
+            isAvailable: false,
+          },
+          {
+            title: "Corrosion Protection",
+            body:
+              "Material paths for applications shaped by chemical exposure or corrosive operating environments.",
+            href: "/capabilities/corrosion-protection",
+            context: "Related to semiconductor, energy, and industrial contexts.",
+            isAvailable: false,
+          },
+          {
+            title: "Composite Fabrication Enabling",
+            body:
+              "Support paths for applications where composite fabrication requirements affect component decisions.",
+            href: "/capabilities/composite-fabrication-enabling",
+            context: "Related to aerospace, defense, and advanced manufacturing contexts.",
+            isAvailable: false,
+          },
+          {
+            title: "Additive Manufacturing",
+            body:
+              "Manufacturing paths for applications where additive methods may support advanced component development.",
+            href: "/capabilities/additive-manufacturing",
+            context: "Related to aerospace, defense, and specialized production needs.",
+            isAvailable: false,
+          },
+          {
+            title: "Precision Rollers",
+            body:
+              "Roller-focused paths for applications where surface, material, and process requirements intersect.",
+            href: "/capabilities/precision-rollers",
+            context: "Related to industrial manufacturing environments.",
+            isAvailable: false,
+          },
+        ],
       },
     ],
   },

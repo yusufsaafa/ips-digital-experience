@@ -25,9 +25,6 @@ export function ProblemsWeSolveSection() {
             <article key={problem.href} className={styles.card}>
               <span className={styles.cardLabel}>{problem.title}</span>
               <span className={styles.cardBody}>{problem.body}</span>
-              <span className={styles.cardStatus}>
-                Detailed path not available yet
-              </span>
             </article>
           ))}
         </div>
@@ -35,9 +32,6 @@ export function ProblemsWeSolveSection() {
         <div className={styles.actions}>
           <ActionLink href="#problems" variant="secondary">
             Explore Problem Areas
-          </ActionLink>
-          <ActionLink href="/contact" isAvailable={false} variant="text">
-            Talk to an Engineer
           </ActionLink>
         </div>
       </div>

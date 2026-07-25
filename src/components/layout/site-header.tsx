@@ -26,27 +26,21 @@ export function SiteHeader() {
                   {link.label}
                 </a>
               ) : (
-                <span
-                  aria-disabled="true"
-                  className={styles.navUnavailable}
-                  title="This path is not available yet."
-                >
+                <span className={styles.navUnavailable}>
                   {link.label}
-                  <span className={styles.statusLabel}>Planned</span>
                 </span>
               )}
             </span>
           ))}
         </div>
 
-        <div className={styles.desktopAction}>
-          <ActionLink
-            href={siteNavigation.primaryAction.href}
-            isAvailable={siteNavigation.primaryAction.isAvailable}
-          >
-            {siteNavigation.primaryAction.label}
-          </ActionLink>
-        </div>
+        {siteNavigation.primaryAction.isAvailable ? (
+          <div className={styles.desktopAction}>
+            <ActionLink href={siteNavigation.primaryAction.href}>
+              {siteNavigation.primaryAction.label}
+            </ActionLink>
+          </div>
+        ) : null}
 
         <details className={styles.mobileMenu}>
           <summary className={styles.mobileSummary}>
@@ -63,24 +57,20 @@ export function SiteHeader() {
                     {link.label}
                   </a>
                 ) : (
-                  <span
-                    aria-disabled="true"
-                    className={styles.mobileUnavailable}
-                    title="This path is not available yet."
-                  >
+                  <span className={styles.mobileUnavailable}>
                     {link.label}
-                    <span className={styles.statusLabel}>Planned</span>
                   </span>
                 )}
               </span>
             ))}
-            <ActionLink
-              className={styles.mobileAction}
-              href={siteNavigation.primaryAction.href}
-              isAvailable={siteNavigation.primaryAction.isAvailable}
-            >
-              {siteNavigation.primaryAction.label}
-            </ActionLink>
+            {siteNavigation.primaryAction.isAvailable ? (
+              <ActionLink
+                className={styles.mobileAction}
+                href={siteNavigation.primaryAction.href}
+              >
+                {siteNavigation.primaryAction.label}
+              </ActionLink>
+            ) : null}
           </div>
         </details>
       </nav>

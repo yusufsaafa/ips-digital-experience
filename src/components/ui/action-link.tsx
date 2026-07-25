@@ -28,11 +28,7 @@ export function ActionLink({
 
   if (!isAvailable) {
     return (
-      <span
-        aria-disabled="true"
-        className={classNames}
-        title="This path is not available yet."
-      >
+      <span aria-disabled="true" className={classNames}>
         {children}
       </span>
     );

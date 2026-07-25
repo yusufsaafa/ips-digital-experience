@@ -99,15 +99,7 @@
 
 .unavailablePath {
   color: var(--color-text-muted);
-  cursor: not-allowed;
   opacity: 0.68;
-}
-
-.unavailablePath span {
-  border: var(--border-width-thin) solid var(--color-border-subtle);
-  border-radius: var(--radius-pill);
-  padding: 0.05rem var(--space-2);
-  font-size: var(--font-size-xs);
 }
 
 @media (hover: hover) and (pointer: fine) {

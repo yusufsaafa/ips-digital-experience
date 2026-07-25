@@ -95,12 +95,6 @@
   line-height: 1.6;
 }
 
-.cardStatus {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-}
-
 .actions {
   display: flex;
   flex-wrap: wrap;

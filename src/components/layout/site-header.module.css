@@ -73,25 +73,12 @@
 .navUnavailable {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   color: var(--color-text-muted);
-  cursor: not-allowed;
   font-size: var(--font-size-sm);
   font-weight: 600;
   opacity: 0.68;
-}
-
-.statusLabel {
-  display: inline-flex;
-  align-items: center;
-  border: var(--border-width-thin) solid var(--color-border-subtle);
-  border-radius: var(--radius-pill);
-  padding: 0.1rem var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-  font-weight: 650;
 }
 
 .desktopAction {
@@ -169,7 +156,6 @@
 
 .mobileUnavailable {
   color: var(--color-text-muted);
-  cursor: not-allowed;
   opacity: 0.72;
 }
 

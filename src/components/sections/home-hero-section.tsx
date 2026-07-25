@@ -18,12 +18,11 @@ export function HomeHeroSection() {
           </div>
 
           <div className={styles.actions} aria-label="Hero actions">
-            <ActionLink
-              href={hero.primaryAction.href}
-              isAvailable={hero.primaryAction.isAvailable}
-            >
-              {hero.primaryAction.label}
-            </ActionLink>
+            {hero.primaryAction.isAvailable ? (
+              <ActionLink href={hero.primaryAction.href}>
+                {hero.primaryAction.label}
+              </ActionLink>
+            ) : null}
             <ActionLink href={hero.secondaryAction.href} variant="secondary">
               {hero.secondaryAction.label}
             </ActionLink>
@@ -38,14 +37,7 @@ export function HomeHeroSection() {
                 {path.isAvailable ? (
                   <a href={path.currentHref ?? path.href}>{path.label}</a>
                 ) : (
-                  <span
-                    aria-disabled="true"
-                    className={styles.unavailablePath}
-                    title="This path is not available yet."
-                  >
-                    {path.label}
-                    <span>Planned</span>
-                  </span>
+                  <span className={styles.unavailablePath}>{path.label}</span>
                 )}
               </li>
             ))}
