@@ -53,7 +53,7 @@ export const siteNavigation = {
   },
 };
 
-// Temporary strategic copy for Sprint 5. Requires IPS stakeholder approval
+// Temporary strategic copy. Requires IPS stakeholder approval
 // before publication as final marketing or technical language.
 export const siteMetadata = {
   title: "Integrated Polymer Solutions",
@@ -63,49 +63,84 @@ export const siteMetadata = {
 
 export const homePageContent = {
   hero: {
-    eyebrow: "Integrated Polymer Solutions",
-    title:
-      "Solve critical sealing, shielding, and material performance problems.",
+    // Sprint 11 prototype copy. All visitor-facing terminology in this hero is
+    // temporary and requires stakeholder review before final publication.
+    eyebrow: "Pressure-boundary inspection",
+    title: "See what can fail below the surface.",
     body:
-      "IPS helps technical teams move from harsh-environment requirements to the right solution path across sealing, EMI/RFI shielding, fire and thermal protection, corrosion resistance, high-purity processing, and material performance challenges.",
+      "Inspect a conceptual sealed interface, then choose the path that best matches the engineering problem you need to solve.",
     primaryAction: {
-      label: "Talk to an Engineer",
-      href: "/contact",
-      currentHref: "#contact",
+      label: "Open pressure-boundary inspection",
+      href: "#hero-inspection",
+      currentHref: "#hero-inspection",
       isAvailable: true,
     },
     secondaryAction: {
-      label: "Explore Problems We Solve",
+      label: "Skip inspection",
       href: "#problems",
     },
-    supportingPathsLabel: "Start with the language you already have:",
+    supportingPathsLabel: "Go directly to:",
     supportingPaths: [
       {
-        label: "Problem",
-        href: "/problems",
+        label: "Problems",
+        href: "#problems",
         currentHref: "#problems",
         isAvailable: true,
       },
       {
-        label: "Industry",
-        href: "/industries",
-        currentHref: "#industries",
-        isAvailable: true,
-      },
-      {
         label: "Capability",
-        href: "/capabilities",
+        href: "#capabilities",
         currentHref: "#capabilities",
         isAvailable: true,
       },
-      { label: "Product", href: "/products", isAvailable: false },
       {
-        label: "Known IPS specialist",
-        href: "/specialist-network",
-        currentHref: "#specialist-network",
+        label: "Evidence",
+        href: "#proof",
+        currentHref: "#proof",
+        isAvailable: true,
+      },
+      {
+        label: "Contact",
+        href: "#contact",
+        currentHref: "#contact",
         isAvailable: true,
       },
     ],
+    inspection: {
+      buttonLabel: "Inspect boundary",
+      buttonAccessibleName: "Open pressure-boundary inspection",
+      helperText:
+        "Opens a static inspection view of pressure acting across a sealed interface.",
+      statusClosed:
+        "The inspection diagram is visible below and can be emphasized with the inspection control.",
+      statusOpen:
+        "Inspection view emphasized. The diagram and sealing problem introduction are ready to review.",
+      diagramTitle: "Conceptual pressure-boundary cross-section",
+      diagramDescription:
+        "A conceptual cross-section shows pressure acting across a sealed interface. The diagram highlights a possible leakage path and the need to maintain sealing behavior between an outer environment and a protected internal region.",
+      layers: [
+        "Outer environment",
+        "Rigid housing",
+        "Interface boundary",
+        "Sealing element",
+        "Pressure region",
+        "Possible leakage path",
+        "Protected region",
+      ],
+      problem: {
+        label: "Maintain sealing under pressure",
+        body:
+          "Start here when containment, pressure, movement, or interface conditions make sealing behavior central to application reliability.",
+        verificationNote:
+          "Temporary prototype framing. Capability relationships require IPS stakeholder review.",
+        links: [
+          { label: "Compare problem paths", href: "#problems" },
+          { label: "Review capabilities", href: "#capabilities" },
+          { label: "Check evidence needs", href: "#proof" },
+          { label: "Prepare a technical conversation", href: "#contact" },
+        ],
+      },
+    },
   },
   problems: {
     eyebrow: "Problems We Solve",
