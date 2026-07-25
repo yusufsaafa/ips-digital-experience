@@ -36,13 +36,20 @@ export const siteNavigation = {
       currentHref: "#specialist-network",
       isAvailable: true,
     },
+    {
+      label: "Proof",
+      href: "/resources/proof",
+      currentHref: "#proof",
+      isAvailable: true,
+    },
     { label: "Resources", href: "/resources", isAvailable: false },
     { label: "About IPS", href: "/about", isAvailable: false },
   ],
   primaryAction: {
     label: "Talk to an Engineer",
     href: "/contact",
-    isAvailable: false,
+    currentHref: "#contact",
+    isAvailable: true,
   },
 };
 
@@ -64,7 +71,8 @@ export const homePageContent = {
     primaryAction: {
       label: "Talk to an Engineer",
       href: "/contact",
-      isAvailable: false,
+      currentHref: "#contact",
+      isAvailable: true,
     },
     secondaryAction: {
       label: "Explore Problems We Solve",
@@ -414,6 +422,79 @@ export const homePageContent = {
           "Swift Textile Metalizing",
         ],
       },
+    ],
+  },
+  // Temporary proof content for Sprint 8. These are evidence categories to
+  // verify with IPS stakeholders, not confirmed public claims about every
+  // specialist company, certification, facility, customer, or process.
+  proof: {
+    eyebrow: "Quality, Compliance and Proof",
+    title: "Technical buyers need evidence, not only claims.",
+    body:
+      "Proof requirements can vary by specialist company, market, application, and program context. This homepage introduces the evidence areas a buyer may need to review before engaging deeper.",
+    categories: [
+      {
+        title: "Quality systems",
+        body:
+          "Understand which quality practices are relevant to the specialist, application, and production context.",
+        futureHref: "/resources/quality-systems",
+      },
+      {
+        title: "Certifications and registrations",
+        body:
+          "Review verified certifications or registrations at the appropriate specialist-company level when they are approved for publication.",
+        futureHref: "/resources/certifications-registrations",
+      },
+      {
+        title: "Engineering and production practices",
+        body:
+          "Clarify how technical review, material decisions, production planning, and specialist routing may support the work.",
+        futureHref: "/resources/engineering-production-practices",
+      },
+      {
+        title: "Testing and qualification support",
+        body:
+          "Identify what evidence or customer qualification needs should be discussed for the specific application.",
+        futureHref: "/resources/testing-qualification-support",
+      },
+      {
+        title: "Application examples or case studies",
+        body:
+          "Use approved examples only when IPS stakeholders verify the market, application, and customer-disclosure boundaries.",
+        futureHref: "/resources/application-examples",
+      },
+      {
+        title: "Technical resources and documentation",
+        body:
+          "Determine which technical materials can help a buyer evaluate fit by capability, industry, or specialist.",
+        futureHref: "/resources/technical-documentation",
+      },
+    ],
+  },
+  // Temporary contact content for Sprint 8. This summarizes future inquiry
+  // routing needs without implying that a form, upload, guaranteed review,
+  // response timeline, or route page exists today.
+  contact: {
+    eyebrow: "Next Step",
+    title: "Prepare the context that helps route a technical conversation.",
+    body:
+      "The right starting point may be an engineering conversation, quote request, drawing or specification review, specialist routing question, or general inquiry. Until a contact workflow is implemented, the homepage should make clear what information will matter.",
+    futureHref: "/contact",
+    inquiryTypes: [
+      "Talk to an engineer",
+      "Request a quote",
+      "Submit a drawing or specification",
+      "Find the right IPS specialist",
+      "General inquiry",
+    ],
+    contextItems: [
+      "Application or problem",
+      "Industry",
+      "Capability or product interest",
+      "Program stage",
+      "Compliance or certification needs",
+      "Drawing or specification availability",
+      "Preferred IPS specialist, if known",
     ],
   },
 };

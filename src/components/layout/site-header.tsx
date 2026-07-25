@@ -36,7 +36,12 @@ export function SiteHeader() {
 
         {siteNavigation.primaryAction.isAvailable ? (
           <div className={styles.desktopAction}>
-            <ActionLink href={siteNavigation.primaryAction.href}>
+            <ActionLink
+              href={
+                siteNavigation.primaryAction.currentHref ??
+                siteNavigation.primaryAction.href
+              }
+            >
               {siteNavigation.primaryAction.label}
             </ActionLink>
           </div>
@@ -66,7 +71,10 @@ export function SiteHeader() {
             {siteNavigation.primaryAction.isAvailable ? (
               <ActionLink
                 className={styles.mobileAction}
-                href={siteNavigation.primaryAction.href}
+                href={
+                  siteNavigation.primaryAction.currentHref ??
+                  siteNavigation.primaryAction.href
+                }
               >
                 {siteNavigation.primaryAction.label}
               </ActionLink>

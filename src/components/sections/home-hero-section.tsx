@@ -19,7 +19,9 @@ export function HomeHeroSection() {
 
           <div className={styles.actions} aria-label="Hero actions">
             {hero.primaryAction.isAvailable ? (
-              <ActionLink href={hero.primaryAction.href}>
+              <ActionLink
+                href={hero.primaryAction.currentHref ?? hero.primaryAction.href}
+              >
                 {hero.primaryAction.label}
               </ActionLink>
             ) : null}
