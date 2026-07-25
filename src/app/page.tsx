@@ -1,5 +1,5 @@
-import { HomeStartSection } from "@/components/sections/home-start-section";
+import { HomePage } from "@/components/sections/home-page";
 
 export default function Home() {
-  return <HomeStartSection />;
+  return <HomePage />;
 }
