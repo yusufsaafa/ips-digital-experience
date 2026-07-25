@@ -94,6 +94,7 @@
   min-height: 410px;
   padding: 30px 28px 34px;
   overflow: hidden;
+  border: 0;
   border-right: 1px solid rgba(184, 218, 229, 0.11);
   background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
   transform: translateY(54px);
@@ -187,7 +188,7 @@
 }
 
 .released {
-  min-height: 200svh;
+  min-height: 285svh;
   overflow: visible;
   background: #071014;
 }
@@ -286,11 +287,11 @@
 
 @media (max-width: 680px) {
   .released {
-    min-height: 290svh;
+    min-height: 455svh;
   }
 
   .capabilities {
-    min-height: 190svh;
+    min-height: 355svh;
     padding: 78px 20px 80px;
   }
 
