@@ -3,25 +3,24 @@ import { IndustriesSection } from "./components/IndustriesSection";
 import { CaseStudySection } from "./components/CaseStudySection";
 import { TechnicalRequestSection } from "./components/TechnicalRequestSection";
 import { GlobalNavigation } from "./components/GlobalNavigation";
-
-const anchorStyle = { scrollMarginTop: "92px" };
+import { SectionReveal } from "./components/SectionReveal";
 
 export default function Home() {
   return (
     <>
       <GlobalNavigation />
-      <div id="experience" style={anchorStyle}>
+      <div id="experience" style={{ scrollMarginTop: "92px" }}>
         <CinematicHero />
       </div>
-      <div id="industries" style={anchorStyle}>
+      <SectionReveal id="industries" index="02" label="Application environments">
         <IndustriesSection />
-      </div>
-      <div id="case-study" style={anchorStyle}>
+      </SectionReveal>
+      <SectionReveal id="case-study" index="03" label="Failure to control" delay={80}>
         <CaseStudySection />
-      </div>
-      <div id="technical-brief" style={anchorStyle}>
+      </SectionReveal>
+      <SectionReveal id="technical-brief" index="04" label="Start an engineering brief" delay={100}>
         <TechnicalRequestSection />
-      </div>
+      </SectionReveal>
     </>
   );
 }
