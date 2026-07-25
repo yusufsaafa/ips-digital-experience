@@ -1,4 +1,4 @@
-import { CinematicHero } from "./components/CinematicHero";
+import { CinematicHeroV2 } from "./components/CinematicHeroV2";
 import { IndustriesSection } from "./components/IndustriesSection";
 import { CaseStudySection } from "./components/CaseStudySection";
 import { EngineeringProcessSection } from "./components/EngineeringProcessSection";
@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <GlobalNavigation />
       <div id="experience" style={{ scrollMarginTop: "92px" }}>
-        <CinematicHero />
+        <CinematicHeroV2 />
       </div>
       <SectionReveal id="industries" index="02" label="Application environments">
         <IndustriesSection />
