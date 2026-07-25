@@ -7,39 +7,78 @@ import system from "./CinematicHeroSystem.module.css";
 import failure from "./CinematicHeroFailure.module.css";
 import solution from "./CinematicHeroSolution.module.css";
 import transition from "./CinematicHeroTransition.module.css";
+import capabilityStyles from "./CinematicHeroCapabilities.module.css";
 
 type SceneStep = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-const capabilities = [
+type Capability = {
+  index: string;
+  title: string;
+  copy: string;
+  meta: string;
+  problem: string;
+  intervention: string;
+  result: string;
+  metricLabel: string;
+  metricValue: string;
+  mode: "seal" | "material" | "failure" | "custom";
+};
+
+const capabilities: Capability[] = [
   {
     index: "01",
     title: "Sealing Systems",
     copy: "Pressure-boundary sealing engineered around contact, compression and operating load.",
     meta: "STATIC / DYNAMIC / HIGH PRESSURE",
+    problem: "Leakage begins when contact pressure falls below the operating differential.",
+    intervention: "Geometry, squeeze and material response are tuned as one pressure-control system.",
+    result: "Stable contact maintained across the full duty cycle.",
+    metricLabel: "CONTROL VARIABLE",
+    metricValue: "CONTACT PRESSURE",
+    mode: "seal",
   },
   {
     index: "02",
     title: "Polymer Engineering",
     copy: "Material selection and geometry developed for chemical, thermal and mechanical reality.",
     meta: "ELASTOMERS / THERMOPLASTICS / COMPOSITES",
+    problem: "A compatible material can still fail when heat, media and deformation act together.",
+    intervention: "Compound behaviour is mapped against temperature, exposure and mechanical strain.",
+    result: "Material response aligned with the real operating envelope.",
+    metricLabel: "CONTROL VARIABLE",
+    metricValue: "MATERIAL RESPONSE",
+    mode: "material",
   },
   {
     index: "03",
     title: "Failure Analysis",
     copy: "Trace the path from visible damage back to the interface condition that caused it.",
     meta: "ROOT CAUSE / VALIDATION / REMEDIATION",
+    problem: "Visible damage is usually the final symptom, not the original failure condition.",
+    intervention: "Fracture, wear and leakage paths are reconstructed back to their initiating interface.",
+    result: "Corrective action targets the cause instead of replacing the symptom.",
+    metricLabel: "CONTROL VARIABLE",
+    metricValue: "ROOT CAUSE",
+    mode: "failure",
   },
   {
     index: "04",
     title: "Custom Components",
     copy: "Application-specific polymer components designed when catalogue parts are not enough.",
     meta: "DESIGN / PROTOTYPE / PRODUCTION",
+    problem: "Standard components force compromises when the surrounding system is non-standard.",
+    intervention: "The component is designed from the load case, interface and manufacturing route outward.",
+    result: "A production-ready part shaped around the actual system constraint.",
+    metricLabel: "CONTROL VARIABLE",
+    metricValue: "SYSTEM FIT",
+    mode: "custom",
   },
 ];
 
 export function CinematicHero() {
   const sceneRef = useRef<HTMLElement>(null);
   const [sceneStep, setSceneStep] = useState<SceneStep>(0);
+  const [activeCapability, setActiveCapability] = useState(0);
   const sceneStepRef = useRef<SceneStep>(0);
   const stepEnteredAt = useRef(Date.now());
   const lastWheelAt = useRef(0);
@@ -58,8 +97,6 @@ export function CinematicHero() {
       if (Math.abs(event.deltaY) < 8) return;
 
       const current = sceneStepRef.current;
-
-      // Once the narrative releases into the site, downward wheel movement is native page scroll.
       if (current === 6 && event.deltaY > 0) return;
       if (current === 6 && event.deltaY < 0 && window.scrollY > 8) return;
 
@@ -74,10 +111,7 @@ export function CinematicHero() {
       if (current === 5 && event.deltaY > 0 && now - stepEnteredAt.current < 2500) return;
 
       lastWheelAt.current = now;
-      const next = event.deltaY > 0
-        ? Math.min(6, current + 1)
-        : Math.max(0, current - 1);
-
+      const next = event.deltaY > 0 ? Math.min(6, current + 1) : Math.max(0, current - 1);
       changeStep(next as SceneStep);
     }
 
@@ -125,6 +159,7 @@ export function CinematicHero() {
   const isFailing = sceneStep === 4;
   const isResolved = sceneStep >= 5;
   const isReleased = sceneStep === 6;
+  const selectedCapability = capabilities[activeCapability];
 
   return (
     <main
@@ -158,11 +193,7 @@ export function CinematicHero() {
         <span className={`${styles.hatchShadow} ${motion.hatchShadow}`} aria-hidden="true" />
         <span className={`${styles.outerRing} ${motion.outerRing}`} aria-hidden="true">
           {Array.from({ length: 8 }).map((_, index) => (
-            <span
-              className={`${styles.bolt} ${motion.bolt}`}
-              key={index}
-              style={{ "--bolt-index": index } as React.CSSProperties}
-            />
+            <span className={`${styles.bolt} ${motion.bolt}`} key={index} style={{ "--bolt-index": index } as React.CSSProperties} />
           ))}
           <span className={motion.depthWell}>
             <span className={motion.depthRing} />
@@ -175,9 +206,7 @@ export function CinematicHero() {
             <span className={styles.scanLine} />
           </span>
         </span>
-        <span className={`${styles.openLabel} ${motion.openLabel}`}>
-          {isOpening ? "Port unlocked" : "Open inspection"}
-        </span>
+        <span className={`${styles.openLabel} ${motion.openLabel}`}>{isOpening ? "Port unlocked" : "Open inspection"}</span>
       </button>
 
       <section className={`${system.systemWorld} ${failure.systemWorld} ${solution.systemWorld} ${transition.systemWorld}`} aria-label="Engineering cross-section">
@@ -194,7 +223,6 @@ export function CinematicHero() {
           <div className={`${system.pressureWave} ${solution.pressureWave}`} />
           <div className={system.inspectionLine} />
           <div className={`${system.targetMarker} ${failure.targetMarker} ${solution.targetMarker}`}><i /></div>
-
           <svg className={`${failure.failureTrace} ${solution.failureTrace}`} viewBox="0 0 800 620" preserveAspectRatio="none">
             <path className={`${failure.traceGlow} ${solution.traceGlow}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
             <path className={`${failure.traceCore} ${solution.traceCore}`} d="M400 520 C390 470 430 430 398 380 C365 330 430 292 401 248 C382 219 409 198 400 170" />
@@ -230,16 +258,68 @@ export function CinematicHero() {
           <span>From investigation through production, each discipline resolves a different part of the same system.</span>
         </header>
 
-        <div className={transition.capabilityGrid}>
-          {capabilities.map((capability) => (
-            <article className={transition.capabilityCard} key={capability.index}>
-              <div className={transition.cardIndex}>{capability.index}</div>
-              <div className={transition.cardSignal} aria-hidden="true"><i /></div>
-              <h3>{capability.title}</h3>
-              <p>{capability.copy}</p>
-              <span>{capability.meta}</span>
-            </article>
-          ))}
+        <div className={capabilityStyles.capabilityWorkspace}>
+          <div className={transition.capabilityGrid} role="tablist" aria-label="Engineering capabilities">
+            {capabilities.map((capability, index) => {
+              const isActive = index === activeCapability;
+              return (
+                <button
+                  className={`${transition.capabilityCard} ${capabilityStyles.capabilityButton} ${isActive ? capabilityStyles.activeCapability : ""}`}
+                  key={capability.index}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls="capability-inspection"
+                  onMouseEnter={() => setActiveCapability(index)}
+                  onFocus={() => setActiveCapability(index)}
+                  onClick={() => setActiveCapability(index)}
+                >
+                  <div className={transition.cardIndex}>{capability.index}</div>
+                  <div className={transition.cardSignal} aria-hidden="true"><i /></div>
+                  <h3>{capability.title}</h3>
+                  <p>{capability.copy}</p>
+                  <span>{capability.meta}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <article
+            id="capability-inspection"
+            className={capabilityStyles.inspectionPanel}
+            data-mode={selectedCapability.mode}
+            role="tabpanel"
+            aria-live="polite"
+          >
+            <div className={capabilityStyles.inspectionHeader}>
+              <span>MODULE {selectedCapability.index} / ACTIVE INSPECTION</span>
+              <strong>{selectedCapability.metricLabel}: {selectedCapability.metricValue}</strong>
+            </div>
+
+            <div className={capabilityStyles.inspectionBody}>
+              <div className={capabilityStyles.diagram} aria-hidden="true">
+                <div className={capabilityStyles.diagramHousing} />
+                <div className={capabilityStyles.diagramCore} />
+                <div className={capabilityStyles.diagramInterface} />
+                <div className={capabilityStyles.diagramLoad} />
+                <div className={capabilityStyles.diagramTarget}><i /></div>
+                <div className={capabilityStyles.diagramScan} />
+              </div>
+
+              <div className={capabilityStyles.inspectionCopy}>
+                <p>PROBLEM CONDITION</p>
+                <h3>{selectedCapability.problem}</h3>
+                <div>
+                  <span>IPS INTERVENTION</span>
+                  <p>{selectedCapability.intervention}</p>
+                </div>
+                <div>
+                  <span>ENGINEERED RESULT</span>
+                  <p>{selectedCapability.result}</p>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
