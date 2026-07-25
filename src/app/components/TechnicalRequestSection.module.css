@@ -1,0 +1,420 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(96px, 12vw, 180px) clamp(22px, 6vw, 96px) 42px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(91, 191, 220, 0.09), transparent 28%),
+    linear-gradient(180deg, #071014 0%, #04090c 42%, #020405 100%);
+  color: #edf5f7;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(144, 205, 224, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(144, 205, 224, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000, transparent 86%);
+}
+
+.header,
+.workspace,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.65fr) minmax(340px, 1.45fr) minmax(240px, 0.8fr);
+  gap: clamp(28px, 5vw, 82px);
+  align-items: end;
+  padding-bottom: clamp(54px, 7vw, 94px);
+  border-bottom: 1px solid rgba(183, 219, 230, 0.13);
+}
+
+.header p,
+.header span,
+.choiceGroup legend,
+.detailField > span,
+.outputHeader,
+.output dt,
+.footer,
+.note {
+  font-family: var(--font-geist-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.header p {
+  align-self: start;
+  margin: 0;
+  color: rgba(203, 229, 236, 0.43);
+  font-size: 0.61rem;
+}
+
+.header h2 {
+  margin: 0;
+  max-width: 920px;
+  font-size: clamp(3.2rem, 6.4vw, 7.5rem);
+  font-weight: 420;
+  line-height: 0.91;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+
+.header > span {
+  color: rgba(214, 232, 237, 0.57);
+  font-family: var(--font-geist-sans);
+  font-size: 0.96rem;
+  line-height: 1.68;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  gap: clamp(30px, 5vw, 80px);
+  padding: clamp(54px, 7vw, 96px) 0 clamp(88px, 11vw, 150px);
+}
+
+.form {
+  display: grid;
+  gap: 42px;
+}
+
+.choiceGroup {
+  margin: 0;
+  padding: 0 0 30px;
+  border: 0;
+  border-bottom: 1px solid rgba(183, 219, 230, 0.11);
+}
+
+.choiceGroup legend,
+.detailField > span {
+  margin-bottom: 17px;
+  color: rgba(196, 224, 232, 0.45);
+  font-size: 0.58rem;
+}
+
+.choiceGroup > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choiceGroup button {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 58px;
+  padding: 14px 16px;
+  border: 1px solid rgba(176, 218, 231, 0.12);
+  background: rgba(255, 255, 255, 0.012);
+  color: rgba(220, 236, 241, 0.62);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 280ms ease, background 280ms ease, color 280ms ease, transform 280ms ease;
+}
+
+.choiceGroup button:hover,
+.choiceGroup button:focus-visible,
+.choiceGroup button.active {
+  border-color: rgba(126, 214, 239, 0.42);
+  background: rgba(89, 192, 222, 0.06);
+  color: #eefafd;
+  transform: translateX(4px);
+  outline: none;
+}
+
+.choiceGroup button i {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(144, 214, 233, 0.36);
+  border-radius: 50%;
+  transition: background 280ms ease, box-shadow 280ms ease;
+}
+
+.choiceGroup button.active i {
+  background: #91e2f5;
+  box-shadow: 0 0 14px rgba(102, 210, 238, 0.78);
+}
+
+.detailField {
+  display: grid;
+}
+
+.detailField textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid rgba(176, 218, 231, 0.14);
+  border-radius: 0;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.018);
+  color: #edf5f7;
+  font: inherit;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 280ms ease, background 280ms ease;
+}
+
+.detailField textarea:focus {
+  border-color: rgba(126, 214, 239, 0.46);
+  background: rgba(89, 192, 222, 0.04);
+}
+
+.detailField textarea::placeholder {
+  color: rgba(215, 232, 237, 0.28);
+}
+
+.output {
+  position: sticky;
+  top: 28px;
+  align-self: start;
+  min-height: 720px;
+  padding: 26px;
+  border: 1px solid rgba(151, 214, 233, 0.18);
+  background:
+    linear-gradient(180deg, rgba(107, 200, 227, 0.04), transparent 50%),
+    rgba(2, 7, 9, 0.76);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.28);
+}
+
+.output::before,
+.output::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.output::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid #8dddf2;
+  border-left: 1px solid #8dddf2;
+}
+
+.output::after {
+  right: -1px;
+  bottom: -1px;
+  border-right: 1px solid #8dddf2;
+  border-bottom: 1px solid #8dddf2;
+}
+
+.outputHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(198, 226, 234, 0.45);
+  font-size: 0.56rem;
+}
+
+.outputHeader i {
+  color: #8fe2f5;
+  font-style: normal;
+}
+
+.signal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(260px, 70%);
+  aspect-ratio: 1;
+  margin: 58px auto 62px;
+  border: 1px solid rgba(130, 211, 234, 0.16);
+  border-radius: 50%;
+}
+
+.signal::before,
+.signal::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(132, 213, 236, 0.14);
+  transform: translate(-50%, -50%);
+}
+
+.signal::before { width: 118%; height: 1px; }
+.signal::after { width: 1px; height: 118%; }
+
+.signalCore {
+  width: 34%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(144, 226, 246, 0.52);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(151, 230, 248, 0.22), transparent 65%);
+  box-shadow: 0 0 54px rgba(99, 204, 232, 0.2);
+}
+
+.signalOrbit {
+  position: absolute;
+  inset: 17%;
+  border: 1px dashed rgba(139, 216, 237, 0.23);
+  border-radius: 50%;
+  animation: rotate 18s linear infinite;
+}
+
+.signalScan {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(143, 225, 246, 0.75), transparent);
+  animation: rotate 5s linear infinite;
+}
+
+.output dl {
+  display: grid;
+  gap: 0;
+  margin: 0 0 40px;
+}
+
+.output dl div {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(183, 219, 230, 0.1);
+}
+
+.output dt {
+  color: rgba(196, 224, 232, 0.38);
+  font-size: 0.53rem;
+}
+
+.output dd {
+  margin: 0;
+  color: rgba(232, 244, 247, 0.82);
+  font-size: 0.88rem;
+}
+
+.submit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  padding: 0 20px;
+  border: 1px solid rgba(133, 219, 242, 0.42);
+  background: rgba(84, 194, 224, 0.08);
+  color: #effbfe;
+  font-family: var(--font-geist-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+  transition: background 300ms ease, transform 300ms ease, box-shadow 300ms ease;
+}
+
+.submit:hover,
+.submit:focus-visible {
+  background: rgba(84, 194, 224, 0.15);
+  box-shadow: 0 0 35px rgba(77, 190, 222, 0.1);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+.submit b {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: rgba(220, 235, 239, 0.28);
+  font-size: 0.47rem;
+  line-height: 1.6;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(183, 219, 230, 0.12);
+  color: rgba(199, 225, 233, 0.38);
+  font-size: 0.52rem;
+}
+
+.footer strong {
+  color: rgba(229, 244, 248, 0.86);
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+.footer span:last-child { text-align: right; }
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 980px) {
+  .header {
+    grid-template-columns: 1fr 1.6fr;
+  }
+
+  .header > span {
+    grid-column: 2;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .output {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .section {
+    padding: 84px 20px 32px;
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .header > span {
+    grid-column: auto;
+  }
+
+  .header h2 {
+    font-size: clamp(2.9rem, 13vw, 4.8rem);
+  }
+
+  .choiceGroup > div {
+    grid-template-columns: 1fr;
+  }
+
+  .output {
+    padding: 20px;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .footer span:last-child { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalOrbit,
+  .signalScan {
+    animation: none;
+  }
+}
