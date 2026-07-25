@@ -1,0 +1,115 @@
+.section {
+  border-top: var(--border-width-thin) solid var(--color-border-subtle);
+  background: var(--color-ink);
+  color: var(--color-ink-foreground);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(300px, 1fr);
+  gap: var(--space-8);
+  width: min(100%, var(--content-width-wide));
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-12);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-4);
+  color: var(--color-accent);
+  font-size: var(--font-size-xs);
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.intro h2 {
+  max-width: 42rem;
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.intro p:not(.eyebrow) {
+  max-width: var(--content-width-reading);
+  margin-top: var(--space-5);
+  color: color-mix(in srgb, var(--color-ink-foreground) 72%, transparent);
+  line-height: 1.7;
+}
+
+.network {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+}
+
+.guidance {
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 18%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-ink-foreground) 6%, transparent);
+  padding: var(--space-5);
+  color: color-mix(in srgb, var(--color-ink-foreground) 82%, transparent);
+  line-height: 1.65;
+}
+
+.groups {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.group {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  border-bottom: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 18%, transparent);
+  padding-bottom: var(--space-4);
+}
+
+.group h3 {
+  color: var(--color-accent);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+.group ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.group li {
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-ink-foreground) 18%, transparent);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-3);
+  color: color-mix(in srgb, var(--color-ink-foreground) 86%, transparent);
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding: var(--space-8) var(--space-4) var(--space-10);
+  }
+
+  .intro h2 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .intro h2 {
+    font-size: 2rem;
+  }
+
+  .group {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}

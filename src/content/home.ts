@@ -23,11 +23,18 @@ export const siteNavigation = {
       currentHref: "#capabilities",
       isAvailable: true,
     },
+    {
+      label: "Engineering Process",
+      href: "/engineering-process",
+      currentHref: "#engineering-process",
+      isAvailable: true,
+    },
     { label: "Products", href: "/products", isAvailable: false },
     {
       label: "IPS Specialist Network",
       href: "/specialist-network",
-      isAvailable: false,
+      currentHref: "#specialist-network",
+      isAvailable: true,
     },
     { label: "Resources", href: "/resources", isAvailable: false },
     { label: "About IPS", href: "/about", isAvailable: false },
@@ -87,7 +94,8 @@ export const homePageContent = {
       {
         label: "Known IPS specialist",
         href: "/specialist-network",
-        isAvailable: false,
+        currentHref: "#specialist-network",
+        isAvailable: true,
       },
     ],
   },
@@ -324,6 +332,86 @@ export const homePageContent = {
             context: "Related to industrial manufacturing environments.",
             isAvailable: false,
           },
+        ],
+      },
+    ],
+  },
+  // Temporary Engineering Process copy for Sprint 7. Requires IPS stakeholder
+  // validation before publication as final process, qualification, tooling,
+  // manufacturing, or lifecycle-support language.
+  engineeringProcess: {
+    eyebrow: "Engineering Process",
+    title: "Know what happens after you bring the problem forward.",
+    body:
+      "A structured conversation helps technical teams move from unclear requirements toward a practical next step without assuming every IPS specialist follows the same path.",
+    steps: [
+      {
+        title: "Discover",
+        body:
+          "Clarify the application, operating environment, constraints, and what is already known about the challenge.",
+      },
+      {
+        title: "Engineer",
+        body:
+          "Explore material, geometry, manufacturing, and specialist-fit considerations that may shape the solution path.",
+      },
+      {
+        title: "Prototype",
+        body:
+          "Identify whether an early sample, concept, or production-intent direction is useful for the application stage.",
+      },
+      {
+        title: "Validate / Qualify",
+        body:
+          "Discuss what evidence, review, or customer qualification needs may apply before a solution can move forward.",
+      },
+      {
+        title: "Manufacture",
+        body:
+          "Route the work toward an appropriate production approach and specialist context when the requirements are ready.",
+      },
+      {
+        title: "Support",
+        body:
+          "Consider follow-on needs such as production continuity, application changes, or future design iterations.",
+      },
+    ],
+  },
+  // Temporary Specialist Network framing and list for Sprint 7. Specialist
+  // names come from the research set; descriptions and routing logic require
+  // IPS stakeholder approval before becoming final public language.
+  specialistNetwork: {
+    eyebrow: "IPS Specialist Network",
+    title: "One IPS platform, multiple specialized engineering companies.",
+    body:
+      "The network gives visitors more than one way to orient: start with a problem, industry, capability, product need, or a company name you already know.",
+    guidance:
+      "Not sure where to start? Use the problem, industry, and capability sections above to narrow the conversation before choosing a specific company.",
+    groups: [
+      {
+        label: "A-C",
+        specialists: [
+          "ABBA Roller",
+          "AkroFire",
+          "Icon Aerospace Technology",
+        ],
+      },
+      {
+        label: "I-R",
+        specialists: [
+          "IRP Medical",
+          "MAST Technologies",
+          "Northern Engineering Sheffield",
+          "Oldham Seals",
+          "RMB Products",
+          "Rubbercraft",
+        ],
+      },
+      {
+        label: "S",
+        specialists: [
+          "Spira Manufacturing",
+          "Swift Textile Metalizing",
         ],
       },
     ],

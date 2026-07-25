@@ -1,7 +1,9 @@
 import { CapabilitiesSection } from "@/components/sections/capabilities-section";
+import { EngineeringProcessSection } from "@/components/sections/engineering-process-section";
 import { HomeHeroSection } from "@/components/sections/home-hero-section";
 import { IndustriesSection } from "@/components/sections/industries-section";
 import { ProblemsWeSolveSection } from "@/components/sections/problems-we-solve-section";
+import { SpecialistNetworkSection } from "@/components/sections/specialist-network-section";
 
 export function HomePage() {
   return (
@@ -10,6 +12,8 @@ export function HomePage() {
       <ProblemsWeSolveSection />
       <IndustriesSection />
       <CapabilitiesSection />
+      <EngineeringProcessSection />
+      <SpecialistNetworkSection />
     </main>
   );
 }
