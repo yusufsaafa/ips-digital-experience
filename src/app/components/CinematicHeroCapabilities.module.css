@@ -1,0 +1,382 @@
+.capabilityWorkspace {
+  position: relative;
+  z-index: 2;
+}
+
+.capabilityButton {
+  width: 100%;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.capabilityButton:focus-visible {
+  outline: 1px solid rgba(153, 224, 244, 0.72);
+  outline-offset: -1px;
+}
+
+.activeCapability {
+  background:
+    linear-gradient(180deg, rgba(115, 207, 233, 0.07), rgba(115, 207, 233, 0.018)) !important;
+}
+
+.activeCapability::before {
+  height: 100% !important;
+}
+
+.activeCapability h3 {
+  color: #eefbff;
+  text-shadow: 0 0 24px rgba(112, 210, 238, 0.2);
+}
+
+.activeCapability [class*="cardSignal"] {
+  border-color: rgba(146, 224, 246, 0.68);
+  transform: rotate(45deg) scale(1.08);
+  box-shadow: 0 0 28px rgba(104, 204, 232, 0.14);
+  transition: transform 500ms cubic-bezier(0.16, 0.82, 0.18, 1), border-color 400ms ease, box-shadow 400ms ease;
+}
+
+.inspectionPanel {
+  position: relative;
+  display: grid;
+  margin-top: 1px;
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid rgba(184, 218, 229, 0.12);
+  background:
+    radial-gradient(circle at 25% 54%, rgba(102, 199, 228, 0.08), transparent 32%),
+    linear-gradient(125deg, rgba(5, 12, 15, 0.96), rgba(9, 22, 27, 0.98));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.inspectionPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(143, 202, 221, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 202, 221, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(90deg, #000, transparent 78%);
+}
+
+.inspectionHeader {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(184, 218, 229, 0.11);
+  color: rgba(201, 229, 237, 0.46);
+  font-family: var(--font-geist-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.inspectionHeader strong {
+  color: rgba(159, 226, 245, 0.72);
+  font-weight: 500;
+}
+
+.inspectionBody {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(360px, 1.05fr) minmax(360px, 0.95fr);
+  min-height: 500px;
+}
+
+.diagram {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+  border-right: 1px solid rgba(184, 218, 229, 0.1);
+  perspective: 1000px;
+}
+
+.diagram::before,
+.diagram::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(132, 210, 233, 0.12);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.diagram::before {
+  width: 72%;
+  aspect-ratio: 1;
+}
+
+.diagram::after {
+  width: 46%;
+  aspect-ratio: 1;
+}
+
+.diagramHousing,
+.diagramCore,
+.diagramInterface,
+.diagramLoad,
+.diagramTarget,
+.diagramScan {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.diagramHousing {
+  width: min(68%, 460px);
+  aspect-ratio: 1.7;
+  border: 1px solid rgba(190, 224, 234, 0.16);
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #263238, #0c1215);
+  box-shadow: inset 0 -28px 50px rgba(0,0,0,.48), 0 30px 70px rgba(0,0,0,.34);
+  transform: translate(-50%, -50%) rotateX(58deg);
+  transition: transform 850ms cubic-bezier(0.16, 0.82, 0.18, 1), border-radius 750ms ease;
+}
+
+.diagramCore {
+  width: min(47%, 320px);
+  aspect-ratio: 1.5;
+  border: 1px solid rgba(130, 216, 241, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(86, 191, 222, 0.16), rgba(5, 15, 19, 0.9) 68%);
+  box-shadow: inset 0 0 38px rgba(87, 194, 226, 0.12), 0 0 36px rgba(87, 194, 226, 0.08);
+  transform: translate(-50%, -50%) rotateX(58deg) translateZ(28px);
+  transition: transform 850ms cubic-bezier(0.16, 0.82, 0.18, 1), border-radius 750ms ease;
+}
+
+.diagramInterface {
+  width: min(54%, 360px);
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(135, 222, 246, 0.9), transparent);
+  box-shadow: 0 0 20px rgba(103, 209, 238, 0.42);
+  transform: translate(-50%, -50%);
+  transition: width 750ms ease, height 750ms ease, transform 750ms ease, background 450ms ease;
+}
+
+.diagramLoad {
+  width: 120px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(117, 207, 233, 0.34);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+  animation: loadPulse 2100ms ease-out infinite;
+}
+
+.diagramTarget {
+  width: 72px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(153, 225, 245, 0.58);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 700ms cubic-bezier(0.16, 0.82, 0.18, 1), top 700ms cubic-bezier(0.16, 0.82, 0.18, 1), transform 700ms ease;
+}
+
+.diagramTarget::before,
+.diagramTarget::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: rgba(153, 225, 245, 0.42);
+  transform: translate(-50%, -50%);
+}
+
+.diagramTarget::before { width: 145%; height: 1px; }
+.diagramTarget::after { width: 1px; height: 145%; }
+
+.diagramTarget i {
+  position: absolute;
+  inset: 43%;
+  border-radius: 50%;
+  background: #a7eaff;
+  box-shadow: 0 0 18px rgba(104, 204, 232, 0.84);
+}
+
+.diagramScan {
+  top: 12%;
+  bottom: 12%;
+  width: 1px;
+  height: 76%;
+  background: linear-gradient(transparent, rgba(139, 220, 243, 0.7), transparent);
+  box-shadow: 0 0 16px rgba(104, 204, 232, 0.3);
+  transform: translateX(-50%);
+  animation: scanTravel 3100ms ease-in-out infinite;
+}
+
+.inspectionCopy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(38px, 5vw, 78px);
+}
+
+.inspectionCopy > p,
+.inspectionCopy span {
+  color: rgba(196, 226, 235, 0.4);
+  font-family: var(--font-geist-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.inspectionCopy h3 {
+  margin: 16px 0 clamp(34px, 5vw, 66px);
+  max-width: 700px;
+  font-size: clamp(2rem, 3.6vw, 4.6rem);
+  font-weight: 430;
+  line-height: 0.98;
+  letter-spacing: -0.048em;
+  text-wrap: balance;
+}
+
+.inspectionCopy > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.35fr) minmax(220px, 1fr);
+  gap: 26px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(184, 218, 229, 0.1);
+}
+
+.inspectionCopy > div p {
+  margin: 0;
+  color: rgba(211, 232, 238, 0.62);
+  font-size: 0.91rem;
+  line-height: 1.62;
+}
+
+.inspectionPanel[data-mode="material"] .diagramHousing {
+  border-radius: 18% 48% 24% 44%;
+  transform: translate(-50%, -50%) rotate(18deg) skewX(-8deg);
+}
+
+.inspectionPanel[data-mode="material"] .diagramCore {
+  border-radius: 38% 24% 46% 22%;
+  transform: translate(-50%, -50%) rotate(-14deg) scale(0.9);
+}
+
+.inspectionPanel[data-mode="material"] .diagramInterface {
+  width: 42%;
+  height: 26%;
+  opacity: 0.55;
+  background: repeating-linear-gradient(125deg, rgba(137, 222, 246, 0.42) 0 2px, transparent 2px 15px);
+  transform: translate(-50%, -50%) rotate(-12deg);
+}
+
+.inspectionPanel[data-mode="failure"] .diagramInterface {
+  width: 48%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 104, 91, 0.95), transparent);
+  box-shadow: 0 0 24px rgba(255, 74, 62, 0.45);
+  transform: translate(-50%, -50%) rotate(14deg);
+}
+
+.inspectionPanel[data-mode="failure"] .diagramTarget {
+  left: 61%;
+  top: 43%;
+  border-color: rgba(255, 112, 98, 0.72);
+}
+
+.inspectionPanel[data-mode="failure"] .diagramTarget i {
+  background: #ff796a;
+  box-shadow: 0 0 20px rgba(255, 74, 62, 0.86);
+}
+
+.inspectionPanel[data-mode="custom"] .diagramHousing {
+  border-radius: 12px 52px 18px 70px;
+  transform: translate(-50%, -50%) rotate(-8deg) skewY(5deg);
+}
+
+.inspectionPanel[data-mode="custom"] .diagramCore {
+  border-radius: 8px 34px 12px 42px;
+  transform: translate(-50%, -50%) rotate(-8deg) translate(12px, -8px);
+}
+
+.inspectionPanel[data-mode="custom"] .diagramInterface {
+  width: 34%;
+  transform: translate(-36%, -50%) rotate(-8deg);
+}
+
+.inspectionPanel[data-mode="custom"] .diagramTarget {
+  left: 63%;
+  top: 58%;
+}
+
+@keyframes loadPulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  28% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.5); }
+}
+
+@keyframes scanTravel {
+  0%, 100% { left: 28%; opacity: 0.08; }
+  50% { left: 72%; opacity: 0.65; }
+}
+
+@media (max-width: 900px) {
+  .inspectionBody {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram {
+    min-height: 420px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(184, 218, 229, 0.1);
+  }
+
+  .inspectionCopy {
+    padding: 48px 34px;
+  }
+}
+
+@media (max-width: 680px) {
+  .inspectionHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .diagram {
+    min-height: 330px;
+  }
+
+  .inspectionCopy {
+    padding: 38px 22px;
+  }
+
+  .inspectionCopy h3 {
+    font-size: clamp(2rem, 10vw, 3.6rem);
+  }
+
+  .inspectionCopy > div {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagramLoad,
+  .diagramScan {
+    animation: none;
+  }
+
+  .diagramHousing,
+  .diagramCore,
+  .diagramInterface,
+  .diagramTarget,
+  .activeCapability [class*="cardSignal"] {
+    transition: none;
+  }
+}
