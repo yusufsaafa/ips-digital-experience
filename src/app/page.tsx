@@ -1,9 +1,20 @@
 import { ButtonLink } from "@/components/button-link";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteContainer } from "@/components/site-container";
+import {
+  assertValidIpsRegistry,
+  getBusinessesByCapability,
+  getBusinessesByIndustry,
+  ipsBusinesses,
+} from "@/domain/ips";
 import styles from "./page.module.css";
 
 export default function Home() {
+  assertValidIpsRegistry();
+
+  const shieldingBusinesses = getBusinessesByCapability("emi-rfi-shielding");
+  const aerospaceBusinesses = getBusinessesByIndustry("aerospace");
+
   return (
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="foundation-title">
@@ -77,6 +88,52 @@ export default function Home() {
               Back to top
             </ButtonLink>
           </article>
+        </SiteContainer>
+      </section>
+
+      <section className={styles.registrySection}>
+        <SiteContainer>
+          <SectionHeading
+            eyebrow="Registry"
+            title="Business data registry preview."
+            description="This temporary section proves the typed IPS registry and exact-slug query helpers are wired into the foundation page."
+          />
+
+          <div className={styles.registryGrid}>
+            <article>
+              <p className={styles.sampleLabel}>Total businesses</p>
+              <strong>{ipsBusinesses.length}</strong>
+            </article>
+
+            <article>
+              <p className={styles.sampleLabel}>Business names</p>
+              <ul>
+                {ipsBusinesses.map((business) => (
+                  <li key={business.slug}>{business.name}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article>
+              <p className={styles.sampleLabel}>Capability query</p>
+              <h3>EMI / RFI Shielding</h3>
+              <ul>
+                {shieldingBusinesses.map((business) => (
+                  <li key={business.slug}>{business.name}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article>
+              <p className={styles.sampleLabel}>Industry query</p>
+              <h3>Aerospace</h3>
+              <ul>
+                {aerospaceBusinesses.map((business) => (
+                  <li key={business.slug}>{business.name}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
         </SiteContainer>
       </section>
     </main>
