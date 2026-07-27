@@ -1,13 +1,46 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Core surfaces keep the foundation calm and legible across long pages. */
+  --color-background: #f7f8f6;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef1ed;
+  --color-surface-strong: #18231f;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Text colors are tuned for hierarchy without depending on pure black. */
+  --color-text-primary: #18231f;
+  --color-text-secondary: #53605a;
+  --color-text-inverse: #f8faf7;
+
+  /* A single restrained accent supports calls to action and focus states. */
+  --color-accent: #2f6f5e;
+  --color-accent-strong: #235447;
+  --color-border: #d7ddd6;
+  --color-focus: #1f7a68;
+
+  /* Spacing scale uses compact steps for repeatable section rhythm. */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Containers keep content readable on large screens and padded on mobile. */
+  --container-default: 72rem;
+  --container-narrow: 48rem;
+  --container-padding: clamp(1rem, 4vw, 2rem);
+
+  /* Radii and shadows are intentionally modest for corporate UI surfaces. */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --shadow-sm: 0 1px 2px rgb(24 35 31 / 8%);
+  --shadow-md: 0 1rem 2rem rgb(24 35 31 / 10%);
+
+  /* Shared motion stays quick, and is disabled below for reduced motion. */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --transition-standard: 180ms var(--ease-standard);
 }
 
 html {
@@ -24,11 +57,12 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text-primary);
+  background: var(--color-background);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -42,8 +76,30 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

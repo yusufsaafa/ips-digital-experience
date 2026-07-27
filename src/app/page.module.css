@@ -1,142 +1,170 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
+  min-height: 100vh;
+  background: var(--color-background);
+}
 
-  --text-primary: #000;
-  --text-secondary: #666;
+.hero {
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  gap: var(--space-3xl);
   align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+.heroCopy {
+  display: grid;
+  gap: var(--space-lg);
+  max-width: 44rem;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.eyebrow,
+.sampleLabel {
+  color: var(--color-accent-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
+.hero h1 {
+  color: var(--color-text-primary);
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-weight: 720;
+  line-height: 0.98;
+  max-width: 12ch;
   text-wrap: balance;
-  color: var(--text-primary);
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.hero p:not(.eyebrow),
+.typeGrid p:not(.sampleLabel),
+.card p:not(.sampleLabel) {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.heroCopy > p:not(.eyebrow) {
+  max-width: 38rem;
 }
 
-.ctas {
+.actions {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
 }
 
-.ctas a {
+.tokenPanel {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.tokenPanel span {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  min-height: 5rem;
+  align-items: end;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 650;
+  background: var(--color-surface-muted);
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.tokenPanel span:nth-child(2) {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.tokenPanel span:nth-child(3) {
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.preview,
+.surfaceSection {
+  padding-block: var(--space-3xl);
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.preview {
+  background: var(--color-surface);
+  border-block: 1px solid var(--color-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  margin-block-start: var(--space-2xl);
+}
+
+.typeGrid article,
+.card {
+  display: grid;
+  gap: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.typeGrid h3,
+.card h3 {
+  color: var(--color-text-primary);
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  font-weight: 680;
+  line-height: 1.15;
+}
+
+.surfaceGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.card {
+  background: var(--color-surface-strong);
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+.card h3,
+.card p:not(.sampleLabel) {
+  color: var(--color-text-inverse);
+}
+
+.card .sampleLabel {
+  color: #a8d3c8;
+}
+
+@media (max-width: 760px) {
+  .heroGrid,
+  .typeGrid,
+  .surfaceGrid {
+    grid-template-columns: 1fr;
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+  .hero {
+    padding-block: var(--space-3xl);
+  }
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+  .heroGrid,
+  .surfaceGrid {
+    gap: var(--space-2xl);
+  }
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .typeGrid article,
+  .card {
+    padding: var(--space-lg);
   }
 }

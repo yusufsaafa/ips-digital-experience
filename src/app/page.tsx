@@ -1,66 +1,84 @@
-import Image from "next/image";
+import { ButtonLink } from "@/components/button-link";
+import { SectionHeading } from "@/components/section-heading";
+import { SiteContainer } from "@/components/site-container";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className={styles.page}>
+      <section className={styles.hero} aria-labelledby="foundation-title">
+        <SiteContainer className={styles.heroGrid}>
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>Foundation preview</p>
+            <h1 id="foundation-title">
+              A calm base for the IPS Business Router redesign.
+            </h1>
+            <p>
+              This temporary page verifies typography, spacing, containers,
+              surfaces, and calls to action before product-specific sections are
+              built.
+            </p>
+            <div className={styles.actions} aria-label="Button variants">
+              <ButtonLink href="#preview">Primary action</ButtonLink>
+              <ButtonLink href="#surface" variant="secondary">
+                Secondary action
+              </ButtonLink>
+            </div>
+          </div>
+          <div className={styles.tokenPanel} aria-label="Design token sample">
+            <span>Background</span>
+            <span>Surface</span>
+            <span>Accent</span>
+          </div>
+        </SiteContainer>
+      </section>
+
+      <section id="preview" className={styles.preview}>
+        <SiteContainer>
+          <SectionHeading
+            eyebrow="Typography"
+            title="Readable hierarchy for routing workflows."
+            description="Headings, body copy, and labels are sized to support scanning on desktop and mobile without relying on animated reveals."
+          />
+
+          <div className={styles.typeGrid}>
+            <article>
+              <p className={styles.sampleLabel}>Heading sample</p>
+              <h3>Section titles stay direct and balanced.</h3>
+            </article>
+            <article>
+              <p className={styles.sampleLabel}>Body sample</p>
+              <p>
+                Body text uses generous line height and restrained contrast so
+                future directory cards, filters, and routing copy remain easy to
+                compare.
+              </p>
+            </article>
+          </div>
+        </SiteContainer>
+      </section>
+
+      <section id="surface" className={styles.surfaceSection}>
+        <SiteContainer className={styles.surfaceGrid}>
+          <SectionHeading
+            eyebrow="Surfaces"
+            title="Reusable cards with stable spacing."
+            description="The system favors modest radius, light borders, and clear focus states over decorative effects."
+          />
+
+          <article className={styles.card}>
+            <p className={styles.sampleLabel}>Card sample</p>
+            <h3>Surface module</h3>
+            <p>
+              This card previews the shared background, border, radius, shadow,
+              and spacing tokens intended for future finder and directory UI.
+            </p>
+            <ButtonLink href="#foundation-title" variant="secondary">
+              Back to top
+            </ButtonLink>
+          </article>
+        </SiteContainer>
+      </section>
+    </main>
   );
 }
