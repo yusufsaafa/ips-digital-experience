@@ -1,0 +1,130 @@
+.header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-block-end: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.inner {
+  display: grid;
+  min-height: 4.75rem;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.wordmark {
+  display: inline-grid;
+  gap: var(--space-2xs);
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.wordmark span:first-child {
+  font-size: 1.35rem;
+  font-weight: 760;
+  letter-spacing: 0.02em;
+}
+
+.wordmark span:last-child {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.desktopNavigation {
+  display: flex;
+  justify-content: center;
+  gap: clamp(var(--space-sm), 2vw, var(--space-xl));
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.desktopNavigation a {
+  padding-block: var(--space-sm);
+  transition:
+    color var(--transition-standard),
+    background-color var(--transition-standard);
+}
+
+.desktopNavigation a:hover {
+  color: var(--color-text-primary);
+}
+
+.headerCta {
+  min-height: 2.5rem;
+}
+
+.mobileNavigation {
+  display: none;
+}
+
+.menuButton {
+  min-height: 2.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding-inline: var(--space-md);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mobileMenu {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  border-block-end: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.mobileMenu nav {
+  display: grid;
+  gap: var(--space-xs);
+  width: min(100% - (var(--container-padding) * 2), var(--container-default));
+  margin-inline: auto;
+  padding-block: var(--space-md);
+}
+
+.mobileMenu a {
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--color-text-primary);
+  font-weight: 680;
+}
+
+.mobileMenu .mobileCta {
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .desktopNavigation,
+  .headerCta {
+    display: none;
+  }
+
+  .mobileNavigation {
+    display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  .inner {
+    min-height: 4.35rem;
+  }
+
+  .wordmark span:last-child {
+    max-width: 11rem;
+    line-height: 1.15;
+  }
+}

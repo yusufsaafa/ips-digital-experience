@@ -4,12 +4,21 @@
 }
 
 .hero {
-  padding-block: clamp(4rem, 9vw, 7rem);
+  border-block-end: 1px solid var(--color-border);
+  background:
+    linear-gradient(90deg, rgb(24 35 31 / 5%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(24 35 31 / 4%) 1px, transparent 1px),
+    var(--color-background);
+  background-size:
+    5rem 5rem,
+    5rem 5rem,
+    auto;
+  padding-block: clamp(4rem, 8vw, 6.5rem);
 }
 
 .heroGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.88fr);
   gap: var(--space-3xl);
   align-items: center;
 }
@@ -32,10 +41,10 @@
 
 .hero h1 {
   color: var(--color-text-primary);
-  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-size: clamp(2.65rem, 5.6vw, 5.35rem);
   font-weight: 720;
-  line-height: 0.98;
-  max-width: 12ch;
+  line-height: 1;
+  max-width: 13ch;
   text-wrap: balance;
 }
 
@@ -57,41 +66,70 @@
   gap: var(--space-sm);
 }
 
-.tokenPanel {
-  display: grid;
-  gap: var(--space-md);
-  padding: var(--space-lg);
+.hero .proofLine {
+  color: var(--color-accent-strong);
+  font-size: 0.92rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.heroSignal {
+  position: relative;
+  min-height: 25rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
+  overflow: hidden;
   box-shadow: var(--shadow-md);
 }
 
-.tokenPanel span {
-  display: flex;
-  min-height: 5rem;
-  align-items: end;
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
+.signalPlane {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 0 42%, rgb(47 111 94 / 12%) 42% 58%, transparent 58%),
+    linear-gradient(90deg, transparent 0 56%, var(--color-surface-muted) 56% 100%);
+}
+
+.signalContent {
+  position: relative;
+  display: grid;
+  min-height: 25rem;
+  align-content: end;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+}
+
+.signalContent dl {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.signalContent dl div {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--space-md);
+  align-items: baseline;
+  border-block-start: 1px solid var(--color-border);
+  padding-block-start: var(--space-sm);
+}
+
+.signalContent dt {
   color: var(--color-text-primary);
-  font-size: 0.9rem;
-  font-weight: 650;
-  background: var(--color-surface-muted);
+  font-size: 2.4rem;
+  font-weight: 740;
+  line-height: 1;
 }
 
-.tokenPanel span:nth-child(2) {
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-}
-
-.tokenPanel span:nth-child(3) {
-  color: var(--color-text-inverse);
-  background: var(--color-accent);
+.signalContent dd {
+  color: var(--color-text-secondary);
+  font-weight: 680;
 }
 
 .preview,
 .surfaceSection,
-.registrySection {
+.registrySection,
+.anchorSection {
   padding-block: var(--space-3xl);
 }
 
@@ -176,15 +214,51 @@
   list-style-position: inside;
 }
 
+.anchorSection {
+  background: var(--color-background);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.anchorGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+.anchorGrid article {
+  display: grid;
+  gap: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-xl);
+}
+
+.anchorGrid h2 {
+  color: var(--color-text-primary);
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  line-height: 1.15;
+}
+
+.anchorGrid p:not(.sampleLabel) {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
 @media (max-width: 760px) {
   .heroGrid,
   .typeGrid,
   .surfaceGrid,
-  .registryGrid {
+  .registryGrid,
+  .anchorGrid {
     grid-template-columns: 1fr;
   }
 
   .hero {
+    background-size:
+      3.5rem 3.5rem,
+      3.5rem 3.5rem,
+      auto;
     padding-block: var(--space-3xl);
   }
 
@@ -196,5 +270,24 @@
   .typeGrid article,
   .card {
     padding: var(--space-lg);
+  }
+
+  .heroSignal,
+  .signalContent {
+    min-height: 20rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .signalContent dl div {
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  .signalContent dt {
+    font-size: 2rem;
   }
 }
