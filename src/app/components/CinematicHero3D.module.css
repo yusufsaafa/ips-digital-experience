@@ -1,0 +1,205 @@
+.track {
+  position: relative;
+  height: 320vh;
+  background: #080909;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  color: #f4f1ea;
+  background: #080909;
+}
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.canvasWrap canvas {
+  display: block;
+}
+
+.atmosphere {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 46%, transparent 0 18%, rgba(0, 0, 0, 0.14) 52%, rgba(0, 0, 0, 0.66) 100%),
+    linear-gradient(90deg, rgba(8, 9, 9, 0.92) 0%, rgba(8, 9, 9, 0.56) 31%, transparent 58%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.26), transparent 20%, transparent 74%, rgba(0, 0, 0, 0.46));
+}
+
+.copy {
+  position: absolute;
+  z-index: 4;
+  top: clamp(140px, 18vh, 210px);
+  left: clamp(28px, 7vw, 112px);
+  width: min(610px, 42vw);
+  animation: copyIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.copy p {
+  margin: 0 0 24px;
+  color: rgba(232, 221, 205, 0.58);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  margin: 0;
+  max-width: 620px;
+  font-size: clamp(3.5rem, 5.9vw, 7.2rem);
+  font-weight: 410;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+  text-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+}
+
+.copy > span {
+  display: block;
+  max-width: 500px;
+  margin-top: 28px;
+  color: rgba(244, 241, 234, 0.62);
+  font-size: clamp(1rem, 1.08vw, 1.16rem);
+  line-height: 1.68;
+}
+
+.progress {
+  position: absolute;
+  z-index: 4;
+  right: clamp(24px, 4vw, 64px);
+  bottom: clamp(26px, 5vh, 54px);
+  display: grid;
+  grid-template-columns: auto minmax(120px, 220px);
+  align-items: center;
+  gap: 12px 18px;
+  color: rgba(244, 241, 234, 0.5);
+}
+
+.progress > span {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+}
+
+.progress > i {
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.progress > i b {
+  position: absolute;
+  inset: 0;
+  background: rgba(239, 235, 226, 0.78);
+  transform-origin: left;
+}
+
+.progress small {
+  grid-column: 1 / -1;
+  justify-self: end;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+@keyframes copyIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .track {
+    height: 300vh;
+  }
+
+  .copy {
+    top: 122px;
+    left: 24px;
+    right: 24px;
+    width: auto;
+  }
+
+  .copy h1 {
+    max-width: 680px;
+    font-size: clamp(3rem, 9.5vw, 5.6rem);
+  }
+
+  .copy > span {
+    max-width: 440px;
+  }
+
+  .atmosphere {
+    background:
+      radial-gradient(circle at 62% 58%, transparent 0 20%, rgba(0, 0, 0, 0.18) 58%, rgba(0, 0, 0, 0.7) 100%),
+      linear-gradient(180deg, rgba(8, 9, 9, 0.9) 0%, rgba(8, 9, 9, 0.44) 36%, transparent 66%);
+  }
+}
+
+@media (max-width: 620px) {
+  .track {
+    height: 280vh;
+  }
+
+  .copy {
+    top: 104px;
+  }
+
+  .copy p {
+    margin-bottom: 18px;
+    font-size: 0.61rem;
+  }
+
+  .copy h1 {
+    font-size: clamp(2.7rem, 13vw, 4.7rem);
+    line-height: 0.97;
+  }
+
+  .copy > span {
+    margin-top: 18px;
+    max-width: 90%;
+    font-size: 0.93rem;
+    line-height: 1.54;
+  }
+
+  .progress {
+    right: 18px;
+    bottom: 22px;
+  }
+
+  .progress small {
+    max-width: 230px;
+    text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    height: auto;
+  }
+
+  .sticky {
+    position: relative;
+    min-height: 100svh;
+  }
+
+  .copy {
+    animation: none;
+  }
+}
