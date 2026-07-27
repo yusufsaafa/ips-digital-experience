@@ -1,6 +1,6 @@
 import type { IpsIndustry } from "./types";
 
-export const ipsIndustries = [
+export const ipsIndustries: readonly IpsIndustry[] = [
   {
     slug: "aerospace",
     name: "Aerospace",
@@ -61,4 +61,4 @@ export const ipsIndustries = [
     description:
       "Commercial applications supported by shielding, absorbing, conductive fabric, aerospace, or advanced-material solutions.",
   },
-] as const satisfies readonly IpsIndustry[];
+];

@@ -1,6 +1,6 @@
 import type { IpsCapability } from "./types";
 
-export const ipsCapabilities = [
+export const ipsCapabilities: readonly IpsCapability[] = [
   {
     slug: "sealing-and-containment",
     name: "Sealing and Containment",
@@ -55,4 +55,4 @@ export const ipsCapabilities = [
     description:
       "RF, microwave, and EMI-absorbing materials for defense, commercial, and harsh-environment applications.",
   },
-] as const satisfies readonly IpsCapability[];
+];

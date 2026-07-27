@@ -1,6 +1,6 @@
 import type { IpsBusiness } from "./types";
 
-export const ipsBusinesses = [
+export const ipsBusinesses: readonly IpsBusiness[] = [
   // Sources: https://www.integratedpolymersolutions.com/ and https://www.abbaroller.com/
   {
     name: "ABBA Roller",
@@ -148,4 +148,4 @@ export const ipsBusinesses = [
     capabilities: ["conductive-fabrics", "emi-rfi-shielding"],
     industries: ["aerospace", "defense", "commercial"],
   },
-] as const satisfies readonly IpsBusiness[];
+];

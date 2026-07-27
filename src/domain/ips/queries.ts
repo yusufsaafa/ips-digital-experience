@@ -9,13 +9,13 @@ export function getBusinessBySlug(slug: BusinessSlug) {
 
 export function getBusinessesByCapability(capabilitySlug: CapabilitySlug) {
   return ipsBusinesses.filter((business) =>
-    (business.capabilities as readonly CapabilitySlug[]).includes(capabilitySlug),
+    business.capabilities.includes(capabilitySlug),
   );
 }
 
 export function getBusinessesByIndustry(industrySlug: IndustrySlug) {
   return ipsBusinesses.filter((business) =>
-    (business.industries as readonly IndustrySlug[]).includes(industrySlug),
+    business.industries.includes(industrySlug),
   );
 }
 

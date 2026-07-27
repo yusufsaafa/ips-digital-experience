@@ -49,12 +49,26 @@ export function validateIpsRegistry(): RegistryValidationResult {
   }
 
   for (const business of ipsBusinesses) {
+    if (!business.name.trim()) {
+      errors.push(`Business name is empty: ${business.slug}`);
+    }
+
     if (!business.summary.trim()) {
       errors.push(`Business summary is empty: ${business.slug}`);
     }
 
-    if (business.websiteUrl && !business.websiteUrl.startsWith("https://")) {
+    if (!business.websiteUrl.trim()) {
+      errors.push(`Business URL is empty: ${business.slug}`);
+    } else if (!business.websiteUrl.startsWith("https://")) {
       errors.push(`Business URL must use https: ${business.slug}`);
+    }
+
+    if (business.capabilities.length === 0) {
+      errors.push(`Business has no capabilities: ${business.slug}`);
+    }
+
+    if (business.industries.length === 0) {
+      errors.push(`Business has no industries: ${business.slug}`);
     }
 
     for (const capability of business.capabilities) {
