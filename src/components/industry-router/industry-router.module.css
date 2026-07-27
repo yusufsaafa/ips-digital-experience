@@ -1,0 +1,305 @@
+.industries {
+  border-block-start: 1px solid var(--color-border);
+  background: var(--color-background);
+  padding-block: var(--space-3xl);
+}
+
+.router {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(22rem, 1.05fr);
+  gap: clamp(var(--space-xl), 5vw, var(--space-3xl));
+  align-items: start;
+  margin-block-start: var(--space-2xl);
+}
+
+.marketMatrix {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.matrixHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 13rem);
+  gap: var(--space-lg);
+  align-items: end;
+  border-block-end: 1px solid var(--color-border);
+  padding-block-end: var(--space-md);
+}
+
+.matrixHeader p,
+.marketContext > p,
+.relevance > p {
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.matrixHeader span {
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  text-align: end;
+}
+
+.industryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-block-start: 1px solid var(--color-border);
+  border-inline-start: 1px solid var(--color-border);
+}
+
+.industryButton {
+  display: grid;
+  min-height: 11.25rem;
+  align-content: space-between;
+  gap: var(--space-md);
+  border: 0;
+  border-block-end: 1px solid var(--color-border);
+  border-inline-end: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: var(--space-lg);
+  text-align: start;
+  transition:
+    background-color var(--transition-standard),
+    color var(--transition-standard);
+}
+
+.industryButton[aria-pressed="true"] {
+  background: var(--color-surface-strong);
+  color: var(--color-text-inverse);
+}
+
+.industryButton > span:first-child {
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-weight: 740;
+  line-height: 1;
+}
+
+.industryButton > span:nth-child(2) {
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.industryButton[aria-pressed="true"] > span:nth-child(2) {
+  color: rgb(248 250 247 / 78%);
+}
+
+.industryButton strong {
+  color: var(--color-accent-strong);
+  font-size: 0.8rem;
+  font-weight: 720;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.industryButton[aria-pressed="true"] strong {
+  color: #a8d3c8;
+}
+
+.resultRegion {
+  position: sticky;
+  top: 6.5rem;
+}
+
+.resultContent {
+  display: grid;
+  gap: var(--space-xl);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 280ms ease,
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.resultContentVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.marketContext {
+  display: grid;
+  gap: var(--space-sm);
+  border-block-start: 2px solid var(--color-text-primary);
+  padding-block-start: var(--space-lg);
+}
+
+.marketContext h3 {
+  color: var(--color-text-primary);
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-weight: 760;
+  line-height: 0.95;
+  max-width: 11ch;
+  text-wrap: balance;
+}
+
+.marketContext > p:last-child {
+  color: var(--color-text-secondary);
+  font-size: 1.04rem;
+  line-height: 1.7;
+  max-width: 42rem;
+}
+
+.resultSummary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: end;
+  border-block: 1px solid var(--color-border);
+  padding-block: var(--space-lg);
+}
+
+.resultSummary span {
+  color: var(--color-text-primary);
+  font-size: clamp(3.25rem, 7vw, 6rem);
+  font-weight: 760;
+  line-height: 0.8;
+}
+
+.resultSummary p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 680;
+  line-height: 1.35;
+  max-width: 16rem;
+}
+
+.businessList {
+  display: grid;
+  gap: var(--space-xl);
+  list-style: none;
+}
+
+.businessResult {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.65fr);
+  gap: var(--space-lg);
+  border-block-start: 1px solid var(--color-border);
+  padding-block-start: var(--space-lg);
+}
+
+.businessCopy {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.businessCopy h4 {
+  color: var(--color-text-primary);
+  font-size: clamp(1.45rem, 2.4vw, 2.3rem);
+  font-weight: 730;
+  line-height: 1.05;
+}
+
+.businessCopy p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.relevance {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.relevance ul {
+  display: grid;
+  gap: var(--space-xs);
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  list-style: none;
+}
+
+.relevance li {
+  border-block-start: 1px solid var(--color-border);
+  padding-block-start: var(--space-xs);
+}
+
+.websiteLink {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-accent-strong);
+  font-size: 0.95rem;
+  font-weight: 720;
+  grid-column: 1 / -1;
+  line-height: 1.2;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25rem;
+}
+
+.websiteLink::after {
+  content: "↗";
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .industryButton:hover > span:first-child,
+  .websiteLink:hover {
+    color: var(--color-accent);
+  }
+
+  .industryButton[aria-pressed="true"]:hover > span:first-child {
+    color: var(--color-text-inverse);
+  }
+}
+
+@media (max-width: 1080px) {
+  .router {
+    grid-template-columns: 1fr;
+  }
+
+  .resultRegion {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .matrixHeader,
+  .businessResult {
+    grid-template-columns: 1fr;
+  }
+
+  .matrixHeader span {
+    text-align: start;
+  }
+
+  .industryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .industryButton {
+    min-height: 9rem;
+  }
+
+  .resultSummary {
+    align-items: start;
+  }
+}
+
+@media (max-width: 380px) {
+  .industryButton {
+    padding: var(--space-md);
+  }
+
+  .resultSummary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resultContent {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

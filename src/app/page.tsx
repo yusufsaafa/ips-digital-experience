@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/button-link";
 import { CapabilityRouter } from "@/components/capability-router";
+import { IndustryRouter } from "@/components/industry-router";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
@@ -83,28 +84,7 @@ export default function Home() {
 
         <CapabilityRouter />
 
-        <Reveal as="section" id="industries" className={styles.surfaceSection}>
-          <SiteContainer className={styles.surfaceGrid}>
-            <SectionHeading
-              eyebrow="Surfaces"
-              title="Reusable cards with stable spacing."
-              description="The system favors modest radius, light borders, and clear focus states over decorative effects."
-            />
-
-            <Reveal as="article" className={styles.card} delay={100} variant="card">
-              <p className={styles.sampleLabel}>Card sample</p>
-              <h3>Surface module</h3>
-              <p>
-                This card previews the shared background, border, radius,
-                shadow, and spacing tokens intended for future finder and
-                directory UI.
-              </p>
-              <ButtonLink href="#hero-title" variant="secondary">
-                Back to top
-              </ButtonLink>
-            </Reveal>
-          </SiteContainer>
-        </Reveal>
+        <IndustryRouter />
 
         <Reveal as="section" id="businesses" className={styles.registrySection}>
           <SiteContainer>

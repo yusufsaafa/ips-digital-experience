@@ -48,8 +48,7 @@
   text-wrap: balance;
 }
 
-.hero p:not(.eyebrow),
-.card p:not(.sampleLabel) {
+.hero p:not(.eyebrow) {
   color: var(--color-text-secondary);
   font-size: 1.05rem;
   line-height: 1.7;
@@ -122,7 +121,6 @@
 }
 
 .preview,
-.surfaceSection,
 .registrySection,
 .anchorSection {
   padding-block: var(--space-3xl);
@@ -133,7 +131,6 @@
   border-block: 1px solid var(--color-border);
 }
 
-.card,
 .registryGrid article {
   display: grid;
   gap: var(--space-md);
@@ -144,34 +141,11 @@
   box-shadow: var(--shadow-sm);
 }
 
-.card h3,
 .registryGrid h3 {
   color: var(--color-text-primary);
   font-size: clamp(1.45rem, 2vw, 2rem);
   font-weight: 680;
   line-height: 1.15;
-}
-
-.surfaceGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
-  gap: var(--space-2xl);
-  align-items: start;
-}
-
-.card {
-  background: var(--color-surface-strong);
-  border-color: transparent;
-  box-shadow: var(--shadow-md);
-}
-
-.card h3,
-.card p:not(.sampleLabel) {
-  color: var(--color-text-inverse);
-}
-
-.card .sampleLabel {
-  color: #a8d3c8;
 }
 
 .registrySection {
@@ -233,7 +207,6 @@
 
 @media (max-width: 760px) {
   .heroGrid,
-  .surfaceGrid,
   .registryGrid,
   .anchorGrid {
     grid-template-columns: 1fr;
@@ -247,13 +220,8 @@
     padding-block: var(--space-3xl);
   }
 
-  .heroGrid,
-  .surfaceGrid {
+  .heroGrid {
     gap: var(--space-2xl);
-  }
-
-  .card {
-    padding: var(--space-lg);
   }
 
   .heroSignal,
