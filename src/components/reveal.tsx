@@ -16,6 +16,7 @@ type RevealProps = HTMLAttributes<HTMLElement> & {
   as?: RevealElement;
   children: ReactNode;
   delay?: number;
+  variant?: "hero" | "section" | "card";
 };
 
 type RevealStyle = CSSProperties & {
@@ -27,6 +28,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
+  variant = "section",
   style,
   ...props
 }: RevealProps) {
@@ -64,6 +66,7 @@ export function Reveal({
 
   const classNames = [
     styles.reveal,
+    styles[variant],
     isRevealed ? styles.revealed : undefined,
     className,
   ]

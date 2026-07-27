@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/button-link";
+import { CapabilityRouter } from "@/components/capability-router";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
@@ -30,7 +31,7 @@ export default function Home() {
       <main className={styles.page}>
         <section className={styles.hero} aria-labelledby="hero-title">
           <SiteContainer className={styles.heroGrid}>
-            <Reveal className={styles.heroCopy}>
+            <Reveal className={styles.heroCopy} variant="hero">
               <p className={styles.eyebrow}>Integrated Polymer Solutions</p>
               <h1 id="hero-title">
                 Specialized businesses. One path to the right solution.
@@ -52,6 +53,7 @@ export default function Home() {
               className={styles.heroSignal}
               aria-label="IPS group overview"
               delay={80}
+              variant="hero"
             >
               <div className={styles.signalPlane} aria-hidden="true" />
               <div className={styles.signalContent}>
@@ -79,30 +81,7 @@ export default function Home() {
           </SiteContainer>
         </section>
 
-        <Reveal as="section" id="capabilities" className={styles.preview}>
-          <SiteContainer>
-            <SectionHeading
-              eyebrow="Typography"
-              title="Readable hierarchy for routing workflows."
-              description="Headings, body copy, and labels are sized to support scanning on desktop and mobile without relying on animated reveals."
-            />
-
-            <div className={styles.typeGrid}>
-              <Reveal as="article">
-                <p className={styles.sampleLabel}>Heading sample</p>
-                <h3>Section titles stay direct and balanced.</h3>
-              </Reveal>
-              <Reveal as="article" delay={70}>
-                <p className={styles.sampleLabel}>Body sample</p>
-                <p>
-                  Body text uses generous line height and restrained contrast so
-                  future directory cards, filters, and routing copy remain easy
-                  to compare.
-                </p>
-              </Reveal>
-            </div>
-          </SiteContainer>
-        </Reveal>
+        <CapabilityRouter />
 
         <Reveal as="section" id="industries" className={styles.surfaceSection}>
           <SiteContainer className={styles.surfaceGrid}>
@@ -112,7 +91,7 @@ export default function Home() {
               description="The system favors modest radius, light borders, and clear focus states over decorative effects."
             />
 
-            <Reveal as="article" className={styles.card} delay={70}>
+            <Reveal as="article" className={styles.card} delay={100} variant="card">
               <p className={styles.sampleLabel}>Card sample</p>
               <h3>Surface module</h3>
               <p>
@@ -141,7 +120,7 @@ export default function Home() {
                 <strong>{ipsBusinesses.length}</strong>
               </Reveal>
 
-              <Reveal as="article" delay={60}>
+              <Reveal as="article" delay={100} variant="card">
                 <p className={styles.sampleLabel}>Business names</p>
                 <ul>
                   {ipsBusinesses.map((business) => (
@@ -150,7 +129,7 @@ export default function Home() {
                 </ul>
               </Reveal>
 
-              <Reveal as="article" delay={120}>
+              <Reveal as="article" delay={200} variant="card">
                 <p className={styles.sampleLabel}>Capability query</p>
                 <h3>EMI / RFI Shielding</h3>
                 <ul>
@@ -160,7 +139,7 @@ export default function Home() {
                 </ul>
               </Reveal>
 
-              <Reveal as="article" delay={180}>
+              <Reveal as="article" delay={300} variant="card">
                 <p className={styles.sampleLabel}>Industry query</p>
                 <h3>Aerospace</h3>
                 <ul>
@@ -184,7 +163,7 @@ export default function Home() {
               </p>
             </Reveal>
 
-            <Reveal as="article" id="contact" delay={70}>
+            <Reveal as="article" id="contact" delay={100} variant="card">
               <p className={styles.sampleLabel}>Contact</p>
               <h2>Routing contact placeholder</h2>
               <p>
