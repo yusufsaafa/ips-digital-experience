@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { siteNavItems } from "./nav-items";
 import styles from "./site-header.module.css";
 
@@ -11,6 +11,7 @@ type MobileNavigationProps = {
 export function MobileNavigation({ items }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuId = useId();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -20,6 +21,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsOpen(false);
+        menuButtonRef.current?.focus();
       }
     }
 
@@ -33,6 +35,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
   return (
     <div className={styles.mobileNavigation}>
       <button
+        ref={menuButtonRef}
         type="button"
         className={styles.menuButton}
         aria-expanded={isOpen}

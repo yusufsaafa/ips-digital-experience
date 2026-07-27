@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/button-link";
+import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import { SiteContainer } from "@/components/site-container";
@@ -29,7 +30,7 @@ export default function Home() {
       <main className={styles.page}>
         <section className={styles.hero} aria-labelledby="hero-title">
           <SiteContainer className={styles.heroGrid}>
-            <div className={styles.heroCopy}>
+            <Reveal className={styles.heroCopy}>
               <p className={styles.eyebrow}>Integrated Polymer Solutions</p>
               <h1 id="hero-title">
                 Specialized businesses. One path to the right solution.
@@ -45,17 +46,20 @@ export default function Home() {
                   Explore Capabilities
                 </ButtonLink>
               </div>
-              <p className={styles.proofLine}>
-                {registryCounts.businesses} specialized businesses;{" "}
-                {registryCounts.capabilities} capability groups;{" "}
-                {registryCounts.industries} markets served
-              </p>
-            </div>
+            </Reveal>
 
-            <div className={styles.heroSignal} aria-label="Registry overview">
+            <Reveal
+              className={styles.heroSignal}
+              aria-label="IPS group overview"
+              delay={80}
+            >
               <div className={styles.signalPlane} aria-hidden="true" />
               <div className={styles.signalContent}>
-                <p className={styles.sampleLabel}>Group routing signal</p>
+                <p className={styles.eyebrow}>The IPS Group</p>
+                <p>
+                  A focused network of specialized engineering and
+                  manufacturing businesses.
+                </p>
                 <dl>
                   <div>
                     <dt>{registryCounts.businesses}</dt>
@@ -71,11 +75,11 @@ export default function Home() {
                   </div>
                 </dl>
               </div>
-            </div>
+            </Reveal>
           </SiteContainer>
         </section>
 
-        <section id="capabilities" className={styles.preview}>
+        <Reveal as="section" id="capabilities" className={styles.preview}>
           <SiteContainer>
             <SectionHeading
               eyebrow="Typography"
@@ -84,23 +88,23 @@ export default function Home() {
             />
 
             <div className={styles.typeGrid}>
-              <article>
+              <Reveal as="article">
                 <p className={styles.sampleLabel}>Heading sample</p>
                 <h3>Section titles stay direct and balanced.</h3>
-              </article>
-              <article>
+              </Reveal>
+              <Reveal as="article" delay={70}>
                 <p className={styles.sampleLabel}>Body sample</p>
                 <p>
                   Body text uses generous line height and restrained contrast so
                   future directory cards, filters, and routing copy remain easy
                   to compare.
                 </p>
-              </article>
+              </Reveal>
             </div>
           </SiteContainer>
-        </section>
+        </Reveal>
 
-        <section id="industries" className={styles.surfaceSection}>
+        <Reveal as="section" id="industries" className={styles.surfaceSection}>
           <SiteContainer className={styles.surfaceGrid}>
             <SectionHeading
               eyebrow="Surfaces"
@@ -108,7 +112,7 @@ export default function Home() {
               description="The system favors modest radius, light borders, and clear focus states over decorative effects."
             />
 
-            <article className={styles.card}>
+            <Reveal as="article" className={styles.card} delay={70}>
               <p className={styles.sampleLabel}>Card sample</p>
               <h3>Surface module</h3>
               <p>
@@ -119,11 +123,11 @@ export default function Home() {
               <ButtonLink href="#hero-title" variant="secondary">
                 Back to top
               </ButtonLink>
-            </article>
+            </Reveal>
           </SiteContainer>
-        </section>
+        </Reveal>
 
-        <section id="businesses" className={styles.registrySection}>
+        <Reveal as="section" id="businesses" className={styles.registrySection}>
           <SiteContainer>
             <SectionHeading
               eyebrow="Registry"
@@ -132,21 +136,21 @@ export default function Home() {
             />
 
             <div className={styles.registryGrid}>
-              <article>
+              <Reveal as="article">
                 <p className={styles.sampleLabel}>Total businesses</p>
                 <strong>{ipsBusinesses.length}</strong>
-              </article>
+              </Reveal>
 
-              <article>
+              <Reveal as="article" delay={60}>
                 <p className={styles.sampleLabel}>Business names</p>
                 <ul>
                   {ipsBusinesses.map((business) => (
                     <li key={business.slug}>{business.name}</li>
                   ))}
                 </ul>
-              </article>
+              </Reveal>
 
-              <article>
+              <Reveal as="article" delay={120}>
                 <p className={styles.sampleLabel}>Capability query</p>
                 <h3>EMI / RFI Shielding</h3>
                 <ul>
@@ -154,9 +158,9 @@ export default function Home() {
                     <li key={business.slug}>{business.name}</li>
                   ))}
                 </ul>
-              </article>
+              </Reveal>
 
-              <article>
+              <Reveal as="article" delay={180}>
                 <p className={styles.sampleLabel}>Industry query</p>
                 <h3>Aerospace</h3>
                 <ul>
@@ -164,32 +168,32 @@ export default function Home() {
                     <li key={business.slug}>{business.name}</li>
                   ))}
                 </ul>
-              </article>
+              </Reveal>
             </div>
           </SiteContainer>
-        </section>
+        </Reveal>
 
-        <section className={styles.anchorSection}>
+        <Reveal as="section" className={styles.anchorSection}>
           <SiteContainer className={styles.anchorGrid}>
-            <article id="about">
+            <Reveal as="article" id="about">
               <p className={styles.sampleLabel}>About IPS</p>
               <h2>Group overview placeholder</h2>
               <p>
                 This anchor reserves the future group overview section without
                 building the full page content in this task.
               </p>
-            </article>
+            </Reveal>
 
-            <article id="contact">
+            <Reveal as="article" id="contact" delay={70}>
               <p className={styles.sampleLabel}>Contact</p>
               <h2>Routing contact placeholder</h2>
               <p>
                 This anchor reserves the future contact route without adding a
                 form or backend workflow.
               </p>
-            </article>
+            </Reveal>
           </SiteContainer>
-        </section>
+        </Reveal>
       </main>
     </>
   );
