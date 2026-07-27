@@ -214,9 +214,11 @@
   padding: 0.38rem 0.5rem;
 }
 
-.businessLink,
 .websiteLink {
+  display: inline-flex;
   width: fit-content;
+  align-items: center;
+  gap: var(--space-xs);
   color: var(--color-accent-strong);
   font-size: 0.95rem;
   font-weight: 720;
@@ -226,13 +228,14 @@
   text-underline-offset: 0.25rem;
 }
 
-.websiteLink {
-  margin-block-start: calc(var(--space-md) * -1);
+.websiteLink::after {
+  content: "↗";
+  font-size: 0.8em;
+  line-height: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .capabilityButton:hover .capabilityText span:first-child,
-  .businessLink:hover,
   .websiteLink:hover {
     color: var(--color-accent);
   }

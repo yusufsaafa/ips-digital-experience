@@ -69,12 +69,6 @@ export function CapabilityRouterClient({
                 aria-pressed={isSelected}
                 aria-describedby={`${capability.slug}-description`}
                 onClick={() => selectCapability(capability.slug)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    selectCapability(capability.slug);
-                  }
-                }}
               >
                 <span className={styles.capabilityNumber}>
                   {String(index + 1).padStart(2, "0")}
@@ -147,20 +141,13 @@ export function CapabilityRouterClient({
                   </div>
 
                   <a
-                    href={`/businesses/${business.slug}`}
-                    className={styles.businessLink}
-                    aria-label={`View future ${business.name} business page`}
-                  >
-                    Business page
-                  </a>
-                  <a
                     href={business.websiteUrl}
                     className={styles.websiteLink}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Visit ${business.name} website in a new tab`}
                   >
-                    Visit company website
+                    Visit {business.name}
                   </a>
                 </article>
               </li>
