@@ -1,14 +1,12 @@
 import { ButtonLink } from "@/components/button-link";
+import { BusinessDirectory } from "@/components/business-directory";
 import { CapabilityRouter } from "@/components/capability-router";
 import { IndustryRouter } from "@/components/industry-router";
 import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import { SiteContainer } from "@/components/site-container";
 import {
   assertValidIpsRegistry,
-  getBusinessesByCapability,
-  getBusinessesByIndustry,
   ipsBusinesses,
   ipsCapabilities,
   ipsIndustries,
@@ -18,8 +16,6 @@ import styles from "./page.module.css";
 export default function Home() {
   assertValidIpsRegistry();
 
-  const shieldingBusinesses = getBusinessesByCapability("emi-rfi-shielding");
-  const aerospaceBusinesses = getBusinessesByIndustry("aerospace");
   const registryCounts = {
     businesses: ipsBusinesses.length,
     capabilities: ipsCapabilities.length,
@@ -86,51 +82,7 @@ export default function Home() {
 
         <IndustryRouter />
 
-        <Reveal as="section" id="businesses" className={styles.registrySection}>
-          <SiteContainer>
-            <SectionHeading
-              eyebrow="Registry"
-              title="Business data registry preview."
-              description="This temporary section proves the typed IPS registry and exact-slug query helpers are wired into the foundation page."
-            />
-
-            <div className={styles.registryGrid}>
-              <Reveal as="article">
-                <p className={styles.sampleLabel}>Total businesses</p>
-                <strong>{ipsBusinesses.length}</strong>
-              </Reveal>
-
-              <Reveal as="article" delay={100} variant="card">
-                <p className={styles.sampleLabel}>Business names</p>
-                <ul>
-                  {ipsBusinesses.map((business) => (
-                    <li key={business.slug}>{business.name}</li>
-                  ))}
-                </ul>
-              </Reveal>
-
-              <Reveal as="article" delay={200} variant="card">
-                <p className={styles.sampleLabel}>Capability query</p>
-                <h3>EMI / RFI Shielding</h3>
-                <ul>
-                  {shieldingBusinesses.map((business) => (
-                    <li key={business.slug}>{business.name}</li>
-                  ))}
-                </ul>
-              </Reveal>
-
-              <Reveal as="article" delay={300} variant="card">
-                <p className={styles.sampleLabel}>Industry query</p>
-                <h3>Aerospace</h3>
-                <ul>
-                  {aerospaceBusinesses.map((business) => (
-                    <li key={business.slug}>{business.name}</li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
-          </SiteContainer>
-        </Reveal>
+        <BusinessDirectory />
 
         <Reveal as="section" className={styles.anchorSection}>
           <SiteContainer className={styles.anchorGrid}>

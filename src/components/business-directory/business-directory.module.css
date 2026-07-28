@@ -1,0 +1,134 @@
+.directory {
+  border-block-start: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding-block: var(--space-3xl);
+}
+
+.businessList {
+  display: grid;
+  margin-block-start: var(--space-2xl);
+}
+
+.business {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+  gap: clamp(var(--space-lg), 4vw, var(--space-3xl));
+  border-block-start: 1px solid var(--color-border);
+  padding-block: clamp(var(--space-xl), 5vw, var(--space-3xl));
+}
+
+.business:last-child {
+  border-block-end: 1px solid var(--color-border);
+}
+
+.identity {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.index,
+.tagGroup > p {
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.copy h3 {
+  color: var(--color-text-primary);
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  font-weight: 740;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.copy p {
+  color: var(--color-text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  max-width: 42rem;
+}
+
+.details {
+  display: grid;
+  align-content: start;
+  gap: var(--space-lg);
+}
+
+.tagGroup {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.tagGroup ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  list-style: none;
+}
+
+.tagGroup li {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.86rem;
+  font-weight: 620;
+  line-height: 1.25;
+  padding: 0.38rem 0.5rem;
+}
+
+.websiteLink {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-accent-strong);
+  font-size: 0.95rem;
+  font-weight: 720;
+  line-height: 1.2;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25rem;
+}
+
+.websiteLink::after {
+  content: "↗";
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .websiteLink:hover {
+    color: var(--color-accent);
+  }
+}
+
+@media (max-width: 900px) {
+  .business {
+    grid-template-columns: 1fr;
+  }
+
+  .copy p {
+    max-width: 48rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .business {
+    gap: var(--space-xl);
+  }
+
+  .identity {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+}

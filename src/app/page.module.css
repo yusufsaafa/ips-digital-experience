@@ -120,58 +120,8 @@
   font-weight: 680;
 }
 
-.preview,
-.registrySection,
 .anchorSection {
   padding-block: var(--space-3xl);
-}
-
-.preview {
-  background: var(--color-surface);
-  border-block: 1px solid var(--color-border);
-}
-
-.registryGrid article {
-  display: grid;
-  gap: var(--space-md);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  padding: var(--space-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-.registryGrid h3 {
-  color: var(--color-text-primary);
-  font-size: clamp(1.45rem, 2vw, 2rem);
-  font-weight: 680;
-  line-height: 1.15;
-}
-
-.registrySection {
-  background: var(--color-surface);
-  border-block-start: 1px solid var(--color-border);
-}
-
-.registryGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-  gap: var(--space-lg);
-  margin-block-start: var(--space-2xl);
-}
-
-.registryGrid article:first-child strong {
-  color: var(--color-text-primary);
-  font-size: clamp(3rem, 7vw, 5rem);
-  line-height: 0.9;
-}
-
-.registryGrid ul {
-  display: grid;
-  gap: var(--space-xs);
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  list-style-position: inside;
 }
 
 .anchorSection {
@@ -207,7 +157,6 @@
 
 @media (max-width: 760px) {
   .heroGrid,
-  .registryGrid,
   .anchorGrid {
     grid-template-columns: 1fr;
   }
