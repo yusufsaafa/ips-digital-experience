@@ -34,15 +34,11 @@ export default function Home() {
                 Specialized businesses. One path to the right solution.
               </h1>
               <p>
-                IPS connects customers with specialized engineering and
-                manufacturing businesses serving demanding aerospace, defense,
-                medical, industrial, and commercial markets.
+                IPS connects complex applications with the specialized
+                businesses built to solve them.
               </p>
               <div className={styles.actions} aria-label="Hero actions">
                 <ButtonLink href="#businesses">Find a Business</ButtonLink>
-                <ButtonLink href="#capabilities" variant="secondary">
-                  Explore Capabilities
-                </ButtonLink>
               </div>
             </Reveal>
 
@@ -55,22 +51,19 @@ export default function Home() {
               <div className={styles.signalPlane} aria-hidden="true" />
               <div className={styles.signalContent}>
                 <p className={styles.eyebrow}>The IPS Group</p>
-                <p>
-                  A focused network of specialized engineering and
-                  manufacturing businesses.
-                </p>
+                <p>A network of specialized businesses.</p>
                 <dl>
                   <div>
                     <dt>{registryCounts.businesses}</dt>
-                    <dd>Specialized businesses</dd>
+                    <dd>Businesses</dd>
                   </div>
                   <div>
                     <dt>{registryCounts.capabilities}</dt>
-                    <dd>Capability groups</dd>
+                    <dd>Capabilities</dd>
                   </div>
                   <div>
                     <dt>{registryCounts.industries}</dt>
-                    <dd>Markets served</dd>
+                    <dd>Markets</dd>
                   </div>
                 </dl>
               </div>
