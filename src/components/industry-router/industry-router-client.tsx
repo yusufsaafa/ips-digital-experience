@@ -51,8 +51,7 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
     <div className={styles.router}>
       <Reveal className={styles.marketMatrix} delay={100}>
         <div className={styles.matrixHeader}>
-          <p>Market index</p>
-          <span>{industries.length} markets represented across IPS</span>
+          <p>{industries.length} markets</p>
         </div>
 
         <div className={styles.industryGrid} aria-label="Select an industry">
@@ -86,7 +85,6 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
         className={styles.resultRegion}
         delay={200}
         variant="card"
-        aria-live="polite"
         aria-labelledby={resultHeadingId}
       >
         <div
@@ -98,17 +96,11 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
             .join(" ")}
         >
           <div className={styles.marketContext}>
-            <p>Selected market</p>
             <h3 id={resultHeadingId}>{selectedIndustry.name}</h3>
-            <p>{selectedIndustry.description}</p>
-          </div>
-
-          <div className={styles.resultSummary}>
-            <span>{selectedIndustry.businessCount}</span>
             <p>
               {selectedIndustry.businessCount === 1
-                ? "IPS business serves this market"
-                : "IPS businesses serve this market"}
+                ? "1 business"
+                : `${selectedIndustry.businessCount} businesses`}
             </p>
           </div>
 
@@ -119,15 +111,6 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
                   <div className={styles.businessCopy}>
                     <h4>{business.name}</h4>
                     <p>{business.summary}</p>
-                  </div>
-
-                  <div className={styles.relevance}>
-                    <p>Relevant capabilities</p>
-                    <ul aria-label={`${business.name} relevant capabilities`}>
-                      {business.capabilities.map((capability) => (
-                        <li key={capability}>{capability}</li>
-                      ))}
-                    </ul>
                   </div>
 
                   <a

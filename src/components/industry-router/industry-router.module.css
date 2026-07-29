@@ -1,7 +1,7 @@
 .industries {
   border-block-start: 1px solid var(--color-border);
   background: var(--color-background);
-  padding-block: var(--space-3xl);
+  padding-block: clamp(var(--space-3xl), 9vw, 7rem);
 }
 
 .router {
@@ -18,30 +18,18 @@
 }
 
 .matrixHeader {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(10rem, 13rem);
-  gap: var(--space-lg);
-  align-items: end;
   border-block-end: 1px solid var(--color-border);
-  padding-block-end: var(--space-md);
+  padding-block-end: var(--space-sm);
 }
 
 .matrixHeader p,
-.marketContext > p,
-.relevance > p {
+.marketContext > p {
   color: var(--color-accent-strong);
   font-size: 0.75rem;
   font-weight: 720;
   letter-spacing: 0.08em;
   line-height: 1.2;
   text-transform: uppercase;
-}
-
-.matrixHeader span {
-  color: var(--color-text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.45;
-  text-align: end;
 }
 
 .industryGrid {
@@ -53,7 +41,7 @@
 
 .industryButton {
   display: grid;
-  min-height: 11.25rem;
+  min-height: 9.5rem;
   align-content: space-between;
   gap: var(--space-md);
   border: 0;
@@ -62,7 +50,7 @@
   background: transparent;
   color: var(--color-text-primary);
   cursor: pointer;
-  padding: var(--space-lg);
+  padding: var(--space-md);
   text-align: start;
   transition:
     background-color var(--transition-standard),
@@ -75,15 +63,19 @@
 }
 
 .industryButton > span:first-child {
-  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-size: clamp(1.18rem, 1.7vw, 1.75rem);
   font-weight: 740;
   line-height: 1;
 }
 
 .industryButton > span:nth-child(2) {
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--color-text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.42;
 }
 
 .industryButton[aria-pressed="true"] > span:nth-child(2) {
@@ -132,7 +124,7 @@
 
 .marketContext h3 {
   color: var(--color-text-primary);
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-size: clamp(2.2rem, 4.4vw, 4rem);
   font-weight: 760;
   line-height: 0.95;
   max-width: 11ch;
@@ -140,48 +132,21 @@
 }
 
 .marketContext > p:last-child {
-  color: var(--color-text-secondary);
-  font-size: 1.04rem;
-  line-height: 1.7;
-  max-width: 42rem;
-}
-
-.resultSummary {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-md);
-  align-items: end;
-  border-block: 1px solid var(--color-border);
-  padding-block: var(--space-lg);
-}
-
-.resultSummary span {
-  color: var(--color-text-primary);
-  font-size: clamp(3.25rem, 7vw, 6rem);
-  font-weight: 760;
-  line-height: 0.8;
-}
-
-.resultSummary p {
-  color: var(--color-text-secondary);
-  font-size: 1rem;
-  font-weight: 680;
-  line-height: 1.35;
-  max-width: 16rem;
+  font-size: 0.78rem;
+  line-height: 1.2;
 }
 
 .businessList {
   display: grid;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   list-style: none;
 }
 
 .businessResult {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.65fr);
-  gap: var(--space-lg);
+  gap: var(--space-sm);
   border-block-start: 1px solid var(--color-border);
-  padding-block-start: var(--space-lg);
+  padding-block-start: var(--space-md);
 }
 
 .businessCopy {
@@ -202,25 +167,6 @@
   line-height: 1.7;
 }
 
-.relevance {
-  display: grid;
-  gap: var(--space-sm);
-}
-
-.relevance ul {
-  display: grid;
-  gap: var(--space-xs);
-  color: var(--color-text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.45;
-  list-style: none;
-}
-
-.relevance li {
-  border-block-start: 1px solid var(--color-border);
-  padding-block-start: var(--space-xs);
-}
-
 .websiteLink {
   display: inline-flex;
   width: fit-content;
@@ -229,7 +175,6 @@
   color: var(--color-accent-strong);
   font-size: 0.95rem;
   font-weight: 720;
-  grid-column: 1 / -1;
   line-height: 1.2;
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
@@ -264,35 +209,18 @@
 }
 
 @media (max-width: 680px) {
-  .matrixHeader,
   .businessResult {
     grid-template-columns: 1fr;
   }
 
-  .matrixHeader span {
-    text-align: start;
-  }
-
   .industryGrid {
     grid-template-columns: 1fr;
-  }
-
-  .industryButton {
-    min-height: 9rem;
-  }
-
-  .resultSummary {
-    align-items: start;
   }
 }
 
 @media (max-width: 380px) {
   .industryButton {
     padding: var(--space-md);
-  }
-
-  .resultSummary {
-    grid-template-columns: 1fr;
   }
 }
 

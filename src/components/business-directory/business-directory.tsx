@@ -14,13 +14,25 @@ import type {
 import styles from "./business-directory.module.css";
 
 type DirectoryBusiness = {
-  capabilities: readonly string[];
-  industries: readonly string[];
+  capabilities: TagSummary;
+  industries: TagSummary;
   name: string;
   slug: BusinessSlug;
   summary: string;
   websiteUrl: string;
 };
+
+type TagSummary = {
+  hiddenCount: number;
+  visible: readonly string[];
+};
+
+function summarizeTags(tags: readonly string[]): TagSummary {
+  return {
+    hiddenCount: Math.max(tags.length - 2, 0),
+    visible: tags.slice(0, 2),
+  };
+}
 
 function resolveCapabilityNames(capabilitySlugs: readonly CapabilitySlug[]) {
   return capabilitySlugs
@@ -37,8 +49,8 @@ function resolveIndustryNames(industrySlugs: readonly IndustrySlug[]) {
 export function BusinessDirectory() {
   const businesses: readonly DirectoryBusiness[] = ipsBusinesses.map(
     (business) => ({
-      capabilities: resolveCapabilityNames(business.capabilities),
-      industries: resolveIndustryNames(business.industries),
+      capabilities: summarizeTags(resolveCapabilityNames(business.capabilities)),
+      industries: summarizeTags(resolveIndustryNames(business.industries)),
       name: business.name,
       slug: business.slug,
       summary: business.summary,
@@ -57,27 +69,21 @@ export function BusinessDirectory() {
           <SectionHeading
             eyebrow="IPS Businesses"
             title={
-              <span id="businesses-title">
-                The operating companies behind the IPS Group.
-              </span>
+              <span id="businesses-title">The IPS businesses.</span>
             }
-            description="IPS brings together specialized operating companies serving distinct engineering, manufacturing, polymer, elastomeric, shielding, thermal, and advanced-material domains."
+            description="Specialized operating companies across engineering and manufacturing domains."
           />
         </Reveal>
 
         <div className={styles.businessList}>
-          {businesses.map((business, index) => (
+          {businesses.map((business) => (
             <Reveal
               as="article"
               className={styles.business}
-              delay={Math.min(index * 100, 500)}
               key={business.slug}
               variant="card"
             >
               <div className={styles.identity}>
-                <p className={styles.index}>
-                  {String(index + 1).padStart(2, "0")}
-                </p>
                 <div className={styles.copy}>
                   <h3>{business.name}</h3>
                   <p>{business.summary}</p>
@@ -88,18 +94,34 @@ export function BusinessDirectory() {
                 <div className={styles.tagGroup}>
                   <p>Capabilities</p>
                   <ul aria-label={`${business.name} capabilities`}>
-                    {business.capabilities.map((capability) => (
+                    {business.capabilities.visible.map((capability) => (
                       <li key={capability}>{capability}</li>
                     ))}
+                    {business.capabilities.hiddenCount > 0 ? (
+                      <li
+                        className={styles.overflowTag}
+                        aria-label={`${business.capabilities.hiddenCount} more capabilities`}
+                      >
+                        +{business.capabilities.hiddenCount}
+                      </li>
+                    ) : null}
                   </ul>
                 </div>
 
                 <div className={styles.tagGroup}>
                   <p>Industries</p>
                   <ul aria-label={`${business.name} industries`}>
-                    {business.industries.map((industry) => (
+                    {business.industries.visible.map((industry) => (
                       <li key={industry}>{industry}</li>
                     ))}
+                    {business.industries.hiddenCount > 0 ? (
+                      <li
+                        className={styles.overflowTag}
+                        aria-label={`${business.industries.hiddenCount} more industries`}
+                      >
+                        +{business.industries.hiddenCount}
+                      </li>
+                    ) : null}
                   </ul>
                 </div>
 

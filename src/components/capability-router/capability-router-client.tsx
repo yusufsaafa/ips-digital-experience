@@ -53,8 +53,7 @@ export function CapabilityRouterClient({
     <div className={styles.router}>
       <Reveal className={styles.capabilityIndex} delay={100}>
         <div className={styles.indexIntro}>
-          <p>Capability index</p>
-          <span>{capabilities.length} groups across the IPS portfolio</span>
+          <p>{capabilities.length} capability groups</p>
         </div>
 
         <div className={styles.capabilityList} aria-label="Select a capability">
@@ -93,7 +92,6 @@ export function CapabilityRouterClient({
         className={styles.resultColumn}
         delay={200}
         variant="card"
-        aria-live="polite"
         aria-labelledby={resultHeadingId}
       >
         <div
@@ -105,40 +103,19 @@ export function CapabilityRouterClient({
             .join(" ")}
         >
           <div className={styles.resultHeader}>
-            <p>Selected capability</p>
             <h3 id={resultHeadingId}>{selectedCapability.name}</h3>
-            <p>{selectedCapability.description}</p>
+            <p>
+              {selectedCapability.businessCount}{" "}
+              {selectedCapability.businessCount === 1 ? "business" : "businesses"}
+            </p>
           </div>
 
           <ul className={styles.businessList}>
-            {selectedCapability.businesses.map((business, index) => (
+            {selectedCapability.businesses.map((business) => (
               <li key={business.slug}>
                 <article className={styles.businessCard}>
-                  <div className={styles.businessCardHeader}>
-                    <p>{String(index + 1).padStart(2, "0")}</p>
-                    <h4>{business.name}</h4>
-                  </div>
+                  <h4>{business.name}</h4>
                   <p>{business.summary}</p>
-
-                  <div className={styles.metaGroup}>
-                    <div>
-                      <p>Primary capability</p>
-                      <ul aria-label={`${business.name} primary capabilities`}>
-                        {business.capabilities.map((capability) => (
-                          <li key={capability}>{capability}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <p>Relevant markets</p>
-                      <ul aria-label={`${business.name} relevant markets`}>
-                        {business.industries.map((industry) => (
-                          <li key={industry}>{industry}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
 
                   <a
                     href={business.websiteUrl}
