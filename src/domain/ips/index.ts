@@ -1,6 +1,7 @@
 export { ipsBusinesses } from "./businesses";
 export { ipsCapabilities } from "./capabilities";
 export { ipsIndustries } from "./industries";
+export { capabilityVisuals, heroVisual } from "./visual-assets";
 export {
   getBusinessBySlug,
   getBusinessesByCapability,
@@ -17,3 +18,4 @@ export type {
   IpsCapability,
   IpsIndustry,
 } from "./types";
+export type { IpsVisualAsset } from "./visual-assets";

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ButtonLink } from "@/components/button-link";
 import { BusinessDirectory } from "@/components/business-directory";
 import { CapabilityRouter } from "@/components/capability-router";
@@ -7,6 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteContainer } from "@/components/site-container";
 import {
   assertValidIpsRegistry,
+  heroVisual,
   ipsBusinesses,
   ipsCapabilities,
   ipsIndustries,
@@ -48,7 +50,17 @@ export default function Home() {
               delay={80}
               variant="hero"
             >
-              <div className={styles.signalPlane} aria-hidden="true" />
+              <figure className={styles.heroVisual}>
+                <Image
+                  src={heroVisual.src}
+                  alt={heroVisual.alt}
+                  width={heroVisual.width}
+                  height={heroVisual.height}
+                  sizes="(max-width: 760px) 100vw, 42vw"
+                  priority
+                />
+                <figcaption>{heroVisual.caption}</figcaption>
+              </figure>
               <div className={styles.signalContent}>
                 <p className={styles.eyebrow}>The IPS Group</p>
                 <p>A network of specialized businesses.</p>
@@ -67,6 +79,19 @@ export default function Home() {
                   </div>
                 </dl>
               </div>
+            </Reveal>
+
+            <Reveal
+              className={styles.identityBand}
+              delay={120}
+              aria-label="IPS operating businesses"
+            >
+              <p>Operating businesses</p>
+              <ul>
+                {ipsBusinesses.map((business) => (
+                  <li key={business.slug}>{business.shortName ?? business.name}</li>
+                ))}
+              </ul>
             </Reveal>
           </SiteContainer>
         </section>

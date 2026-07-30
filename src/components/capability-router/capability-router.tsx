@@ -2,10 +2,12 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteContainer } from "@/components/site-container";
 import {
+  capabilityVisuals,
   getBusinessesByCapability,
   ipsCapabilities,
 } from "@/domain/ips";
 import type { BusinessSlug, CapabilitySlug } from "@/domain/ips";
+import type { IpsVisualAsset } from "@/domain/ips";
 import { CapabilityRouterClient } from "./capability-router-client";
 import styles from "./capability-router.module.css";
 
@@ -22,6 +24,7 @@ export type RouterCapability = {
   description: string;
   name: string;
   slug: CapabilitySlug;
+  visual?: IpsVisualAsset;
 };
 
 export function CapabilityRouter() {
@@ -40,6 +43,7 @@ export function CapabilityRouter() {
         description: capability.description,
         name: capability.name,
         slug: capability.slug,
+        visual: capabilityVisuals[capability.slug],
       };
     },
   );

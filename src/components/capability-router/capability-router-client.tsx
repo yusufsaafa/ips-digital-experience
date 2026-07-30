@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { Reveal } from "@/components/reveal";
 import type { CapabilitySlug } from "@/domain/ips";
@@ -109,6 +110,19 @@ export function CapabilityRouterClient({
               {selectedCapability.businessCount === 1 ? "business" : "businesses"}
             </p>
           </div>
+
+          {selectedCapability.visual ? (
+            <figure className={styles.capabilityVisual}>
+              <Image
+                src={selectedCapability.visual.src}
+                alt={selectedCapability.visual.alt}
+                width={selectedCapability.visual.width}
+                height={selectedCapability.visual.height}
+                sizes="(max-width: 980px) 100vw, 44vw"
+              />
+              <figcaption>{selectedCapability.visual.caption}</figcaption>
+            </figure>
+          ) : null}
 
           <ul className={styles.businessList}>
             {selectedCapability.businesses.map((business) => (
