@@ -1,14 +1,14 @@
-import Image from "next/image";
 import { ButtonLink } from "@/components/button-link";
 import { BusinessDirectory } from "@/components/business-directory";
 import { CapabilityRouter } from "@/components/capability-router";
+import { HeroImageSequence } from "@/components/hero-image-sequence";
 import { IndustryRouter } from "@/components/industry-router";
 import { Reveal } from "@/components/reveal";
 import { SiteHeader } from "@/components/site-header";
 import { SiteContainer } from "@/components/site-container";
 import {
   assertValidIpsRegistry,
-  heroVisual,
+  heroVisualSequence,
   ipsBusinesses,
   ipsCapabilities,
   ipsIndustries,
@@ -50,20 +50,9 @@ export default function Home() {
               delay={80}
               variant="hero"
             >
-              <figure className={styles.heroVisual}>
-                <Image
-                  src={heroVisual.src}
-                  alt={heroVisual.alt}
-                  width={heroVisual.width}
-                  height={heroVisual.height}
-                  sizes="(max-width: 760px) 100vw, 42vw"
-                  priority
-                />
-                <figcaption>{heroVisual.caption}</figcaption>
-              </figure>
+              <HeroImageSequence visuals={heroVisualSequence} />
               <div className={styles.signalContent}>
                 <p className={styles.eyebrow}>The IPS Group</p>
-                <p>A network of specialized businesses.</p>
                 <dl>
                   <div>
                     <dt>{registryCounts.businesses}</dt>
@@ -87,11 +76,24 @@ export default function Home() {
               aria-label="IPS operating businesses"
             >
               <p>Operating businesses</p>
-              <ul>
-                {ipsBusinesses.map((business) => (
-                  <li key={business.slug}>{business.shortName ?? business.name}</li>
-                ))}
-              </ul>
+              <div className={styles.marqueeViewport}>
+                <div className={styles.marqueeTrack}>
+                  <ul className={styles.marqueeGroup}>
+                    {ipsBusinesses.map((business) => (
+                      <li key={business.slug}>
+                        {business.shortName ?? business.name}
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className={styles.marqueeGroup} aria-hidden="true">
+                    {ipsBusinesses.map((business) => (
+                      <li key={`${business.slug}-duplicate`}>
+                        {business.shortName ?? business.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </Reveal>
           </SiteContainer>
         </section>
@@ -106,20 +108,12 @@ export default function Home() {
           <SiteContainer className={styles.anchorGrid}>
             <Reveal as="article" id="about">
               <p className={styles.sampleLabel}>About IPS</p>
-              <h2>Group overview placeholder</h2>
-              <p>
-                This anchor reserves the future group overview section without
-                building the full page content in this task.
-              </p>
+              <h2>Group overview</h2>
             </Reveal>
 
             <Reveal as="article" id="contact" delay={100} variant="card">
               <p className={styles.sampleLabel}>Contact</p>
-              <h2>Routing contact placeholder</h2>
-              <p>
-                This anchor reserves the future contact route without adding a
-                form or backend workflow.
-              </p>
+              <h2>Talk with IPS</h2>
             </Reveal>
           </SiteContainer>
         </Reveal>

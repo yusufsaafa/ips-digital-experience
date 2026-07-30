@@ -14,7 +14,6 @@ import styles from "./capability-router.module.css";
 type RouterBusiness = {
   name: string;
   slug: BusinessSlug;
-  summary: string;
   websiteUrl: string;
 };
 
@@ -37,7 +36,6 @@ export function CapabilityRouter() {
         businesses: businesses.map((business) => ({
           name: business.name,
           slug: business.slug,
-          summary: business.summary,
           websiteUrl: business.websiteUrl,
         })),
         description: capability.description,

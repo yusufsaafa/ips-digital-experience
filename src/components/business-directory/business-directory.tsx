@@ -34,6 +34,16 @@ function summarizeTags(tags: readonly string[]): TagSummary {
   };
 }
 
+function summarizeSpecialization(summary: string) {
+  const words = summary.split(/\s+/);
+
+  if (words.length <= 18) {
+    return summary;
+  }
+
+  return `${words.slice(0, 18).join(" ")}.`;
+}
+
 function resolveCapabilityNames(capabilitySlugs: readonly CapabilitySlug[]) {
   return capabilitySlugs
     .map((slug) => getCapabilityBySlug(slug)?.name)
@@ -53,7 +63,7 @@ export function BusinessDirectory() {
       industries: summarizeTags(resolveIndustryNames(business.industries)),
       name: business.name,
       slug: business.slug,
-      summary: business.summary,
+      summary: summarizeSpecialization(business.summary),
       websiteUrl: business.websiteUrl,
     }),
   );
@@ -71,7 +81,6 @@ export function BusinessDirectory() {
             title={
               <span id="businesses-title">The IPS businesses.</span>
             }
-            description="Specialized operating companies across engineering and manufacturing domains."
           />
         </Reveal>
 

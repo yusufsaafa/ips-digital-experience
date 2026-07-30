@@ -64,13 +64,9 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
                 type="button"
                 className={styles.industryButton}
                 aria-pressed={isSelected}
-                aria-describedby={`${industry.slug}-industry-description`}
                 onClick={() => selectIndustry(industry.slug)}
               >
                 <span>{industry.name}</span>
-                <span id={`${industry.slug}-industry-description`}>
-                  {industry.description}
-                </span>
                 <strong>
                   {industry.businessCount}{" "}
                   {industry.businessCount === 1 ? "business" : "businesses"}
@@ -99,8 +95,8 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
             <h3 id={resultHeadingId}>{selectedIndustry.name}</h3>
             <p>
               {selectedIndustry.businessCount === 1
-                ? "1 business"
-                : `${selectedIndustry.businessCount} businesses`}
+                ? "1 matched business"
+                : `${selectedIndustry.businessCount} matched businesses`}
             </p>
           </div>
 
@@ -110,7 +106,6 @@ export function IndustryRouterClient({ industries }: IndustryRouterClientProps) 
                 <article className={styles.businessResult}>
                   <div className={styles.businessCopy}>
                     <h4>{business.name}</h4>
-                    <p>{business.summary}</p>
                   </div>
 
                   <a

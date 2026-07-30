@@ -9,14 +9,12 @@ import styles from "./industry-router.module.css";
 type IndustryRouterBusiness = {
   name: string;
   slug: BusinessSlug;
-  summary: string;
   websiteUrl: string;
 };
 
 export type RouterIndustry = {
   businessCount: number;
   businesses: readonly IndustryRouterBusiness[];
-  description: string;
   name: string;
   slug: IndustrySlug;
 };
@@ -30,10 +28,8 @@ export function IndustryRouter() {
       businesses: businesses.map((business) => ({
         name: business.name,
         slug: business.slug,
-        summary: business.summary,
         websiteUrl: business.websiteUrl,
       })),
-      description: industry.description,
       name: industry.name,
       slug: industry.slug,
     };

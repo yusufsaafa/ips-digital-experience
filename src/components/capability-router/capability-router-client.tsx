@@ -67,7 +67,6 @@ export function CapabilityRouterClient({
                 type="button"
                 className={styles.capabilityButton}
                 aria-pressed={isSelected}
-                aria-describedby={`${capability.slug}-description`}
                 onClick={() => selectCapability(capability.slug)}
               >
                 <span className={styles.capabilityNumber}>
@@ -75,9 +74,6 @@ export function CapabilityRouterClient({
                 </span>
                 <span className={styles.capabilityText}>
                   <span>{capability.name}</span>
-                  <span id={`${capability.slug}-description`}>
-                    {capability.description}
-                  </span>
                 </span>
                 <span className={styles.matchCount}>
                   {capability.businessCount}{" "}
@@ -105,45 +101,51 @@ export function CapabilityRouterClient({
         >
           <div className={styles.resultHeader}>
             <h3 id={resultHeadingId}>{selectedCapability.name}</h3>
-            <p>
-              {selectedCapability.businessCount}{" "}
-              {selectedCapability.businessCount === 1 ? "business" : "businesses"}
-            </p>
+            <p>{selectedCapability.description}</p>
           </div>
 
-          {selectedCapability.visual ? (
-            <figure className={styles.capabilityVisual}>
-              <Image
-                src={selectedCapability.visual.src}
-                alt={selectedCapability.visual.alt}
-                width={selectedCapability.visual.width}
-                height={selectedCapability.visual.height}
-                sizes="(max-width: 980px) 100vw, 44vw"
-              />
-              <figcaption>{selectedCapability.visual.caption}</figcaption>
-            </figure>
-          ) : null}
+          <div className={styles.resultMedia}>
+            {selectedCapability.visual ? (
+              <figure className={styles.capabilityVisual}>
+                <Image
+                  src={selectedCapability.visual.src}
+                  alt={selectedCapability.visual.alt}
+                  width={selectedCapability.visual.width}
+                  height={selectedCapability.visual.height}
+                  sizes="(max-width: 980px) 100vw, 44vw"
+                />
+                <figcaption>{selectedCapability.visual.caption}</figcaption>
+              </figure>
+            ) : (
+              <div className={styles.nonImagePanel} aria-label="Matched businesses">
+                <p>
+                  {selectedCapability.businessCount} matched{" "}
+                  {selectedCapability.businessCount === 1
+                    ? "business"
+                    : "businesses"}
+                </p>
+              </div>
+            )}
+          </div>
 
           <ul className={styles.businessList}>
             {selectedCapability.businesses.map((business) => (
               <li key={business.slug}>
-                <article className={styles.businessCard}>
-                  <h4>{business.name}</h4>
-                  <p>{business.summary}</p>
-
-                  <a
-                    href={business.websiteUrl}
-                    className={styles.websiteLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Visit ${business.name} website in a new tab`}
-                  >
-                    Visit {business.name}
-                  </a>
-                </article>
+                <a
+                  href={business.websiteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Visit ${business.name} website in a new tab`}
+                >
+                  {business.name}
+                </a>
               </li>
             ))}
           </ul>
+
+          <a className={styles.websiteLink} href="#businesses">
+            Review matched businesses
+          </a>
         </div>
       </Reveal>
     </div>

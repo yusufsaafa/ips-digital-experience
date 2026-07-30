@@ -1,0 +1,108 @@
+.sequence {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.stage img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.activeImage {
+  animation: editorialDrift 15s ease-in-out both;
+  opacity: 1;
+  transition: opacity 900ms ease;
+  z-index: 2;
+}
+
+.previousImage {
+  animation: fadeOut 900ms ease both;
+  opacity: 0;
+  z-index: 1;
+}
+
+.caption {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  animation: labelFade 900ms ease both;
+}
+
+.subject {
+  color: var(--color-text-primary);
+  font-weight: 720;
+}
+
+.business {
+  color: var(--color-text-secondary);
+}
+
+.separator {
+  color: var(--color-border);
+}
+
+@keyframes editorialDrift {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.025);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes labelFade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .stage {
+    aspect-ratio: 16 / 11;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activeImage,
+  .previousImage,
+  .label {
+    animation: none;
+    transition: none;
+  }
+}

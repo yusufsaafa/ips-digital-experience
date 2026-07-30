@@ -22,8 +22,19 @@ export const heroVisual: IpsVisualAsset = {
   width: 1600,
 };
 
-export const capabilityVisuals: Partial<Record<CapabilitySlug, IpsVisualAsset>> = {
-  "advanced-thermoplastics-and-linings": {
+export const heroVisualSequence: readonly IpsVisualAsset[] = [
+  heroVisual,
+  {
+    alt: "Close-up of medical molding equipment and a multi-cavity tool.",
+    businessSlug: "irp-medical",
+    caption: "Medical molding process — IRP Medical",
+    capabilitySlug: "medical-elastomers",
+    height: 865,
+    industrySlugs: ["medical"],
+    src: "/media/businesses/irp-medical/irp-medical-molding.jpg",
+    width: 1200,
+  },
+  {
     alt: "White rotationally molded dosing bottle with fittings shown from above.",
     businessSlug: "rmb-products",
     caption: "Rotationally molded product detail — RMB Products",
@@ -33,6 +44,30 @@ export const capabilityVisuals: Partial<Record<CapabilitySlug, IpsVisualAsset>> 
     src: "/media/businesses/rmb/rmb-dosing-bottle-top-view.jpg",
     width: 1200,
   },
+  {
+    alt: "MAST Technologies sample kit with dark RF absorbing material sheets.",
+    businessSlug: "mast-technologies",
+    caption: "RF absorbing material sample kit — MAST Technologies",
+    capabilitySlug: "rf-microwave-absorbing-materials",
+    height: 933,
+    industrySlugs: ["defense", "commercial"],
+    src: "/media/businesses/mast-technologies/mast-rf-absorbing-material.png",
+    width: 1000,
+  },
+  {
+    alt: "Precision roller surface detail shown beside a ruler and coin for scale.",
+    businessSlug: "abba-roller",
+    caption: "Precision roller surface detail — ABBA Roller",
+    capabilitySlug: "rollers-and-surface-engineering",
+    height: 518,
+    industrySlugs: ["advanced-industrial"],
+    src: "/media/businesses/abba-roller/abba-roller-precision-surface-detail.jpg",
+    width: 718,
+  },
+];
+
+export const capabilityVisuals: Partial<Record<CapabilitySlug, IpsVisualAsset>> = {
+  "advanced-thermoplastics-and-linings": heroVisualSequence[2],
   "emi-rfi-shielding": {
     alt: "Orange and metal EMI multi-seal gasket curved against a dark background.",
     businessSlug: "spira-manufacturing",
@@ -53,35 +88,8 @@ export const capabilityVisuals: Partial<Record<CapabilitySlug, IpsVisualAsset>> 
     src: "/media/businesses/oldham/oldham-flexible-rubber-bellows.jpg",
     width: 600,
   },
-  "medical-elastomers": {
-    alt: "Close-up of medical molding equipment and a multi-cavity tool.",
-    businessSlug: "irp-medical",
-    caption: "Medical molding process — IRP Medical",
-    capabilitySlug: "medical-elastomers",
-    height: 865,
-    industrySlugs: ["medical"],
-    src: "/media/businesses/irp-medical/irp-medical-molding.jpg",
-    width: 1200,
-  },
-  "rf-microwave-absorbing-materials": {
-    alt: "MAST Technologies sample kit with dark RF absorbing material sheets.",
-    businessSlug: "mast-technologies",
-    caption: "RF absorbing material sample kit — MAST Technologies",
-    capabilitySlug: "rf-microwave-absorbing-materials",
-    height: 933,
-    industrySlugs: ["defense", "commercial"],
-    src: "/media/businesses/mast-technologies/mast-rf-absorbing-material.png",
-    width: 1000,
-  },
-  "rollers-and-surface-engineering": {
-    alt: "Precision roller surface detail shown beside a ruler and coin for scale.",
-    businessSlug: "abba-roller",
-    caption: "Precision roller surface detail — ABBA Roller",
-    capabilitySlug: "rollers-and-surface-engineering",
-    height: 518,
-    industrySlugs: ["advanced-industrial"],
-    src: "/media/businesses/abba-roller/abba-roller-precision-surface-detail.jpg",
-    width: 718,
-  },
+  "medical-elastomers": heroVisualSequence[1],
+  "rf-microwave-absorbing-materials": heroVisualSequence[3],
+  "rollers-and-surface-engineering": heroVisualSequence[4],
   "sealing-and-containment": heroVisual,
 };
